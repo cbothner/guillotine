@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  individual: false
+  first_name: MyString
+  last_name: MyString
+  email: MyString
+  affiliation: MyString
+  local_phone: MyString
+  local_address: MyString
+  local_address2: MyString
+  local_city: MyString
+  local_state: MyString
+  local_zip: MyString
+  perm_phone: MyString
+  perm_address: MyString
+  perm_address2: MyString
+  perm_city: MyString
+  perm_state: MyString
+  perm_zip: MyString
+  perm_country: MyString
+
+two:
+  individual: false
+  first_name: MyString
+  last_name: MyString
+  email: MyString
+  affiliation: MyString
+  local_phone: MyString
+  local_address: MyString
+  local_address2: MyString
+  local_city: MyString
+  local_state: MyString
+  local_zip: MyString
+  perm_phone: MyString
+  perm_address: MyString
+  perm_address2: MyString
+  perm_city: MyString
+  perm_state: MyString
+  perm_zip: MyString
+  perm_country: MyString

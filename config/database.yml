@@ -3,7 +3,7 @@ common: &common
   encoding: unicode
   pool: 5
   username: guillotine
-  password:
+  password: cecinestpasuneBD
   host: localhost
 
 development:

@@ -1,0 +1,89 @@
+<%= form_for(@pledger) do |f| %>
+  <% if @pledger.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pledger.errors.count, "error") %> prohibited this pledger from being saved:</h2>
+
+      <ul>
+      <% @pledger.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :individual %><br />
+    <%= f.check_box :individual %>
+  </div>
+  <div class="field">
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :affiliation %><br />
+    <%= f.text_field :affiliation %>
+  </div>
+  <div class="field">
+    <%= f.label :local_phone %><br />
+    <%= f.text_field :local_phone %>
+  </div>
+  <div class="field">
+    <%= f.label :local_address %><br />
+    <%= f.text_field :local_address %>
+  </div>
+  <div class="field">
+    <%= f.label :local_address2 %><br />
+    <%= f.text_field :local_address2 %>
+  </div>
+  <div class="field">
+    <%= f.label :local_city %><br />
+    <%= f.text_field :local_city %>
+  </div>
+  <div class="field">
+    <%= f.label :local_state %><br />
+    <%= f.text_field :local_state %>
+  </div>
+  <div class="field">
+    <%= f.label :local_zip %><br />
+    <%= f.text_field :local_zip %>
+  </div>
+  <div class="field">
+    <%= f.label :perm_phone %><br />
+    <%= f.text_field :perm_phone %>
+  </div>
+  <div class="field">
+    <%= f.label :perm_address %><br />
+    <%= f.text_field :perm_address %>
+  </div>
+  <div class="field">
+    <%= f.label :perm_address2 %><br />
+    <%= f.text_field :perm_address2 %>
+  </div>
+  <div class="field">
+    <%= f.label :perm_city %><br />
+    <%= f.text_field :perm_city %>
+  </div>
+  <div class="field">
+    <%= f.label :perm_state %><br />
+    <%= f.text_field :perm_state %>
+  </div>
+  <div class="field">
+    <%= f.label :perm_zip %><br />
+    <%= f.text_field :perm_zip %>
+  </div>
+  <div class="field">
+    <%= f.label :perm_country %><br />
+    <%= f.text_field :perm_country %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
