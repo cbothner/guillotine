@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130609042118) do
+ActiveRecord::Schema.define(:version => 20130609174814) do
 
   create_table "donations", :force => true do |t|
     t.integer  "pledger_id"
@@ -43,8 +43,6 @@ ActiveRecord::Schema.define(:version => 20130609042118) do
 
   create_table "pledgers", :force => true do |t|
     t.boolean  "individual"
-    t.string   "first_name"
-    t.string   "last_name"
     t.string   "email"
     t.string   "affiliation"
     t.string   "local_phone"
@@ -62,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20130609042118) do
     t.string   "perm_country"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "name"
   end
 
   create_table "rewards", :force => true do |t|
