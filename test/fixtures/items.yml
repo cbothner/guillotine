@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  taxable_value: 9.99
+  cost: 9.99
+  stock: 1
+  backorderable: false
+  shape: MyString
+  note: MyText
+
+two:
+  name: MyString
+  taxable_value: 9.99
+  cost: 9.99
+  stock: 1
+  backorderable: false
+  shape: MyString
+  note: MyText

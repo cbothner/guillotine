@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @item.name %>
+</p>
+
+<p>
+  <b>Taxable value:</b>
+  <%= @item.taxable_value %>
+</p>
+
+<p>
+  <b>Cost:</b>
+  <%= @item.cost %>
+</p>
+
+<p>
+  <b>Stock:</b>
+  <%= @item.stock %>
+</p>
+
+<p>
+  <b>Backorderable:</b>
+  <%= @item.backorderable %>
+</p>
+
+<p>
+  <b>Shape:</b>
+  <%= @item.shape %>
+</p>
+
+<p>
+  <b>Note:</b>
+  <%= @item.note %>
+</p>
+
+
+<%= link_to 'Edit', edit_item_path(@item) %> |
+<%= link_to 'Back', items_path %>

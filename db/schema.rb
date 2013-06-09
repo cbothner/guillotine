@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130609022656) do
+ActiveRecord::Schema.define(:version => 20130609030128) do
+
+  create_table "items", :force => true do |t|
+    t.string   "name"
+    t.decimal  "taxable_value"
+    t.decimal  "cost"
+    t.integer  "stock"
+    t.boolean  "backorderable"
+    t.string   "shape"
+    t.text     "note"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "pledgers", :force => true do |t|
     t.boolean  "individual"

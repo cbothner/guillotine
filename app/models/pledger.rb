@@ -3,6 +3,7 @@ class Pledger < ActiveRecord::Base
 
   validates :email, :last_name, :individual, :perm_address, :perm_city, :perm_country, :perm_phone, :presence => true
   validates :email, :format => { :with => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, :message => "Must be a valid email address." }
+  validates :affiliation, :inclusion => { :in => %w{staff alumni public}, :message => "Affiliation must be one of staff, alumni, or public" }
   with_options :if => :american? do |american|
     american.validates :perm_state, :presence => true, :length => { :is => 2 }
     american.validates :perm_zip, :presence => true, :numericality => { :only_integer => true }, :length => { :is => 5 }
