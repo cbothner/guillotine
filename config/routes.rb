@@ -1,4 +1,7 @@
 Guillotine::Application.routes.draw do
+  resources :shows
+
+
   resources :items
 
 

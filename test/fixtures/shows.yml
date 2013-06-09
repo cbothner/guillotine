@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  semester: 1
+  weekday: 1
+  start: 2013-06-08 23:33:34
+  end: 2013-06-08 23:33:34
+  name: MyString
+  dj: MyString
+
+two:
+  semester: 1
+  weekday: 1
+  start: 2013-06-08 23:33:34
+  end: 2013-06-08 23:33:34
+  name: MyString
+  dj: MyString

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Semester:</b>
+  <%= @show.semester %>
+</p>
+
+<p>
+  <b>Weekday:</b>
+  <%= @show.weekday %>
+</p>
+
+<p>
+  <b>Start:</b>
+  <%= @show.start %>
+</p>
+
+<p>
+  <b>End:</b>
+  <%= @show.end %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @show.name %>
+</p>
+
+<p>
+  <b>Dj:</b>
+  <%= @show.dj %>
+</p>
+
+
+<%= link_to 'Edit', edit_show_path(@show) %> |
+<%= link_to 'Back', shows_path %>
