@@ -18,7 +18,7 @@ class PledgersController < ApplicationController
                                       #FROM pledgers
                                       #WHERE name % ?
                                       #ORDER BY sml DESC, name", params[:name], params[:name]]
-    @pledgers = Pledger.where("name % ?", params[:name])
+    @pledgers = Pledger.select_with_args("id, name, perm_address, similarity(name, ?) AS sml", params[:name]).where("name % ?", params[:name]).order("sml DESC,name")
     respond_to do |format|
       format.json { render json: @pledgers }
     end

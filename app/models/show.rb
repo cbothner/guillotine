@@ -1,5 +1,6 @@
 class Show < ActiveRecord::Base
   has_many :donations, :inverse_of => :show
+  has_many :pledgers, :through => :donations
   attr_accessible :dj, :end, :name, :semester, :start, :weekday
 
   validates :dj, :end, :name, :semester, :start, :weekday, :presence => true
