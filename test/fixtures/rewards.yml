@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  pledger: 
+  item: 
+  premia_sent: false
+  comment: MyText
+
+two:
+  pledger: 
+  item: 
+  premia_sent: false
+  comment: MyText

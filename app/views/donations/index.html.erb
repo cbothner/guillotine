@@ -1,0 +1,37 @@
+<h1>Listing donations</h1>
+
+<table>
+  <tr>
+    <th>Pledger</th>
+    <th>Show</th>
+    <th>Amount</th>
+    <th>Payment method</th>
+    <th>Pledge form sent</th>
+    <th>Payment received</th>
+    <th>Gpo sent</th>
+    <th>Gpo processed</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @donations.each do |donation| %>
+  <tr>
+    <td><%= donation.pledger %></td>
+    <td><%= donation.show %></td>
+    <td><%= donation.amount %></td>
+    <td><%= donation.payment_method %></td>
+    <td><%= donation.pledge_form_sent %></td>
+    <td><%= donation.payment_received %></td>
+    <td><%= donation.gpo_sent %></td>
+    <td><%= donation.gpo_processed %></td>
+    <td><%= link_to 'Show', donation %></td>
+    <td><%= link_to 'Edit', edit_donation_path(donation) %></td>
+    <td><%= link_to 'Destroy', donation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Donation', new_donation_path %>

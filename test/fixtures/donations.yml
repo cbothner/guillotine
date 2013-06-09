@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  pledger: 
+  show: 
+  amount: 9.99
+  payment_method: MyString
+  pledge_form_sent: false
+  payment_received: false
+  gpo_sent: false
+  gpo_processed: false
+
+two:
+  pledger: 
+  show: 
+  amount: 9.99
+  payment_method: MyString
+  pledge_form_sent: false
+  payment_received: false
+  gpo_sent: false
+  gpo_processed: false

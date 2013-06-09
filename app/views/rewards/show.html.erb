@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Pledger:</b>
+  <%= @reward.pledger %>
+</p>
+
+<p>
+  <b>Item:</b>
+  <%= @reward.item %>
+</p>
+
+<p>
+  <b>Premia sent:</b>
+  <%= @reward.premia_sent %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%= @reward.comment %>
+</p>
+
+
+<%= link_to 'Edit', edit_reward_path(@reward) %> |
+<%= link_to 'Back', rewards_path %>

@@ -1,4 +1,10 @@
 Guillotine::Application.routes.draw do
+  resources :rewards
+
+
+  resources :donations
+
+
   resources :shows
 
 

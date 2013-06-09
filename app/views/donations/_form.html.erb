@@ -1,0 +1,49 @@
+<%= form_for(@donation) do |f| %>
+  <% if @donation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@donation.errors.count, "error") %> prohibited this donation from being saved:</h2>
+
+      <ul>
+      <% @donation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :pledger %><br />
+    <%= f.text_field :pledger %>
+  </div>
+  <div class="field">
+    <%= f.label :show %><br />
+    <%= f.text_field :show %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :payment_method %><br />
+    <%= f.text_field :payment_method %>
+  </div>
+  <div class="field">
+    <%= f.label :pledge_form_sent %><br />
+    <%= f.check_box :pledge_form_sent %>
+  </div>
+  <div class="field">
+    <%= f.label :payment_received %><br />
+    <%= f.check_box :payment_received %>
+  </div>
+  <div class="field">
+    <%= f.label :gpo_sent %><br />
+    <%= f.check_box :gpo_sent %>
+  </div>
+  <div class="field">
+    <%= f.label :gpo_processed %><br />
+    <%= f.check_box :gpo_processed %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
