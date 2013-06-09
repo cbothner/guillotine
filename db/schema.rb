@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130609174814) do
+ActiveRecord::Schema.define(:version => 20130609175249) do
 
   create_table "donations", :force => true do |t|
     t.integer  "pledger_id"
@@ -62,6 +62,8 @@ ActiveRecord::Schema.define(:version => 20130609174814) do
     t.datetime "updated_at",     :null => false
     t.string   "name"
   end
+
+  add_index "pledgers", ["name"], :name => "trgm_index"
 
   create_table "rewards", :force => true do |t|
     t.integer  "pledger_id"

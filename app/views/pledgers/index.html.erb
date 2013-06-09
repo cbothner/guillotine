@@ -3,8 +3,7 @@
 <table>
   <tr>
     <th>Individual</th>
-    <th>First name</th>
-    <th>Last name</th>
+    <th>Name</th>
     <th>Email</th>
     <th>Affiliation</th>
     <th>Local phone</th>
@@ -28,8 +27,7 @@
 <% @pledgers.each do |pledger| %>
   <tr>
     <td><%= pledger.individual %></td>
-    <td><%= pledger.first_name %></td>
-    <td><%= pledger.last_name %></td>
+    <td><%= pledger.name %></td>
     <td><%= pledger.email %></td>
     <td><%= pledger.affiliation %></td>
     <td><%= pledger.local_phone %></td>

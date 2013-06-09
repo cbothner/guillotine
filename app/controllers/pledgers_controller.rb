@@ -10,6 +10,20 @@ class PledgersController < ApplicationController
     end
   end
 
+  # GET /pledgers/search.json?name=name
+  def search
+    #@pledgers = Pledger.find_by_sql[" SELECT name, 
+                                        #perm_address, 
+                                        #similarity(name, ?) AS sml
+                                      #FROM pledgers
+                                      #WHERE name % ?
+                                      #ORDER BY sml DESC, name", params[:name], params[:name]]
+    @pledgers = Pledger.where("name % ?", params[:name])
+    respond_to do |format|
+      format.json { render json: @pledgers }
+    end
+  end
+
   # GET /pledgers/1
   # GET /pledgers/1.json
   def show

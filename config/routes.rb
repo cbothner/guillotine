@@ -11,7 +11,11 @@ Guillotine::Application.routes.draw do
   resources :items
 
 
-  resources :pledgers
+  resources :pledgers do
+    collection do
+      get 'search'
+    end
+  end
 
 
   # The priority is based upon order of creation:
