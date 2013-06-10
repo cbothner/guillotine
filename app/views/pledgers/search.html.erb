@@ -1,0 +1,5 @@
+<ul id="namesearchResults">
+  <% @pledgers.each do |pledger| %>
+    <li><%= link_to pledger.name, pledger %></li>
+  <% end %>
+</ul>

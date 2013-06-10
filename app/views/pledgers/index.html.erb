@@ -1,55 +1,9 @@
-<h1>Listing pledgers</h1>
-
-<table>
-  <tr>
-    <th>Individual</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Affiliation</th>
-    <th>Local phone</th>
-    <th>Local address</th>
-    <th>Local address2</th>
-    <th>Local city</th>
-    <th>Local state</th>
-    <th>Local zip</th>
-    <th>Perm phone</th>
-    <th>Perm address</th>
-    <th>Perm address2</th>
-    <th>Perm city</th>
-    <th>Perm state</th>
-    <th>Perm zip</th>
-    <th>Perm country</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @pledgers.each do |pledger| %>
-  <tr>
-    <td><%= pledger.individual %></td>
-    <td><%= pledger.name %></td>
-    <td><%= pledger.email %></td>
-    <td><%= pledger.affiliation %></td>
-    <td><%= pledger.local_phone %></td>
-    <td><%= pledger.local_address %></td>
-    <td><%= pledger.local_address2 %></td>
-    <td><%= pledger.local_city %></td>
-    <td><%= pledger.local_state %></td>
-    <td><%= pledger.local_zip %></td>
-    <td><%= pledger.perm_phone %></td>
-    <td><%= pledger.perm_address %></td>
-    <td><%= pledger.perm_address2 %></td>
-    <td><%= pledger.perm_city %></td>
-    <td><%= pledger.perm_state %></td>
-    <td><%= pledger.perm_zip %></td>
-    <td><%= pledger.perm_country %></td>
-    <td><%= link_to 'Show', pledger %></td>
-    <td><%= link_to 'Edit', edit_pledger_path(pledger) %></td>
-    <td><%= link_to 'Destroy', pledger, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+<%= form_tag({:controller => :pledgers, :action => "search"}, :method => "get", :remote => true, :update => 'namesearchResults' ) do %>
+  <%= label_tag(:namesearch, "Search by first or last name:") %><br />
+  <%= text_field_tag(:namesearch) %>
 <% end %>
-</table>
 
-<br />
+<ul id="namesearchResults">
+  <li><%= link_to 'New Pledger', new_pledger_path %></li>
+</ul>
 
-<%= link_to 'New Pledger', new_pledger_path %>
