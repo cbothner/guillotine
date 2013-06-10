@@ -1,90 +1,170 @@
-<p id="notice"><%= notice %></p>
+<div class="boxcontainer">
+<section class="pledger grid_6">
+  <p id="notice"><%= notice %></p>
 
-<p>
+  <p>
   <b>Individual:</b>
   <%= @pledger.individual %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Name</b>
   <%= @pledger.name %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Email:</b>
   <%= @pledger.email %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Affiliation:</b>
   <%= @pledger.affiliation %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Local phone:</b>
   <%= @pledger.local_phone %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Local address:</b>
   <%= @pledger.local_address %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Local address2:</b>
   <%= @pledger.local_address2 %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Local city:</b>
   <%= @pledger.local_city %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Local state:</b>
   <%= @pledger.local_state %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Local zip:</b>
   <%= @pledger.local_zip %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Perm phone:</b>
   <%= @pledger.perm_phone %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Perm address:</b>
   <%= @pledger.perm_address %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Perm address2:</b>
   <%= @pledger.perm_address2 %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Perm city:</b>
   <%= @pledger.perm_city %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Perm state:</b>
   <%= @pledger.perm_state %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Perm zip:</b>
   <%= @pledger.perm_zip %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Perm country:</b>
   <%= @pledger.perm_country %>
-</p>
+  </p>
 
 
-<%= link_to 'Edit', edit_pledger_path(@pledger) %> |
-<%= link_to 'Back', pledgers_path %>
+  <%= link_to 'Edit', edit_pledger_path(@pledger) %> |
+  <%= link_to 'Back', pledgers_path %>
+
+</section>
+<aside class="pledgerDonations grid_3">
+  <h3>Donations</h3>
+  <div class="donationDiv">
+    <div class="donationLine" id="newDonation">
+      <div class="donationValue" style="padding: 10px 5px 10px 0;font-size:large;">+</div>
+      <div class="donationShow" style="padding: 10px 0 10px 0;font-size:large;">
+        <span class="donationShowName" style="color:#B58900 !important;">New Donation</span>
+      </div>
+    </div>
+    <%if !@activeDonations.empty? %> 
+      <div class="donationLine">
+        <p>Active Pledges: $<%= '%.2f' % @activeDonations.inject(0){ |sum,e| sum += e.amount} %> Total</p>
+      </div>
+    <% end %>
+    <% @activeDonations.each do |donation| %>
+      <div class="donationLine" id="<%= donation.id %>">
+        <div class="donationValue">$<%= donation.amount.round %></div>
+        <div class="donationShow">
+          for<span class="donationShowName"><%= donation.show.name %></span>
+        </div>
+      </div>
+    <% end %>
+    <% if !@archivedDonations.empty? %>
+      <div class="donationLine">
+        <p>Archived Donations</p>
+      </div>
+    <% end %>
+    <% @archivedDonations.each do |donation| %>
+      <div class="donationLine" id="<%= donation.id %>">
+        <div class="donationValue archive">$<%= donation.amount.round %></div>
+        <div class="donationShow archive">
+          for<span class="donationShowName archive"><%= donation.show.name %></span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</aside>
+<aside class="pledgerRewards grid_3">
+  <h3>Premia</h3>
+  <div class="rewardLine" id="newReward">
+    <div class="rewardValue" style="padding: 10px 5px 10px 0;font-size:large;">+</div>
+    <div class="rewardPremia" style="padding: 10px 0 10px 0;font-size:large;">
+      <span class="rewardShowName" style="color:#B58900; font-weight:bold; !important;">
+        New Premium
+      </span>
+    </div>
+  </div>
+  <% if !@activeRewards.empty? %>
+    <div class="rewardLine">
+      <p style="padding-left:10px; font-style:italic;">Requested Premia:</p>
+    </div>
+  <% end %>
+  <% @activeRewards.each do |reward| %>
+    <div class="rewardLine" id="<%= reward.id %>">
+      <div class="rewardValue">$<%= reward.item.cost.round %></div>
+      <div class="rewardPremia">
+        <span class="rewardPremiaName"><%= reward.item.name %></span>
+      </div>
+    </div>
+  <% end %>
+  <% if !@archivedRewards.empty? %>
+    <div class="rewardLine">
+      <p style="padding-left:10px; font-style:italic;">Sent Premia:</p>
+    </div>
+  <% end %>
+  <% @archivedRewards.each do |reward| %>
+    <div class="rewardLine" id="<%= reward.id %>">
+      <div class="rewardValue archive">$<%= reward.item.cost.round %></div>
+      <div class="rewardPremia archive">
+        <span class="rewardPremiaName archive"><%= reward.item.name %></span>
+      </div>
+    </div>
+  <% end %>
+ </div>
+</aside>
+</div>

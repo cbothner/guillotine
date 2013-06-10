@@ -15,20 +15,11 @@ $blue:      #268bd2;
 $cyan:      #2aa198;
 $green:     #859900;
 
-$column:    80px;
-$gutter:    6px;
-
 html, body {
   background-color: $base3;
   color: $base00;
   height: 100%
 }
-
-.container {
-  width: (10*($column+$gutter)-$gutter);
-  margin:auto;
-}
-
 header {
   margin-top:0;
   min-width:100%;
@@ -53,6 +44,15 @@ a {
 a:hover {
   color: $base3;
   background-color: $blue;
+}
+h1.logotype a { color: inherit; }
+h1.logotype a:hover {
+  background-color: inherit;
+  color: $blue;
+}
+p {
+margin-top: 3px;
+margin-bottom: 3px;
 }
 
 table {
@@ -82,4 +82,7 @@ th {
 ::selection {
     background-color: $blue;
     color: $base3;
+}
+.clickable {
+  cursor:pointer;
 }

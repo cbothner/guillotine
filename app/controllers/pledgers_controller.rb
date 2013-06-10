@@ -25,6 +25,11 @@ class PledgersController < ApplicationController
   def show
     @pledger = Pledger.find(params[:id])
 
+    @activeDonations = @pledger.donations.where("payment_received = 'f'")
+    @archivedDonations = @pledger.donations.where("payment_received = 't'")
+    @activeRewards = @pledger.rewards.where("premia_sent = 'f'")
+    @archivedRewards = @pledger.rewards.where("premia_sent = 't'")
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @pledger }

@@ -10,3 +10,63 @@ form#searchForm {
     width: 30em;
   }
 }
+
+.pledger {
+  margin: 1em 1em 0 0;
+}
+
+.pledgerDonations,
+.pledgerRewards{
+  float: left;
+  margin: 1em 1em 0 0;
+  background-color: #EEE8D5;
+  border: 1px solid #93A1A1;
+  h3 {
+    color: #93A1A1;
+    padding: 0 10px 0 10px;
+  }
+}
+.pledgerDonations, 
+.pledgerRewards {
+  padding: 5px 0px 0px 0px;
+  text-align:left;
+  position: relative;
+}
+.donationLine, .rewardLine {
+  padding: 3px 0 3px 0;
+  line-height: 16px;
+  position:relative;
+}
+.rewardLine {padding-top: 4px;padding-bottom:4px;}
+.donationLine:nth-child(odd) {background-color: #FDF6E3}
+.rewardLine:nth-child(even) {background-color: #FDF6E3}
+.donationValue, .rewardValue {
+  display:inline-block;
+  float:left;
+  width:25%;
+  padding-top:1px;
+  color: #859900;
+  font-size: large;
+  font-weight: bold;
+  text-align: right;
+}
+.donationShow, .rewardPremia {
+  display:inline-block;
+  width:70%;
+  text-align: left;
+  padding-left:5px;
+}
+.donationShowName, .rewardPremiaName {
+  display:block;
+  clear:left;
+  color: #268BD2;
+  font-weight: bold;
+}
+.archive {
+  color: #839496;
+  text-decoration: line-through;
+}
+.donationLine p, .rewardLine.p {
+  padding-left:10px; 
+  font-style:italic;
+}

@@ -9,13 +9,13 @@
 <body>
 
 <header>
-  <div class="container">
-    <h1 class="logotype">guillotine</h1>   
+  <div class="container_12">
+    <h1 class="logotype"><%= link_to "guillotine", :controller => :home, :view => :index %></h1>   
     <div class="tagline">wcbn's close cutting fundraiser</div>
   </div>
 </header>
 
-<div class="container">
+<div class="container_12">
   <%= yield %>
 </div>
 
