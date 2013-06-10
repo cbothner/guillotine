@@ -1,0 +1,45 @@
+$base03:    #002b36;
+$base02:    #073642;
+$base01:    #586e75;
+$base00:    #657b83;
+$base0:     #839496;
+$base1:     #93a1a1;
+$base2:     #eee8d5;
+$base3:     #fdf6e3;
+$yellow:    #b58900;
+$orange:    #cb4b16;
+$red:       #dc322f;
+$magenta:   #d33682;
+$violet:    #6c71c4;
+$blue:      #268bd2;
+$cyan:      #2aa198;
+$green:     #859900;
+
+html, body {
+  background-color: $base3;
+  color: $base00;
+  height: 100%
+}
+
+.container {
+  width: 920px;
+  margin:auto;
+}
+
+header {
+  margin-top:0;
+  min-width:100%;
+  background-color: $base2;
+  border-bottom: 1px $base1 solid;
+  h1.logotype {
+    color: $base01;
+    margin-bottom:0;
+    font-weight: bold;
+  }
+  .tagline {
+    color: $base1;
+    margin-top:-1em;
+    margin-left:1.3em;
+  }
+}
+
