@@ -1,10 +1,3 @@
-<%= form_tag({:controller => :pledgers, :action => "search"}, :method => "get", :remote => true ) do %>
-  <%= label_tag(:namesearch, "Search by first or last name:") %><br />
-  <%= text_field_tag(:namesearch) %>
-  <%= hidden_field_tag(:pledgerid) %>
-<% end %>
+<section class="pledger">
 
-<ul id="namesearchResults">
-  <li><%= link_to 'New Pledger', new_pledger_path %></li>
-</ul>
-
+</section>

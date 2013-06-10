@@ -43,3 +43,12 @@ header {
   }
 }
 
+::-moz-selection {
+    background-color: $blue;
+    color: $base3;
+}
+
+::selection {
+    background-color: $blue;
+    color: $base3;
+}

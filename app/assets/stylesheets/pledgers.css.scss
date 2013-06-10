@@ -1,1 +1,12 @@
 @import "globals";
+
+form#searchForm {
+  padding:1em;
+  label {
+    color: $base1;
+  }
+  #namesearch {
+    height: 1.5em;
+    width: 30em;
+  }
+}

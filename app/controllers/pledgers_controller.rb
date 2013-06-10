@@ -1,4 +1,6 @@
 class PledgersController < ApplicationController
+  layout "pledgers"
+
   # GET /pledgers
   # GET /pledgers.json
   def index
