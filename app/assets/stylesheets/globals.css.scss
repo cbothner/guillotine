@@ -54,6 +54,18 @@ header {
   -o-flex-box: 1;
   flex-box: 1;
 }
+.flex2 {
+  -webkit-flex-box: 2;
+  -moz-flex-box: 2;
+  -o-flex-box: 2;
+  flex-box: 2;
+}
+.flex3 {
+  -webkit-flex-box: 3;
+  -moz-flex-box: 3;
+  -o-flex-box: 3;
+  flex-box: 3;
+}
 
 a {
   color: $blue;

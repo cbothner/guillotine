@@ -11,74 +11,47 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :individual %><br />
-    <%= f.check_box :individual %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :affiliation %><br />
-    <%= f.text_field :affiliation %>
-  </div>
-  <div class="field">
-    <%= f.label :local_phone %><br />
-    <%= f.text_field :local_phone %>
-  </div>
-  <div class="field">
-    <%= f.label :local_address %><br />
-    <%= f.text_field :local_address %>
-  </div>
-  <div class="field">
-    <%= f.label :local_address2 %><br />
-    <%= f.text_field :local_address2 %>
-  </div>
-  <div class="field">
-    <%= f.label :local_city %><br />
-    <%= f.text_field :local_city %>
-  </div>
-  <div class="field">
-    <%= f.label :local_state %><br />
-    <%= f.text_field :local_state %>
-  </div>
-  <div class="field">
-    <%= f.label :local_zip %><br />
-    <%= f.text_field :local_zip %>
-  </div>
-  <div class="field">
-    <%= f.label :perm_phone %><br />
-    <%= f.text_field :perm_phone %>
-  </div>
-  <div class="field">
-    <%= f.label :perm_address %><br />
-    <%= f.text_field :perm_address %>
-  </div>
-  <div class="field">
-    <%= f.label :perm_address2 %><br />
-    <%= f.text_field :perm_address2 %>
-  </div>
-  <div class="field">
-    <%= f.label :perm_city %><br />
-    <%= f.text_field :perm_city %>
-  </div>
-  <div class="field">
-    <%= f.label :perm_state %><br />
-    <%= f.text_field :perm_state %>
-  </div>
-  <div class="field">
-    <%= f.label :perm_zip %><br />
-    <%= f.text_field :perm_zip %>
-  </div>
-  <div class="field">
-    <%= f.label :perm_country %><br />
-    <%= f.text_field :perm_country %>
-  </div>
+    <%= f.label :individual %><%= f.check_box :individual %><br />
+    <%= f.label :name %><%= f.text_field :name %>
+    <%= f.label :email %><%= f.email_field :email %>
+    <%= f.label :affiliation %>
+      <%= f.radio_button(:affiliation, "Staff") %>
+      <%= label_tag(:affiliation_staff, "Staff") %>
+      <%= f.radio_button(:affiliation, "Alumni") %>
+      <%= label_tag(:affiliation_alumni, "Alumni") %>
+      <%= f.radio_button(:affiliation, "Public") %>
+      <%= label_tag(:affiliation_public, "Public") %>
+    <div class="flexcontainer middlepadding">
+      <div class="flex1">
+        <%= f.label :perm_phone, "Permanent Phone Number" %><%= f.telephone_field :perm_phone %>
+        <%= f.label :perm_address, "Permanent Street Address" %><%= f.text_field :perm_address %>
+          <%= f.text_field :perm_address2 %>
+        <label>USA? </label><input type="checkbox" id="permUSA" checked=""> 
+        <div id="permCSZDiv" class="flexcontainer">
+          <div class="flex1">
+            <%= f.label :perm_zip, "Zip Code" %><%= f.text_field :perm_zip, :maxlength => "5" %>
+          </div>
+          <div class="flex2" id="permCityState">
+            <%= f.text_field :perm_city, :disabled => true %> <%= f.text_field :perm_state, :disabled => true %>
+          </div>
+        </div>
+      </div>
+      <div id="localAddressDiv" class="flexcontainer middlepadding">
+        <div class="flex1">
+          <%= f.label :local_phone, "Local Phone Number" %><%= f.telephone_field :local_phone %>
+          <%= f.label :local_address %><%= f.text_field :local_address %><%= f.text_field :local_address2 %>
+          <div id="localCSZDiv" class="flexcontainer">
+            <div class="flex1">
+              <%= f.label :local_zip, "Zip Code" %><%= f.text_field :local_zip, :maxlength => "5" %>
+            </div>
+            <div class="flex2" id="localCityState">
+              <%= f.text_field :local_city, :disabled => true %><%= f.text_field :local_state, :disabled => true %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:10px; text-align:center;"><p class="notabene" id="pledgerID" value="<%= @pledger.id %>">Pledger ID: <%= @pledger.id %></p></div>
   <div class="actions">
     <%= f.submit %>
   </div>
