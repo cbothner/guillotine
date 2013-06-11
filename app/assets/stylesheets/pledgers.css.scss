@@ -10,17 +10,24 @@ form#searchForm {
     width: 30em;
   }
 }
-label {
+label, b.labelB {
   color: $green;
   font-weight: bold;
+}
+.inputP {
+  padding: 0.2em;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  border: 1px solid $base1;
+  background-color: $base3;
 }
 input[type=text],
 input[type=tel],
 input[type=email]{
-    width: 100%;
-    height: 1.5em;
-    margin-top: 2px;
-    margin-bottom: 2px;
+  width: 100%;
+  height: 1.5em;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 input[type=checkbox] {
     display: inline;
@@ -43,8 +50,12 @@ textarea {
   text-align:center;
 }
 
-.pledger {
+section.pledger {
   margin: 1em 1em 0 0;
+  border: 1px solid $base1;
+  background-color: $base2;
+  padding: 12px;
+  width: 460px - 25px !important;
 }
 
 .pledgerDonations,
