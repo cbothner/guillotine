@@ -121,7 +121,11 @@ th {
     color: $base3;
 }
 .clickable {
+  color: inherit;
   cursor:pointer;
+}
+.clickable:hover {
+  color: inherit;
 }
 @import url(http://weloveiconfonts.com/api/?family=fontawesome);
 

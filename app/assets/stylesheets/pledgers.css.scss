@@ -79,10 +79,14 @@ section.pledger {
   padding: 3px 0 3px 0;
   line-height: 16px;
   position:relative;
+  display:block;
+}
+.donationLine:hover, .rewardLine:hover {
+  background-color: inherit;
 }
 .rewardLine {padding-top: 4px;padding-bottom:4px;}
 .donationLine:nth-child(odd) {background-color: #FDF6E3}
-.rewardLine:nth-child(even) {background-color: #FDF6E3}
+.rewardLine:nth-child(odd) {background-color: #FDF6E3}
 .donationValue, .rewardValue {
   display:inline-block;
   float:left;
@@ -112,4 +116,7 @@ section.pledger {
 .donationLine p, .rewardLine p {
   padding-left:10px; 
   font-style:italic;
+}
+.donationForm {
+  padding: 5px 15px 5px 10px;
 }

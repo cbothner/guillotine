@@ -1,7 +1,7 @@
 %section.grid_6.pledger
   %p#notice=notice
   %b.labelB Individual
-  =@pledger.individual == true ? "Yes" : "No"
+  %span.inputP=@pledger.individual == true ? "Yes" : "No"
   %br
   %b.labelB Name
   %p.inputP=@pledger.name
@@ -49,7 +49,7 @@
 %aside.pledgerDonations.grid_3
   %h3 Donations
   .donationDiv
-    .donationLine#newDonation
+    %a.clickable.donationLine#newDonation
       .donationValue{:style => "padding: 10px 5px 10px 0;font-size:large;"}<
         +
       .donationShow{:style => "padding: 10px 0; font-size: large;"}<
@@ -59,16 +59,16 @@
       .donationLine
         %p="Active Pledges: $#{ '%.2f' % @activeDonations.inject(0){ |sum,e| sum += e.amount } } Total"
     -@activeDonations.each do |donation|
-      .donationLine{:id => donation.id}
+      %a.clickable.donationLine{:data => {:id => donation.id}}
         .donationValue="$#{ donation.amount.round }"
         .donationShow< 
           for
           %span.donationShowName=donation.show.name
     -if !@archivedDonations.empty?
       .donationLine
-        %p="archived Pledges: $#{ @activeDonations.inject(0){ |sum,e| sum += e.amount } } Total"
+        %p="Archived Pledges: $#{ '%.2f' % @archivedDonations.inject(0){ |sum,e| sum += e.amount } } Total"
     -@archivedDonations.each do |donation|
-      .donationLine{:id => donation.id}
+      %a.clickable.donationLine{:data => {:id => donation.id}}
         .donationValue.archive="$#{ donation.amount.round }"
         .donationShow.archive<
           for
@@ -76,17 +76,17 @@
 %aside.pledgerRewards.grid_3
   %h3 Premia
   .rewardDiv
-    .rewardLine#newReward
+    %a.clickable.rewardLine#newReward
       .rewardValue{:style => "padding: 10px 5px 10px 0;font-size:large;"}<
         +
-      .rewardShow{:style => "padding: 10px 0; font-size: large;"}<
-        %span.rewardShowName{:style => "color:#B58900 !important;"}<
+      .rewardPremia{:style => "padding: 10px 0; font-size: large;"}<
+        %span.rewardPremiaName{:style => "color:#B58900 !important;"}<
           New Premium
     -if !@activeRewards.empty?
       .rewardLine
         %p Requested Premia
     -@activeRewards.each do |reward|
-      .rewardLine{:id => reward.id}
+      %a.clickable.rewardLine{:id => reward.id}
         .rewardValue="$#{ reward.item.cost.round }"
         .rewardPremia< 
           %span.rewardPremiaName=reward.item.name
@@ -94,7 +94,7 @@
       .rewardLine
         %p Sent Premia
     -@archivedRewards.each do |reward|
-      .rewardLine{:id => reward.id}
+      %a.clickable.rewardLine{:id => reward.id}
         .rewardValue.archive="$#{ reward.item.cost.round }"
         .rewardPremia.archive<
           %span.rewardPremiaName.archive=reward.item.name
