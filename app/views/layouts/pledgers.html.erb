@@ -1,0 +1,12 @@
+<section class="search">
+  <%= form_tag({:controller => :pledgers, :action => "search"}, :id => "searchForm", :method => "get", :remote => true ) do %>
+    <%= label_tag(:namesearch, "Search by first or last name:") %>
+    <br>
+    <%= text_field_tag(:namesearch) %>
+    <%= hidden_field_tag(:pledgerid) %>
+<%- end %>
+
+
+<%= yield %>
+
+<%= parent_layout 'application' %>
