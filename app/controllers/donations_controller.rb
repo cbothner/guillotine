@@ -1,4 +1,5 @@
 class DonationsController < ApplicationController
+  layout nil
   # GET /donations
   # GET /donations.json
   def index
@@ -10,8 +11,8 @@ class DonationsController < ApplicationController
     end
   end
 
-  # GET /donations/1
-  # GET /donations/1.json
+   #GET /donations/1
+   #GET /donations/1.json
   def show
     @donation = Donation.find(params[:id])
 
@@ -35,6 +36,10 @@ class DonationsController < ApplicationController
   # GET /donations/1/edit
   def edit
     @donation = Donation.find(params[:id])
+
+    respond_to do |format|
+      format.html { render :layout => !request.xhr? }
+    end
   end
 
   # POST /donations

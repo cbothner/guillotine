@@ -1,0 +1,34 @@
+= form_for(@donation) do |f|
+  - if @donation.errors.any?
+    #error_explanation
+      %h2<
+        =pluralize(@donation.errors.count, "error")
+        prohibited this donation from being saved:
+
+      %ul
+      -@donation.errors.full_messages.each do |msg|
+        %li= msg
+  .flexcontainer.middlepadding
+    .flex1.field
+      = f.label :amount
+      %br
+      = f.text_field :amount
+    .flex3.field
+      = f.label :payment_method 
+      %br
+      = f.text_field :payment_method
+  .flexcontainer
+    .flex1.field.centered
+      %abbr{:title => "Pledge Form Sent?"}
+      = f.label :pledge_form_sent, "&nbsp;".html_safe, :class => "fontawesome-envelope icon-large"
+      = f.check_box :pledge_form_sent
+    .flex1.field.centered
+      %abbr{:title => "Payment Received?"}
+      = f.label :payment_received, "&nbsp;".html_safe, :class => "fontawesome-money icon-large"
+      = f.check_box :payment_received
+    .flex1.field.centered
+      %abbr{:title => "GPO Sent?"}
+      = f.label :gpo_sent, "&nbsp;".html_safe, :class => "fontawesome-cloud-upload icon-large"
+      = f.check_box :gpo_sent
+  .actions
+    = f.submit

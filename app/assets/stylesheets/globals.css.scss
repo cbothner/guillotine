@@ -49,25 +49,29 @@ header {
 }
 
 .flex1 {
-  -webkit-flex-box: 1;
-  -moz-flex-box: 1;
-  -o-flex-box: 1;
-  flex-box: 1;
+  -webkit-flex: 1 1;
+  -moz-flex: 1 1;
+  -o-flex: 1 1;
+  flex: 1 1;
   width: 100%;
 }
 .flex2 {
-  -webkit-flex-box: 2;
-  -moz-flex-box: 2;
-  -o-flex-box: 2;
-  flex-box: 2;
+  -webkit-flex: 2 2;
+  -moz-flex: 2 2;
+  -o-flex: 2 2;
+  flex: 2 2;
   width: 100%;
 }
 .flex3 {
-  -webkit-flex-box: 3;
-  -moz-flex-box: 3;
-  -o-flex-box: 3;
-  flex-box: 3;
+  -webkit-flex: 3 3;
+  -moz-flex: 3 3;
+  -o-flex: 3 3;
+  flex: 3 3;
   width: 100%;
+}
+
+.centered {
+  text-align: center
 }
 
 a {
@@ -118,4 +122,15 @@ th {
 }
 .clickable {
   cursor:pointer;
+}
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+/* fontawesome */
+[class*="fontawesome-"]:before {
+  font-family: 'FontAwesome', sans-serif;
+}
+.icon-large {
+  font-size: 1.3em;
+  position: relative;
+  top: 0.05em;
 }

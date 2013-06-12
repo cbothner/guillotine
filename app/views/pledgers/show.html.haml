@@ -1,0 +1,100 @@
+%section.grid_6.pledger
+  %p#notice=notice
+  %b.labelB Individual
+  =@pledger.individual == true ? "Yes" : "No"
+  %br
+  %b.labelB Name
+  %p.inputP=@pledger.name
+  %b.labelB Email
+  %p.inputP=@pledger.email
+  %b.labelB Affiliation
+  %p.inputP=@pledger.affiliation
+  .flexcontainer.middlepadding
+    .flex1
+      %b.labelB Permanent Phone Number
+      %p.inputP=@pledger.perm_phone
+      %b.labelB Permanent Street Address
+      %p.inputP=@pledger.perm_address
+      -if !@pledger.perm_address2.blank?
+        %p.inputP=@pledger.perm_address2
+      .flexcontainer
+        .flex1
+          %b.labelB City
+          %p.inputP=@pledger.perm_city
+        .flex1
+          %b.labelB State
+          %p.inputP=@pledger.perm_state
+      %b.labelB Zip Code
+      %p.inputP=@pledger.perm_zip
+    .flex1
+      %b.labelB Local Phone Number
+      %p.inputP=@pledger.local_phone
+      %b.labelB Local Street Address
+      %p.inputP=@pledger.local_address
+      -if !@pledger.local_address2.blank?
+        %p.inputP=@pledger.local_address2
+      .flexcontainer
+        .flex1
+          %b.labelB City
+          %p.inputP=@pledger.local_city
+        .flex1
+          %b.labelB State
+          %p.inputP=@pledger.local_state
+      %b.labelB Zip Code
+      %p.inputP=@pledger.local_zip
+
+  -#= link_to 'Edit', edit_pledger_path(@pledger) |
+  -#= link_to 'Back', pledgers_path
+
+%aside.pledgerDonations.grid_3
+  %h3 Donations
+  .donationDiv
+    .donationLine#newDonation
+      .donationValue{:style => "padding: 10px 5px 10px 0;font-size:large;"}<
+        +
+      .donationShow{:style => "padding: 10px 0; font-size: large;"}<
+        %span.donationShowName{:style => "color:#B58900 !important;"}<
+          New Donation
+    -if !@activeDonations.empty?
+      .donationLine
+        %p="Active Pledges: $#{ '%.2f' % @activeDonations.inject(0){ |sum,e| sum += e.amount } } Total"
+    -@activeDonations.each do |donation|
+      .donationLine{:id => donation.id}
+        .donationValue="$#{ donation.amount.round }"
+        .donationShow< 
+          for
+          %span.donationShowName=donation.show.name
+    -if !@archivedDonations.empty?
+      .donationLine
+        %p="archived Pledges: $#{ @activeDonations.inject(0){ |sum,e| sum += e.amount } } Total"
+    -@archivedDonations.each do |donation|
+      .donationLine{:id => donation.id}
+        .donationValue.archive="$#{ donation.amount.round }"
+        .donationShow.archive<
+          for
+          %span.donationShowName.archive=donation.show.name
+%aside.pledgerRewards.grid_3
+  %h3 Premia
+  .rewardDiv
+    .rewardLine#newReward
+      .rewardValue{:style => "padding: 10px 5px 10px 0;font-size:large;"}<
+        +
+      .rewardShow{:style => "padding: 10px 0; font-size: large;"}<
+        %span.rewardShowName{:style => "color:#B58900 !important;"}<
+          New Premium
+    -if !@activeRewards.empty?
+      .rewardLine
+        %p Requested Premia
+    -@activeRewards.each do |reward|
+      .rewardLine{:id => reward.id}
+        .rewardValue="$#{ reward.item.cost.round }"
+        .rewardPremia< 
+          %span.rewardPremiaName=reward.item.name
+    -if !@archivedRewards.empty?
+      .rewardLine
+        %p Sent Premia
+    -@archivedRewards.each do |reward|
+      .rewardLine{:id => reward.id}
+        .rewardValue.archive="$#{ reward.item.cost.round }"
+        .rewardPremia.archive<
+          %span.rewardPremiaName.archive=reward.item.name
