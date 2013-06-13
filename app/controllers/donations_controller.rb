@@ -62,9 +62,10 @@ class DonationsController < ApplicationController
   # PUT /donations/1.json
   def update
     @donation = Donation.find(params[:id])
-
     respond_to do |format|
       if @donation.update_attributes(params[:donation])
+        @activeDonations = @donation.pledger.donations.where("payment_received = 'false'")
+        @archivedDonations = @donation.pledger.donations.where("payment_received = 'true'")
         format.html { redirect_to @donation.pledger, notice: 'Donation was successfully updated.' }
         format.json { head :no_content }
         format.js

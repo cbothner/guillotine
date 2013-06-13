@@ -1,0 +1,27 @@
+%aside.pledgerDonations.grid_3
+  %h3 Donations
+  .donationDiv
+    %a.clickable.donationLine#newDonation
+      .donationValue{:style => "padding: 10px 5px 10px 0;font-size:large;"}<
+        +
+      .donationShow{:style => "padding: 10px 0; font-size: large;"}<
+        %span.donationShowName{:style => "color:#B58900 !important;"}<
+          New Donation
+    -if !@activeDonations.empty?
+      .donationLine
+        %p="Active Pledges: $#{ '%.2f' % @activeDonations.inject(0){ |sum,e| sum += e.amount } } Total"
+    -@activeDonations.each do |donation|
+      %a.clickable.donationLine{:data => {:id => donation.id}}
+        .donationValue="$#{ donation.amount.round }"
+        .donationShow< 
+          for
+          %span.donationShowName=donation.show.name
+    -if !@archivedDonations.empty?
+      .donationLine
+        %p="Archived Pledges: $#{ '%.2f' % @archivedDonations.inject(0){ |sum,e| sum += e.amount } } Total"
+    -@archivedDonations.each do |donation|
+      %a.clickable.donationLine{:data => {:id => donation.id}}
+        .donationValue.archive="$#{ donation.amount.round }"
+        .donationShow.archive<
+          for
+          %span.donationShowName.archive=donation.show.name

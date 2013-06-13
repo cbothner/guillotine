@@ -1,8 +1,5 @@
 <% if @donation.errors.any? %>
   alert("<%= escape_javascript(error_messages_for(@donation)) %>");
 <% else %>
-  var line = window.openDonationLine[<%= @donation.id %>];
-  $(line).children(".donationValue").contents().replaceWith("$<%= @donation.amount.round %>");
-  $(line).find(".donationShowName").contents().replaceWith("<%= @donation.show.name %>");
-  $("#edit_donation_<%= @donation.id %>").parent().replaceWith(line);
+  $("aside.pledgerDonations.grid_3").replaceWith('<%= j render "onepledger" %>');
 <% end %>

@@ -1,0 +1,25 @@
+%aside.pledgerRewards.grid_3
+  %h3 Premia
+  .rewardDiv
+    %a.clickable.rewardLine#newReward
+      .rewardValue{:style => "padding: 10px 5px 10px 0;font-size:large;"}<
+        +
+      .rewardPremia{:style => "padding: 10px 0; font-size: large;"}<
+        %span.rewardPremiaName{:style => "color:#B58900 !important;"}<
+          New Premium
+    -if !@activeRewards.empty?
+      .rewardLine
+        %p Requested Premia
+    -@activeRewards.each do |reward|
+      %a.clickable.rewardLine{:id => reward.id}
+        .rewardValue="$#{ reward.item.cost.round }"
+        .rewardPremia< 
+          %span.rewardPremiaName=reward.item.name
+    -if !@archivedRewards.empty?
+      .rewardLine
+        %p Sent Premia
+    -@archivedRewards.each do |reward|
+      %a.clickable.rewardLine{:id => reward.id}
+        .rewardValue.archive="$#{ reward.item.cost.round }"
+        .rewardPremia.archive<
+          %span.rewardPremiaName.archive=reward.item.name
