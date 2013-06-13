@@ -10,7 +10,7 @@
         %li= msg
   .field
     = f.label :show_id, "Dedication"
-    = f.select(:show_id, unsorted_grouped_options_for_select(Show.for_select, @donation.show.id))
+    = f.select(:show_id, unsorted_grouped_options_for_select(Show.for_select, @donation.show.id), {}, { :class => "chzn-select" })
   .flexcontainer.middlepadding
     .flex1.field
       = f.label :amount

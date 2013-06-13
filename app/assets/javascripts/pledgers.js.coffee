@@ -22,7 +22,10 @@ $(document).ready ->
 
   $(document).on("click",".clickable.donationLine", ->
     window.openDonationLine[$(this).attr('data-id')] = $(this)
-    $(this).replaceWith($('<div class="donationForm donationLine">').load("/donations/#{$(this).attr('data-id')}/edit"))
+    $(this).replaceWith($('<div class="donationForm donationLine">').load("/donations/#{$(this).attr('data-id')}/edit", ->
+      $(".chzn-select").chosen()
+      $(".chzn-select").trigger("liszt:updated")
+    ))
   )
 
   $(document).on("click","#donationFormCancelButton", ->
