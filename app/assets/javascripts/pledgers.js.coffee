@@ -29,3 +29,8 @@ $(document).ready ->
     $(this).parents(".donationForm").replaceWith(window.openDonationLine[donationID])
     window.openDonationLine[donationID]
   )
+
+  #$(".donationForm").bind('ajax:before', ->
+    #alert("ajax:before")
+    #$(this).contents().replaceWith("<span class='fontawesome-spinner icon-spin>&nbsp;</span>'")
+  #)

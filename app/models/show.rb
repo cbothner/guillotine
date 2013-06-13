@@ -15,7 +15,7 @@ class Show < ActiveRecord::Base
       'Thursday'  => where(:weekday => 3).order(:start).map { |s| [s.dj.empty? ? s.name : "#{s.name} with #{s.dj}", s.id] },
       'Friday'    => where(:weekday => 4).order(:start).map { |s| [s.dj.empty? ? s.name : "#{s.name} with #{s.dj}", s.id] },
       'Saturday'  => where(:weekday => 5).order(:start).map { |s| [s.dj.empty? ? s.name : "#{s.name} with #{s.dj}", s.id] },
-      'Sunday'    => where(:weekday => 6).order(:start).map { |s| [s.dj.empty? ? s.name : "#{s.name} with #{s.dj}", s.id] }
+      'Sunday'    => where("weekday = 6 and name != 'ALL FREEFORM'").order(:start).map { |s| [s.dj.empty? ? s.name : "#{s.name} with #{s.dj}", s.id] }
     }
   end
 end
