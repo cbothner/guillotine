@@ -35,6 +35,10 @@ class RewardsController < ApplicationController
   # GET /rewards/1/edit
   def edit
     @reward = Reward.find(params[:id])
+
+    respond_to do |format|
+      format.html { render :layout => !request.xhr? }
+    end
   end
 
   # POST /rewards
@@ -59,6 +63,8 @@ class RewardsController < ApplicationController
     @reward = Reward.find(params[:id])
 
     respond_to do |format|
+      @activeRewards = @reward.pledger.rewards.where("premia_sent = 'false'")
+      @archivedRewards = @reward.pledger.rewards.where("premia_sent = 'true'")
       if @reward.update_attributes(params[:reward])
         format.html { redirect_to @reward, notice: 'Reward was successfully updated.' }
         format.json { head :no_content }

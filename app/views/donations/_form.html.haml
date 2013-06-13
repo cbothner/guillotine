@@ -7,9 +7,10 @@
 
       %ul
       -@donation.errors.full_messages.each do |msg|
-        %li= msr
-  = f.label :show_id, "Dedication"
-  = f.select(:show_id, unsorted_grouped_options_for_select(Show.for_select, @donation.show.id))
+        %li= msg
+  .field
+    = f.label :show_id, "Dedication"
+    = f.select(:show_id, unsorted_grouped_options_for_select(Show.for_select, @donation.show.id))
   .flexcontainer.middlepadding
     .flex1.field
       = f.label :amount

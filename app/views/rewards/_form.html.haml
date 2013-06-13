@@ -1,0 +1,23 @@
+= form_for(@reward, :remote => true) do |f|
+  - if @reward.errors.any?
+    #error_explanation
+      %h2<
+        =pluralize(@reward.errors.count, "error")
+        prohibited this reward from being saved:
+
+      %ul
+      -@reward.errors.full_messages.each do |msg|
+        %li= msg
+  .field
+    = f.label :item 
+    = f.select( :item, [["Item",0]])
+  .field.centered
+    %abbr{:title => "Premia Sent?"}
+      = f.label :premia_sent, "&nbsp;".html_safe, :class => "fontawesome-gift icon-large"
+    = f.check_box :premia_sent
+  .field
+    = f.label :comment
+    = f.text_area :comment, :rows => 3
+  .actions
+    = f.submit
+    = button_tag "Cancel", :type => "button", :id => "rewardFormCancelButton", :data => { :id => @reward.id }
