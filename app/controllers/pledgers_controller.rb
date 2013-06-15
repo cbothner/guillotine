@@ -76,10 +76,10 @@ class PledgersController < ApplicationController
     respond_to do |format|
       if @pledger.update_attributes(params[:pledger])
         format.html { redirect_to @pledger, notice: 'Pledger was successfully updated.' }
-        format.json { head :no_content }
+        format.json { respond_with_bip(@pledger) }
       else
         format.html { render action: "edit" }
-        format.json { render json: @pledger.errors, status: :unprocessable_entity }
+        format.json { respond_with_bip(@pledger) }
       end
     end
   end

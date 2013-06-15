@@ -49,3 +49,6 @@ $(document).ready ->
     #alert("ajax:before")
     #$(this).contents().replaceWith("<span class='fontawesome-spinner icon-spin>&nbsp;</span>'")
   #)
+
+jQuery ->
+  $('.best_in_place').best_in_place()
