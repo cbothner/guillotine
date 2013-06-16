@@ -26,9 +26,11 @@ class DonationsController < ApplicationController
   # GET /donations/new.json
   def new
     @donation = Donation.new
+    @donationID = "new"
+    #@selectedShow = Show.on_now
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :layout => !request.xhr? }
       format.json { render json: @donation }
     end
   end
@@ -36,6 +38,8 @@ class DonationsController < ApplicationController
   # GET /donations/1/edit
   def edit
     @donation = Donation.find(params[:id])
+    @donationID = params[:id]
+    @selectedShow = @donation.show.id
 
     respond_to do |format|
       format.html { render :layout => !request.xhr? }
@@ -45,15 +49,21 @@ class DonationsController < ApplicationController
   # POST /donations
   # POST /donations.json
   def create
-    @donation = Donation.new(params[:donation])
+    pledgerID = params[:donation].delete(:pledger_id)
+    pledger = Pledger.find(pledgerID)
+    @donation = pledger.donations.create(params[:donation])
+    @activeDonations = pledger.donations.where("payment_received = 'false'")
+    @archivedDonations = pledger.donations.where("payment_received = 'true'")
 
     respond_to do |format|
       if @donation.save
         format.html { redirect_to @donation, notice: 'Donation was successfully created.' }
         format.json { render json: @donation, status: :created, location: @donation }
+        format.js
       else
         format.html { render action: "new" }
         format.json { render json: @donation.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

@@ -32,17 +32,22 @@ $(document).ready ->
   )
 
   $(document).on("click",".clickable.donationLine", ->
-    window.openDonationLine[$(this).attr('data-id')] = $(this)
-    $(this).replaceWith($('<div class="donationForm donationLine">').load("/donations/#{$(this).attr('data-id')}/edit", ->
+    window.openDonationLine[String($(this).attr('data-id'))] = $(this)
+    if $(this).attr('data-id') != 'new'
+      editOrNot = "/edit"
+    else
+      editOrNot = ""
+    $(this).replaceWith($('<div class="donationForm donationLine">').load("/donations/#{$(this).attr('data-id')}#{editOrNot}", ->
       $(".chzn-select").chosen()
       $(".chzn-select").trigger("liszt:updated")
+      $("#donation_pledger_id").val($("#pledgerID").attr("data-id"))
     ))
   )
 
   $(document).on("click","#donationFormCancelButton", ->
     donationID = $(this).attr("data-id")
-    $(this).parents(".donationForm").replaceWith(window.openDonationLine[donationID])
-    window.openDonationLine[donationID] = null
+    $(this).parents(".donationForm").replaceWith(window.openDonationLine[String(donationID)])
+    window.openDonationLine[String(donationID)] = null
   )
 
   $(document).on("click",".clickable.rewardLine", ->

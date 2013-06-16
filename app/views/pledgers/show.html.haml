@@ -42,7 +42,9 @@
           %p.inputP=best_in_place @pledger, :local_state
       %b.labelB Zip Code
       %p.inputP=best_in_place @pledger, :local_zip
-
+  %p.notabene#pledgerID{:data => { :id => @pledger.id } }<
+    Pledger ID: 
+    = @pledger.id
   -#= link_to 'Edit', edit_pledger_path(@pledger) |
   -#= link_to 'Back', pledgers_path
 

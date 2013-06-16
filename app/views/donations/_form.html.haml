@@ -4,13 +4,12 @@
       %h2<
         =pluralize(@donation.errors.count, "error")
         prohibited this donation from being saved:
-
       %ul
       -@donation.errors.full_messages.each do |msg|
         %li= msg
   .field
     = f.label :show_id, "Dedication"
-    = f.select(:show_id, unsorted_grouped_options_for_select(Show.for_select, @donation.show.id), {}, { :class => "chzn-select" })
+    = f.select(:show_id, unsorted_grouped_options_for_select(Show.for_select, @selectedShow), {}, { :class => "chzn-select" })
   .flexcontainer.middlepadding
     .flex1.field
       = f.label :amount
@@ -33,6 +32,7 @@
       %abbr{:title => "GPO Sent?"}
         = f.label :gpo_sent, "&nbsp;".html_safe, :class => "fontawesome-cloud-upload icon-large"
       = f.check_box :gpo_sent
+  = f.hidden_field :pledger_id
   .actions
     = f.submit :disable_with => "Saving..."
-    = button_tag "Cancel", :type => "button", :id => "donationFormCancelButton", :data => { :id => @donation.id }
+    = button_tag "Cancel", :type => "button", :id => "donationFormCancelButton", :data => { :id => @donationID }

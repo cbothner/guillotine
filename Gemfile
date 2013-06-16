@@ -40,4 +40,4 @@ gem 'best_in_place'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
+gem 'debugger'
