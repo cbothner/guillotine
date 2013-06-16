@@ -34,5 +34,5 @@
         = f.label :gpo_sent, "&nbsp;".html_safe, :class => "fontawesome-cloud-upload icon-large"
       = f.check_box :gpo_sent
   .actions
-    = f.submit
+    = f.submit :disable_with => "Saving..."
     = button_tag "Cancel", :type => "button", :id => "donationFormCancelButton", :data => { :id => @donation.id }

@@ -21,22 +21,21 @@
       <%= label_tag(:affiliation_alumni, "Alumni") %>
       <%= f.radio_button(:affiliation, "Public") %>
       <%= label_tag(:affiliation_public, "Public") %>
-    <div class="flexcontainer middlepadding">
-      <div class="flex1">
-        <%= f.label :perm_phone, "Permanent Phone Number" %><%= f.telephone_field :perm_phone %>
-        <%= f.label :perm_address, "Permanent Street Address" %><%= f.text_field :perm_address %>
+      <div class="flexcontainer middlepadding">
+        <div class="flex1">
+          <%= f.label :perm_phone, "Permanent Phone Number" %><%= f.telephone_field :perm_phone %>
+          <%= f.label :perm_address, "Permanent Street Address" %><%= f.text_field :perm_address %>
           <%= f.text_field :perm_address2 %>
-        <label>USA? </label><input type="checkbox" id="permUSA" checked=""> 
-        <div id="permCSZDiv" class="flexcontainer">
-          <div class="flex1">
-            <%= f.label :perm_zip, "Zip Code" %><%= f.text_field :perm_zip, :maxlength => "5" %>
-          </div>
-          <div class="flex2" id="permCityState">
-            <%= f.text_field :perm_city, :disabled => true %> <%= f.text_field :perm_state, :disabled => true %>
+          <label>USA? </label><input type="checkbox" id="permUSA" checked=""> 
+          <div id="permCSZDiv" class="flexcontainer">
+            <div class="flex1">
+              <%= f.label :perm_zip, "Zip Code" %><%= f.text_field :perm_zip, :maxlength => "5" %>
+            </div>
+            <div class="flex2" id="permCityState">
+              <%= f.text_field :perm_city, :disabled => true %> <%= f.text_field :perm_state, :disabled => true %>
+            </div>
           </div>
         </div>
-      </div>
-      <div id="localAddressDiv" class="flexcontainer middlepadding">
         <div class="flex1">
           <%= f.label :local_phone, "Local Phone Number" %><%= f.telephone_field :local_phone %>
           <%= f.label :local_address %><%= f.text_field :local_address %><%= f.text_field :local_address2 %>
@@ -50,9 +49,10 @@
           </div>
         </div>
       </div>
-    </div>
     <div style="margin-top:10px; text-align:center;"><p class="notabene" id="pledgerID" value="<%= @pledger.id %>">Pledger ID: <%= @pledger.id %></p></div>
   <div class="actions">
     <%= f.submit %>
+    <%= button_tag "Cancel", :type => "button", :id => "pledgerFormCancelButton" %>
   </div>
+    </div>
 <% end %>
