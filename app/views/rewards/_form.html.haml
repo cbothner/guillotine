@@ -8,8 +8,9 @@
       %ul
       -@reward.errors.full_messages.each do |msg|
         %li= msg
-  .deleteRewardLink
-    = link_to '[X]', {:action=>'destroy', :id=>@reward}, :confirm=>"Are you sure?", :method=>:delete
+  -if @rewardID != 'new'
+    .deleteRewardLink
+      = link_to '[X]', {:action=>'destroy', :id=>@reward}, :confirm=>"Are you sure?", :method=>:delete
   .field
     = f.label :item 
     = f.select( :item, options_for_select(Item.for_select, @selectedItem), {}, :class => "chzn-select" )
@@ -20,6 +21,7 @@
   .field
     = f.label :comment
     = f.text_area :comment, :rows => 3
+  = f.hidden_field :pledger_id
   .actions
-    = f.submit
-    = button_tag "Cancel", :type => "button", :id => "rewardFormCancelButton", :data => { :id => @reward.id }
+    = f.submit :disable_with => "Saving..."
+    = button_tag "Cancel", :type => "button", :id => "rewardFormCancelButton", :data => { :id => @rewardID }

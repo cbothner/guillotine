@@ -1,0 +1,5 @@
+<% if @reward.errors.any? %>
+  alert("<%= escape_javascript(error_messages_for(@reward)) %>");
+<% else %>
+  $("aside.pledgerRewards.grid_3").replaceWith('<%= j render "onepledger" %>');
+<% end %>

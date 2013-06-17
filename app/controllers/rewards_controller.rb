@@ -25,9 +25,10 @@ class RewardsController < ApplicationController
   # GET /rewards/new.json
   def new
     @reward = Reward.new
+    @rewardID = "new"
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :layout => !request.xhr? }
       format.json { render json: @reward }
     end
   end
@@ -35,7 +36,9 @@ class RewardsController < ApplicationController
   # GET /rewards/1/edit
   def edit
     @reward = Reward.find(params[:id])
+    @rewardID = params[:id]
     @selectedItem = @reward.item.id
+
     respond_to do |format|
       format.html { render :layout => !request.xhr? }
     end
@@ -44,15 +47,22 @@ class RewardsController < ApplicationController
   # POST /rewards
   # POST /rewards.json
   def create
-    @reward = Reward.new(params[:reward])
+    pledgerID = params[:reward].delete(:pledger_id)
+    pledger = Pledger.find(pledgerID)
+    params[:reward][:item] = Item.find(params[:reward][:item])
+    @reward = pledger.rewards.create(params[:reward])
+    @activeRewards = pledger.rewards.where("premia_sent = 'false'")
+    @archivedRewards = pledger.rewards.where("premia_sent = 'true'")
 
     respond_to do |format|
       if @reward.save
         format.html { redirect_to @reward, notice: 'Reward was successfully created.' }
         format.json { render json: @reward, status: :created, location: @reward }
+        format.js
       else
         format.html { render action: "new" }
         format.json { render json: @reward.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -68,9 +78,11 @@ class RewardsController < ApplicationController
       if @reward.update_attributes(params[:reward])
         format.html { redirect_to @reward, notice: 'Reward was successfully updated.' }
         format.json { head :no_content }
+        format.js
       else
         format.html { render action: "edit" }
         format.json { render json: @reward.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
