@@ -7,6 +7,8 @@
       %ul
       -@donation.errors.full_messages.each do |msg|
         %li= msg
+  .deleteDonationLink
+    = link_to '[X]', {:action=>'destroy', :id=>@donation}, :confirm=>"Are you sure?", :method=>:delete
   .field
     = f.label :show_id, "Dedication"
     = f.select(:show_id, unsorted_grouped_options_for_select(Show.for_select, @selectedShow), {}, { :class => "chzn-select" })

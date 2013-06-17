@@ -91,10 +91,11 @@ class DonationsController < ApplicationController
   # DELETE /donations/1.json
   def destroy
     @donation = Donation.find(params[:id])
+    pledger = @donation.pledger
     @donation.destroy
 
     respond_to do |format|
-      format.html { redirect_to donations_url }
+      format.html { redirect_to pledger_url(pledger) }
       format.json { head :no_content }
     end
   end

@@ -121,3 +121,13 @@ section.pledger {
 .donationForm, .rewardForm {
   padding: 5px 15px 5px 10px;
 }
+.deleteDonationLink {
+  float: right;
+  a{
+    color: $red;
+  }
+  a:hover{
+    color: $base3;
+    background-color: $red;
+  }
+}
