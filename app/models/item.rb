@@ -8,4 +8,16 @@ class Item < ActiveRecord::Base
   validates :cost, :numericality => { :greater_than => :taxable_value, :message => "The item's cost must be greater than its taxable value." }
   validates :stock, :numericality => { :only_integer => true, :greater_than => 0 }
   validates :shape, :inclusion => { :in => %w{box flat shirt sweatshirt incorporeal}, :message => "Must be a valid shape" }
+
+  def self.for_select
+    not_sold_out = []
+    order(:cost).each { |i| 
+      numleft = i.stock - i.rewards.where("premia_sent = 'false'").count
+      not_sold_out.push([i,numleft]) if numleft > 0 or i.backorderable
+    }
+    not_sold_out.map { |i,numleft|
+      [i.name + (numleft > 0 ? " — #{numleft} left" : " — Backordered") + " ($%.2f)" % i.cost, i.id]
+    }
+    # TODO Only show things that Pledger can afford in the non-DD view
+  end
 end

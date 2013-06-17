@@ -52,7 +52,10 @@ $(document).ready ->
 
   $(document).on("click",".clickable.rewardLine", ->
     window.openRewardLine[$(this).attr('data-id')] = $(this)
-    $(this).replaceWith($('<div class="rewardForm rewardLine">').load("/rewards/#{$(this).attr('data-id')}/edit"))
+    $(this).replaceWith($('<div class="rewardForm rewardLine">').load("/rewards/#{$(this).attr('data-id')}/edit", ->
+      $(".chzn-select").chosen()
+      $(".chzn-select").trigger("liszt:updated")
+    ))
   )
 
   $(document).on("click","#rewardFormCancelButton", ->

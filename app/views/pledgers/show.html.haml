@@ -1,7 +1,7 @@
 %section.grid_6.pledger
   %p#notice=notice
   %b.labelB Individual
-  %span.inputP=@pledger.individual == true ? "Yes" : "No"
+  %span.inputP=best_in_place @pledger, :individual, :type => :checkbox, :collection => [ "No", "Yes"], :class => "inputP"
   %br
   %b.labelB Name
   %p.inputP=best_in_place @pledger, :name

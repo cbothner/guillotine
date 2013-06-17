@@ -121,7 +121,7 @@ section.pledger {
 .donationForm, .rewardForm {
   padding: 5px 15px 5px 10px;
 }
-.deleteDonationLink {
+.deleteDonationLink, .deleteRewardLink {
   float: right;
   a{
     color: $red;

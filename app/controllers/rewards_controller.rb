@@ -35,7 +35,7 @@ class RewardsController < ApplicationController
   # GET /rewards/1/edit
   def edit
     @reward = Reward.find(params[:id])
-
+    @selectedItem = @reward.item.id
     respond_to do |format|
       format.html { render :layout => !request.xhr? }
     end
@@ -79,11 +79,11 @@ class RewardsController < ApplicationController
   # DELETE /rewards/1.json
   def destroy
     @reward = Reward.find(params[:id])
+    pledger = @reward.pledger
     @reward.destroy
 
     respond_to do |format|
-      format.html { redirect_to rewards_url }
-      format.json { head :no_content }
+      format.html { redirect_to pledger_url(pledger) }
     end
   end
 end

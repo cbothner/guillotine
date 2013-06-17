@@ -8,9 +8,11 @@
       %ul
       -@reward.errors.full_messages.each do |msg|
         %li= msg
+  .deleteRewardLink
+    = link_to '[X]', {:action=>'destroy', :id=>@reward}, :confirm=>"Are you sure?", :method=>:delete
   .field
     = f.label :item 
-    = f.select( :item, [["Item",0]])
+    = f.select( :item, options_for_select(Item.for_select, @selectedItem), {}, :class => "chzn-select" )
   .field.centered
     %abbr{:title => "Premia Sent?"}
       = f.label :premia_sent, "&nbsp;".html_safe, :class => "fontawesome-gift icon-large"

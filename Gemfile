@@ -25,7 +25,7 @@ gem 'jquery-rails'
 
 gem 'jquery-ui-rails'
 
-gem 'best_in_place'
+gem 'best_in_place', github: 'bernat/best_in_place'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

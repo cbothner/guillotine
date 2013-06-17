@@ -27,7 +27,7 @@ class DonationsController < ApplicationController
   def new
     @donation = Donation.new
     @donationID = "new"
-    #@selectedShow = Show.on_now
+    # TODO @selectedShow = Show.on_now
 
     respond_to do |format|
       format.html { render :layout => !request.xhr? }
