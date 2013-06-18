@@ -76,3 +76,28 @@ $(document).ready ->
 
 jQuery ->
   $('.best_in_place').best_in_place()
+
+  $(".phonemasked").mask("(999) 999-9999")
+
+  $(document).on('change','#pledger_perm_zip', ->
+    $.zipLookup(
+      $(this).val(), (cityName,stateName,stateShortName) ->
+        $('#pledger_perm_city').val(cityName)
+        $('#pledger_perm_state').val(stateShortName)
+        $('#pledger_perm_city').removeAttr("disabled")
+        $('#pledger_perm_state').removeAttr("disabled")
+      (errMsg) ->
+        $('#pledger_perm_city').val("Error: " + errMsg)
+    )
+  )
+  $(document).on('change','#pledger_local_zip', ->
+    $.zipLookup(
+      $(this).val(), (cityName,stateName,stateShortName) ->
+        $('#pledger_local_city').val(cityName)
+        $('#pledger_local_state').val(stateShortName)
+        $('#pledger_local_city').removeAttr("disabled")
+        $('#pledger_local_state').removeAttr("disabled")
+      (errMsg) ->
+        $('#pledger_local_city').val("Error: " + errMsg)
+    )
+  )

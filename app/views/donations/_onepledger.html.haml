@@ -18,7 +18,7 @@
           %span.donationShowName=donation.show.name
     -if !@archivedDonations.empty?
       .donationLine
-        %p="Archived Pledges: $#{ '%.2f' % @archivedDonations.inject(0){ |sum,e| sum += e.amount } } Total"
+        %p="Archived Pledges: $#{ '%.2f' % @archivedDonations.sum(:amount) } Total"
     -@archivedDonations.each do |donation|
       %a.clickable.donationLine{:data => {:id => donation.id}}
         .donationValue.archive="$#{ donation.amount.round }"

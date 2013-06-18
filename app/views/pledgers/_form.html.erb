@@ -23,7 +23,7 @@
       <%= label_tag(:affiliation_public, "Public") %>
       <div class="flexcontainer middlepadding">
         <div class="flex1">
-          <%= f.label :perm_phone, "Permanent Phone Number" %><%= f.telephone_field :perm_phone %>
+          <%= f.label :perm_phone, "Permanent Phone Number" %><%= f.telephone_field :perm_phone, :class => "phonemasked" %>
           <%= f.label :perm_address, "Permanent Street Address" %><%= f.text_field :perm_address %>
           <%= f.text_field :perm_address2 %>
           <label>USA? </label><input type="checkbox" id="permUSA" checked=""> 
@@ -37,7 +37,7 @@
           </div>
         </div>
         <div class="flex1">
-          <%= f.label :local_phone, "Local Phone Number" %><%= f.telephone_field :local_phone %>
+          <%= f.label :local_phone, "Local Phone Number" %><%= f.telephone_field :local_phone, :class => "phonemasked" %>
           <%= f.label :local_address %><%= f.text_field :local_address %><%= f.text_field :local_address2 %>
           <div id="localCSZDiv" class="flexcontainer">
             <div class="flex1">
