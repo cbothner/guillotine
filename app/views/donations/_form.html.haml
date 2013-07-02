@@ -9,7 +9,7 @@
         %li= msg
   - if @donationID != 'new'
     .deleteDonationLink
-      = link_to '[X]', {:action=>'destroy', :id=>@donation}, :confirm=>"Are you sure?", :method=>:delete
+      = link_to '[X]', {:action=>'destroy', :id=>@donation}, :confirm=>"Are you sure you want to delete this donation?", :method=>:delete
   .field
     = f.label :show_id, "Dedication"
     = f.select(:show_id, unsorted_grouped_options_for_select(Show.for_select, @selectedShow), {}, { :class => "chzn-select" })

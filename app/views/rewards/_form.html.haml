@@ -10,7 +10,7 @@
         %li= msg
   -if @rewardID != 'new'
     .deleteRewardLink
-      = link_to '[X]', {:action=>'destroy', :id=>@reward}, :confirm=>"Are you sure?", :method=>:delete
+      = link_to '[X]', {:action=>'destroy', :id=>@reward}, :confirm=>"Are you sure you want to delete this premium?", :method=>:delete
   .field
     = f.label :item 
     = f.select( :item, options_for_select(Item.for_select, @selectedItem), {}, :class => "chzn-select" )
