@@ -1,4 +1,8 @@
 Guillotine::Application.routes.draw do
+  get "gpo/single/:id", to: 'gpo#single'
+
+  get "gpo/all"
+
   get "home/index"
 
   resources :rewards
@@ -19,6 +23,7 @@ Guillotine::Application.routes.draw do
     end
   end
 
+  resources :settings
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

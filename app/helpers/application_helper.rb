@@ -3,4 +3,7 @@ module ApplicationHelper
     @view_flow.set(:layout,output_buffer)
     self.output_buffer = render(:file => "layouts/#{layout}")
   end  
+  def lesc(text)
+    LatexToPdf.escape_latex(text)
+  end
 end

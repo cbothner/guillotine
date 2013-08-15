@@ -70,6 +70,7 @@ class RewardsController < ApplicationController
   # PUT /rewards/1
   # PUT /rewards/1.json
   def update
+    pledgerID = params[:reward].delete(:pledger_id)
     @reward = Reward.find(params[:id])
 
     respond_to do |format|

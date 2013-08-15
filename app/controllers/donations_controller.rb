@@ -71,6 +71,7 @@ class DonationsController < ApplicationController
   # PUT /donations/1
   # PUT /donations/1.json
   def update
+    pledgerID = params[:donation].delete(:pledger_id)
     @donation = Donation.find(params[:id])
     respond_to do |format|
       if @donation.update_attributes(params[:donation])

@@ -1,0 +1,12 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage[cm]{fullpage}
+\usepackage{palatino}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{subfig}
+
+<%= yield %>
