@@ -25,3 +25,6 @@
         .donationShow.archive<
           for
           %span.donationShowName.archive=donation.show.name
+  -if !@archivedDonations.select{ |don| don[:gpo_sent] == false }.empty?
+    .donationLine
+      %p=link_to "Generate GPO", :controller => "gpo", :action => "single", :id => @pledger, :format => :pdf

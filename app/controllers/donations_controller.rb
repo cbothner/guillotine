@@ -50,7 +50,7 @@ class DonationsController < ApplicationController
   # POST /donations.json
   def create
     pledgerID = params[:donation].delete(:pledger_id)
-    pledger = Pledger.find(pledgerID)
+    @pledger = Pledger.find(pledgerID)
     @donation = pledger.donations.create(params[:donation])
     @activeDonations = pledger.donations.where("payment_received = 'false'")
     @archivedDonations = pledger.donations.where("payment_received = 'true'")
@@ -72,6 +72,7 @@ class DonationsController < ApplicationController
   # PUT /donations/1.json
   def update
     pledgerID = params[:donation].delete(:pledger_id)
+    @pledger = Pledger.find(pledgerID)
     @donation = Donation.find(params[:id])
     respond_to do |format|
       if @donation.update_attributes(params[:donation])
