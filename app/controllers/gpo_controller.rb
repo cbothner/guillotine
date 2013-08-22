@@ -40,7 +40,7 @@ class GpoController < ApplicationController
     }
 
     respond_to do |format|
-      format.html
+      format.html { render :layout => "generate" }
       format.pdf { render :layout => true, format: [:pdf]
         # Mark GPOs sent
         checksForDeposit.each do |donation|

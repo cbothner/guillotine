@@ -1,7 +1,11 @@
-<h1><%=link_to "Generate", :action => "all", :format => :pdf %> Unsent GPOs</h1>
+<% if @argsForGPO.empty? %>
+  <h1>No Unsent GPOs</h1>
+<% else %>
+  <h1><%=link_to "Generate", :action => "all", :format => :pdf %> Unsent GPOs</h1>
 
-<table>
-  <% @argsForGPO.each do |gpo| %>
-    <tr> <td> <%=gpo[:pledger].id%> </td> <td> <%=gpo[:pledger].name%> </td> </tr>
-  <% end %>
-</table>
+  <table>
+    <% @argsForGPO.each do |gpo| %>
+      <tr> <td> <%=gpo[:pledger].id%> </td> <td> <%=gpo[:pledger].name%> </td> </tr>
+    <% end %>
+  </table>
+<% end %>
