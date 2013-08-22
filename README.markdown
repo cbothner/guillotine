@@ -1,5 +1,5 @@
-=  Guillotine
-== WCBN's Close Cutting Fundraiser
+## Guillotine
+###WCBN's Close Cutting Fundraiser
 
 This is a database front-end for managing donations to 
 [WCBN-FM](http://www.wcbn.org/) during the annual fundraiser 
