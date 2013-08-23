@@ -1,29 +1,21 @@
-<h1>Listing rewards</h1>
-
-<table>
-  <tr>
-    <th>Pledger</th>
-    <th>Item</th>
-    <th>Premia sent</th>
-    <th>Comment</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @rewards.each do |reward| %>
-  <tr>
-    <td><%= reward.pledger %></td>
-    <td><%= reward.item %></td>
-    <td><%= reward.premia_sent %></td>
-    <td><%= reward.comment %></td>
-    <td><%= link_to 'Show', reward %></td>
-    <td><%= link_to 'Edit', edit_reward_path(reward) %></td>
-    <td><%= link_to 'Destroy', reward, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Reward', new_reward_path %>
+<div class="flexcontainer">
+  <% @rewards.each do |k, r| %>
+    <div class="flex1">
+      <h3><%=k %></h3>
+      <table>
+        <% dark = true %>
+        <% r.each do |indiv| %>
+          <% indiv[1].each do |reward| %>
+            <tr<%= " class='darkrow'".html_safe if dark %>>
+              <td><%= link_to(reward.pledger.name, reward.pledger) if indiv[0] != 0 %></td>
+              <td><%= reward.item.name %></td>
+              <td class="reward-comment" data-id="<%= reward.id %>"><%= reward.comment %></td>
+            </tr>
+            <% indiv[0] = 0 %>
+          <% end %>
+          <% dark = !dark %>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+</div>

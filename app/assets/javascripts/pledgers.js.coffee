@@ -2,30 +2,31 @@ $(document).ready ->
   window.openDonationLine = []
   window.openRewardLine = []
 
-  $("#namesearch")
-    .autocomplete( source: (request, response) ->
-      $.getJSON '/pledgers/search.json', {name: request.term}, (results) ->
-        names = []
-        # Search results
-        for result in results
+  try
+    $("#namesearch")
+      .autocomplete( source: (request, response) ->
+        $.getJSON '/pledgers/search.json', {name: request.term}, (results) ->
+          names = []
+          # Search results
+          for result in results
+            names.push
+              id: result.id
+              value: result.name
+              desc: "<br />#{result.perm_address}"
+          # Permanently at the bottom: new pledger
           names.push
-            id: result.id
-            value: result.name
-            desc: "<br />#{result.perm_address}"
-        # Permanently at the bottom: new pledger
-        names.push
-          id: "new"
-          value: "New Pledger"
-          desc: ""
-        response names # Callback an array of values.
-        return false
-    select: (event, ui) ->
-      window.location = "/pledgers/#{ui.item.id}"
-    )
-    .data("ui-autocomplete")._renderItem = (ul,item) ->
-      $("<li>")
-        .append("<a style=\"line-height:1.3\">#{item.value}<span style=\"font-size: 11px; margin-left: 1em;\">#{item.desc}</span></a>")
-        .appendTo(ul)
+            id: "new"
+            value: "New Pledger"
+            desc: ""
+          response names # Callback an array of values.
+          return false
+      select: (event, ui) ->
+        window.location = "/pledgers/#{ui.item.id}"
+      )
+      .data("ui-autocomplete")._renderItem = (ul,item) ->
+        $("<li>")
+          .append("<a style=\"line-height:1.3\">#{item.value}<span style=\"font-size: 11px; margin-left: 1em;\">#{item.desc}</span></a>")
+          .appendTo(ul)
 
   $(document).on("click", "#pledgerFormCancelButton", ->
     window.location = "/pledgers"

@@ -93,13 +93,12 @@ margin-bottom: 3px;
 }
 
 table {
-  width:90%;
-  margin: 0 5%;
+  width: 95%;
 }
 tr {
   padding: 10px !important;
 }
-tr:nth-child(odd) {
+tr.darkrow {
   background-color: $base2;
 }
 tr td, tr th {
