@@ -3,8 +3,8 @@ class GpoController < ApplicationController
     @pledger = Pledger.find(params[:id])
 
     # Sum value of unprocessed cheque
-    sumDeposits = @pledger.donations.where("payment_received = 'true' and gpo_sent = 'false'")
-    @depositTotal = sumDeposits.inject(0){ |sum,e| sum += e.amount }
+    checksForDeposit = @pledger.donations.where("payment_received = 'true' and gpo_sent = 'false'")
+    @depositTotal = checksForDeposit.inject(0){ |sum,e| sum += e.amount }
 
     # Sum value of unsent premia
     unsentPremia = @pledger.rewards.where("premia_sent = 'false'")
