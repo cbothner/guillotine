@@ -1,21 +1,29 @@
 <div class="flexcontainer">
-  <% @rewards.each do |k, r| %>
+  <% @rewards.each do |is_qualified, sizes| %>
     <div class="flex1">
-      <h3><%=k %></h3>
-      <table>
-        <% dark = true %>
-        <% r.each do |indiv| %>
-          <% indiv[1].each do |reward| %>
-            <tr<%= " class='darkrow'".html_safe if dark %>>
-              <td><%= link_to(reward.pledger.name, reward.pledger) if indiv[0] != 0 %></td>
-              <td><%= reward.item.name %></td>
-              <td class="reward-comment" data-id="<%= reward.id %>"><%= reward.comment %></td>
-            </tr>
-            <% indiv[0] = 0 %>
-          <% end %>
-          <% dark = !dark %>
+      <h3><%= is_qualified %></h3>
+      <% sizes.sort_by{ |a| a.keys * "" }.each do |size_set| %>
+        <% size_set.each do |size, reward_set| %>
+          <div class="reward-table">
+            <h4 class="reward-table-header"><%= size * ", " %></h4>
+            <!-- TODO: Size Icons -->
+            <table>
+              <% dark = true %>
+              <% reward_set.sort_by { |a,b| b[0].pledger.name }.each do |pledger, rewards| %>
+                <% rewards.each do |reward| %>
+                  <tr<%= " class='darkrow'".html_safe if dark %>>
+                    <td><%= link_to(reward.pledger.name, reward.pledger) if pledger != 0 %></td>
+                    <td><%= reward.item.name %></td>
+                    <td class="reward-comment"><%= reward.comment %></td>
+                  </tr>
+                  <% pledger = 0 %>
+                <% end %>
+                <% dark = !dark %>
+              <% end %>
+            </table>
+          </div>
         <% end %>
-      </table>
+      <% end %>
     </div>
   <% end %>
 </div>

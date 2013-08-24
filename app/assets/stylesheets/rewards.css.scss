@@ -5,3 +5,16 @@
   color: $base3;
   cursor: pointer;
 }
+
+.reward-table-header {
+  cursor: pointer;
+  color: $green;
+}
+
+.reward-table-header-hidden:before {
+  content: "[+] ";
+}
+
+.reward-table-header-visible:before {
+  content: "[\2013] ";
+}

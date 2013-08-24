@@ -2,14 +2,22 @@ class RewardsController < ApplicationController
   # GET /rewards
   # GET /rewards.json
   def index
-    rewards = Reward.includes( :pledger, {pledger: :donations}, :item )
+    rewards = Reward.includes( :pledger, {pledger: :donations}, {pledger: :rewards}, :item )
     sentRewards = rewards.select { |r| r.premia_sent == true }
     unsentRewards = rewards - sentRewards
     unqualifiedRewards = unsentRewards.select { |r| r.pledger.donations.any? { |d| d.payment_received == false } }
     qualifiedRewards = unsentRewards - unqualifiedRewards
 
-    @rewards = Hash[ [ "Qualified Rewards", "Unqualified Rewards" ].zip( [ qualifiedRewards, unqualifiedRewards ].collect { |a|
-      a.group_by { |p| p.pledger_id } } ) ]
+    #@rewards = Hash[ [ "Qualified Rewards", "Unqualified Rewards" ].zip( [ qualifiedRewards, unqualifiedRewards ].collect { |a|
+      #a.group_by { |p| p.pledger } } ) ]
+    @rewards = Hash[ [ "Qualified Rewards", "Unqualified Rewards" ]
+      .zip( [ qualifiedRewards, unqualifiedRewards ]
+           .collect { |a| a.group_by{ |r| r.pledger.rewards
+             .collect { |r| r.item.shape }.sort }
+          .collect { |i,e| 
+          {i => e.group_by { |r| r.pledger_id } } 
+        }
+    } ) ]
 
     respond_to do |format|
       format.html # index.html.erb
