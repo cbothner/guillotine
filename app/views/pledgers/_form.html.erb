@@ -34,6 +34,7 @@
             <div class="flex2" id="permCityState">
               <%= f.text_field :perm_city, :disabled => true %> <%= f.text_field :perm_state, :disabled => true %>
             </div>
+            <%= hidden_field(:pledger, :perm_country) %>
           </div>
         </div>
         <div class="flex1">

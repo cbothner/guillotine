@@ -80,6 +80,9 @@ jQuery ->
 
   $(".phonemasked").mask("(999) 999-9999")
 
+  $("#pledger_perm_country").val("USA")
+  #TODO Javascript switch for non-USA.
+
   $(document).on('change','#pledger_perm_zip', ->
     $.zipLookup(
       $(this).val(), (cityName,stateName,stateShortName) ->
