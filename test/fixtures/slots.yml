@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  semester: 
+  weekday: 
+  start: 2013-12-18 18:34:14
+  end: 2013-12-18 18:34:14
+
+two:
+  semester: 
+  weekday: 
+  start: 2013-12-18 18:34:14
+  end: 2013-12-18 18:34:14

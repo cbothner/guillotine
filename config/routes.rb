@@ -17,13 +17,14 @@ Guillotine::Application.routes.draw do
   resources :items
 
 
+  resources :slots
+
+
   resources :pledgers do
     collection do
       get 'search'
     end
   end
-
-  resources :settings
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

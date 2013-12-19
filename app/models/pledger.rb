@@ -6,7 +6,7 @@ class Pledger < ActiveRecord::Base
   end
 
   has_many :donations, :inverse_of => :pledger
-  has_many :shows, :through => :donations
+  has_many :slots, :through => :donations
   has_many :rewards, :inverse_of => :pledger
   has_many :items, :through => :rewards
   attr_accessible :affiliation, :email, :individual, :name, :local_address, :local_address2, :local_city, :local_phone, :local_state, :local_zip, :perm_address, :perm_address2, :perm_city, :perm_country, :perm_phone, :perm_state, :perm_zip

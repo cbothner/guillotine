@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Semester:</b>
+  <%= @slot.semester %>
+</p>
+
+<p>
+  <b>Weekday:</b>
+  <%= @slot.weekday %>
+</p>
+
+<p>
+  <b>Start:</b>
+  <%= @slot.start %>
+</p>
+
+<p>
+  <b>End:</b>
+  <%= @slot.end %>
+</p>
+
+
+<%= link_to 'Edit', edit_slot_path(@slot) %> |
+<%= link_to 'Back', slots_path %>
