@@ -39,7 +39,7 @@ class DonationsController < ApplicationController
   def edit
     @donation = Donation.find(params[:id])
     @donationID = params[:id]
-    @selectedShow = @donation.show.id
+    @selectedSlot = @donation.slot.id
 
     respond_to do |format|
       format.html { render :layout => !request.xhr? }

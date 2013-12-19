@@ -7,9 +7,11 @@ class GpoController < ApplicationController
     @depositTotal = checksForDeposit.inject(0){ |sum,e| sum += e.amount }
 
     # Sum value of unsent premia
-    unsentPremia = @pledger.rewards.where("premia_sent = 'false'")
+    unsentPremia = @pledger.rewards.where("premia_sent = 'false' and taxed = 'false'")
     @premiaTotal = unsentPremia.inject(0){ |sum,e| sum += e.item.taxable_value }
 
+    #TODO Set taxed = true after PDFs are generated
+    
     @giftTotal = @depositTotal - @premiaTotal
 
     respond_to do |format|
@@ -34,7 +36,7 @@ class GpoController < ApplicationController
         :depositTotal => checksForDeposit
           .select{ |don| don.pledger_id == id }
           .inject(0){ |sum,e| sum += e.amount },
-        :premiaTotal => pledger.rewards.where("premia_sent = 'false'")
+        :premiaTotal => pledger.rewards.where("premia_sent = 'false' and taxed = 'false'")
           .inject(0){ |sum,e| sum+= e.item.taxable_value }
       }
     }

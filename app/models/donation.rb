@@ -1,7 +1,7 @@
 class Donation < ActiveRecord::Base
   belongs_to :pledger, :inverse_of => :donations
-  belongs_to :show, :inverse_of => :donations
-  attr_accessible :amount, :gpo_processed, :gpo_sent, :payment_method, :payment_received, :pledge_form_sent, :show_id
+  belongs_to :slot, :inverse_of => :donations
+  attr_accessible :amount, :gpo_processed, :gpo_sent, :payment_method, :payment_received, :pledge_form_sent, :slot_id, :phone_operator
 
   validates :amount, :payment_method, :presence => true
   validates :amount, :numericality => { :greater_than => 0 }

@@ -18,7 +18,7 @@
 <% @donations.each do |donation| %>
   <tr>
     <td><%= donation.pledger %></td>
-    <td><%= donation.show %></td>
+    <td><%= donation.slot.show %></td>
     <td><%= donation.amount %></td>
     <td><%= donation.payment_method %></td>
     <td><%= donation.pledge_form_sent %></td>

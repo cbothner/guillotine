@@ -2,10 +2,6 @@
 
 <table>
   <tr>
-    <th>Semester</th>
-    <th>Weekday</th>
-    <th>Start</th>
-    <th>End</th>
     <th>Name</th>
     <th>Dj</th>
     <th></th>
@@ -15,10 +11,6 @@
 
 <% @shows.each do |show| %>
   <tr>
-    <td><%= show.semester %></td>
-    <td><%= show.weekday %></td>
-    <td><%= show.start %></td>
-    <td><%= show.end %></td>
     <td><%= show.name %></td>
     <td><%= show.dj %></td>
     <td><%= link_to 'Show', show %></td>

@@ -1,7 +1,7 @@
 class Slot < ActiveRecord::Base
   has_many :donations, :inverse_of => :slot
   has_many :pledgers, :through => :donations
-  belongs_to :show
+  belongs_to :show, :inverse_of => :slots
   attr_accessible :end, :semester, :start, :weekday
 
   validates  :end, :semester, :start, :weekday, :presence => true
@@ -10,13 +10,13 @@ class Slot < ActiveRecord::Base
 
   def self.for_select
     {
-      'Monday'    => where(:weekday => 0).order(:start).map { |s| [s.dj.empty? ? s.name : "#{s.name} with #{s.dj}", s.id] },
-      'Tuesday'   => where(:weekday => 1).order(:start).map { |s| [s.dj.empty? ? s.name : "#{s.name} with #{s.dj}", s.id] },
-      'Wednesday' => where(:weekday => 2).order(:start).map { |s| [s.dj.empty? ? s.name : "#{s.name} with #{s.dj}", s.id] },
-      'Thursday'  => where(:weekday => 3).order(:start).map { |s| [s.dj.empty? ? s.name : "#{s.name} with #{s.dj}", s.id] },
-      'Friday'    => where(:weekday => 4).order(:start).map { |s| [s.dj.empty? ? s.name : "#{s.name} with #{s.dj}", s.id] },
-      'Saturday'  => where(:weekday => 5).order(:start).map { |s| [s.dj.empty? ? s.name : "#{s.name} with #{s.dj}", s.id] },
-      'Sunday'    => where("weekday = 6 and name != 'ALL FREEFORM'").order(:start).map { |s| [s.dj.empty? ? s.name : "#{s.name} with #{s.dj}", s.id] }
+      'Monday'    => where(:weekday => 0).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
+      'Tuesday'   => where(:weekday => 1).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
+      'Wednesday' => where(:weekday => 2).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
+      'Thursday'  => where(:weekday => 3).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
+      'Friday'    => where(:weekday => 4).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
+      'Saturday'  => where(:weekday => 5).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.name} with #{s.show.dj}", s.show.id] },
+      'Sunday'    => where(:weekday => 6).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] }
     }
   end
 end

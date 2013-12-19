@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20131218233414) do
     t.boolean  "payment_received"
     t.boolean  "gpo_sent"
     t.boolean  "gpo_processed"
+    t.string   "phone_operator"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
@@ -69,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20131218233414) do
     t.integer  "pledger_id"
     t.integer  "item_id"
     t.boolean  "premia_sent"
+    t.boolean  "taxed"
     t.text     "comment"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
