@@ -1,0 +1,11 @@
+%h2="#{@semester} Schedule"
+
+.schedule_grid.flexcontainer
+  -(0..6).each do |i|
+    .schedule_column.flex1
+      .schedule_header
+        %h6=Weekdays[i]
+      -@slots[i].each do |slot|
+        .schedule_slot
+          .schedule_starttime=slot.start.to_s(:time)
+          .schedule_showname=slot.show.get_name

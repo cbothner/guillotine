@@ -2,7 +2,10 @@ class SlotsController < ApplicationController
   # GET /slots
   # GET /slots.json
   def index
-    @slots = Slot.all
+    @semester = params[:semester]
+    @semester ||= Slot.current_semester
+    @slots = Slot.where("semester = #{@semester}").group_by(&:weekday)
+    (0..6).each {|i| @slots[i] ||= [] }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,14 +15,6 @@ class SlotsController < ApplicationController
 
   # GET /slots/1
   # GET /slots/1.json
-  def show
-    @slot = Slot.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @slot }
-    end
-  end
 
   # GET /slots/new
   # GET /slots/new.json

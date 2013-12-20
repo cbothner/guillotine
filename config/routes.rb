@@ -17,7 +17,9 @@ Guillotine::Application.routes.draw do
   resources :items
 
 
-  resources :slots
+  resources :slots, except: [:show]
+
+  get "slots/:semester", to: 'slots#index'
 
 
   resources :pledgers do

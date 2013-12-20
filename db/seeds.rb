@@ -32,6 +32,10 @@ ceci = Show.create(
   name: "Ceci n'est pas Freeform",
   dj: "Cameron"
 )
+freeform = Show.create(
+  name: "Freeform",
+  dj: "Cameron"
+)
 
 #SLOTS
 oldslot = Slot.create(
@@ -40,7 +44,7 @@ oldslot = Slot.create(
   start: "12:00",
   end: "15:00"
 )
-ceci.slots<<oldslot
+freeform.slots<<oldslot
 
 nowslot = Slot.create(
   semester: 2,
