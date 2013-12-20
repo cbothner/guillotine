@@ -8,4 +8,8 @@ class Show < ActiveRecord::Base
   def freeform_with?
     name.downcase == "freeform"
   end
+  
+  def get_name
+    freeform_with? ? "Freeform with #{dj}" : name
+  end
 end
