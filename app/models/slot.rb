@@ -10,13 +10,13 @@ class Slot < ActiveRecord::Base
 
   def self.for_select #TODO takes a semester argument
     {
-      'Monday'    => where(:weekday => 0).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
-      'Tuesday'   => where(:weekday => 1).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
-      'Wednesday' => where(:weekday => 2).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
-      'Thursday'  => where(:weekday => 3).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
-      'Friday'    => where(:weekday => 4).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
-      'Saturday'  => where(:weekday => 5).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.show.id] },
-      'Sunday'    => where(:weekday => 6).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] }
+      'Monday'    => where(:weekday => 0).order(:start).map { |s| [s.show.get_name, s.id] },
+      'Tuesday'   => where(:weekday => 1).order(:start).map { |s| [s.show.get_name, s.id] },
+      'Wednesday' => where(:weekday => 2).order(:start).map { |s| [s.show.get_name, s.id] },
+      'Thursday'  => where(:weekday => 3).order(:start).map { |s| [s.show.get_name, s.id] },
+      'Friday'    => where(:weekday => 4).order(:start).map { |s| [s.show.get_name, s.id] },
+      'Saturday'  => where(:weekday => 5).order(:start).map { |s| [s.show.get_name, s.id] },
+      'Sunday'    => where(:weekday => 6).order(:start).map { |s| [s.show.get_name, s.id] }
     }
   end
   def self.current_semester

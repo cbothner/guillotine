@@ -4,7 +4,7 @@ class SlotsController < ApplicationController
   def index
     @semester = params[:semester]
     @semester ||= Slot.current_semester
-    @slots = Slot.where("semester = #{@semester}").group_by(&:weekday)
+    @slots = Slot.includes(:show).where("semester = #{@semester}").group_by(&:weekday)
     (0..6).each {|i| @slots[i] ||= [] }
 
     respond_to do |format|
