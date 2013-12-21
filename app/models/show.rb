@@ -1,6 +1,6 @@
 class Show < ActiveRecord::Base
   has_many :slots, :inverse_of => :show
-  attr_accessible :dj, :name
+  attr_accessible :dj, :name, :id
 
   validates :name, :presence => true
   validates :dj, :presence => true, if: :freeform_with?

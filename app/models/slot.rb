@@ -6,7 +6,7 @@ class Slot < ActiveRecord::Base
 
   validates  :end, :semester, :start, :weekday, :presence => true
   validates :weekday, :numericality => { :less_than_or_equal => 6, :greater_than_or_equal => 0, :only_integer => true } # The week starts with Monday = 0
-  validates :semester, :numericality => { :only_integer => true, :greater_than => 0 }
+  validates :semester, :numericality => { :greater_than => 0 }
 
   def self.for_select #TODO takes a semester argument
     {
