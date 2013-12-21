@@ -88,13 +88,15 @@ ActiveRecord::Schema.define(:version => 20131218233414) do
 
   create_table "slots", :force => true do |t|
     t.integer  "show_id"
-    t.integer  "semester"
+    t.float  "semester"
     t.integer  "weekday"
     t.time     "start"
     t.time     "end"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  #TODO COMMENTS!
 
   add_index "slots", ["show_id"], :name => "index_rewards_on_show_id"
 

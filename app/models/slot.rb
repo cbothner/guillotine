@@ -8,14 +8,14 @@ class Slot < ActiveRecord::Base
   validates :weekday, :numericality => { :less_than_or_equal => 6, :greater_than_or_equal => 0, :only_integer => true } # The week starts with Monday = 0
   validates :semester, :numericality => { :only_integer => true, :greater_than => 0 }
 
-  def self.for_select
+  def self.for_select #TODO takes a semester argument
     {
       'Monday'    => where(:weekday => 0).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
       'Tuesday'   => where(:weekday => 1).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
       'Wednesday' => where(:weekday => 2).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
       'Thursday'  => where(:weekday => 3).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
       'Friday'    => where(:weekday => 4).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] },
-      'Saturday'  => where(:weekday => 5).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.name} with #{s.show.dj}", s.show.id] },
+      'Saturday'  => where(:weekday => 5).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.show.id] },
       'Sunday'    => where(:weekday => 6).order(:start).map { |s| [s.show.dj.empty? ? s.show.name : "#{s.show.name} with #{s.show.dj}", s.id] }
     }
   end
