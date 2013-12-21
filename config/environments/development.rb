@@ -40,4 +40,6 @@ Guillotine::Application.configure do
 
   # Precompile additional assets
   config.assets.precompile += %w( .svg .eot .woff .ttf )
+
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end

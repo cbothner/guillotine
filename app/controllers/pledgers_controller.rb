@@ -1,6 +1,8 @@
 class PledgersController < ApplicationController
   layout "pledgers"
 
+  before_filter :authenticate_user!
+
   # GET /pledgers
   # GET /pledgers.json
   def index

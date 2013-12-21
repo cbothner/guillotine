@@ -1,4 +1,6 @@
 Guillotine::Application.routes.draw do
+  devise_for :users
+
   get "gpo/single/:id", to: 'gpo#single'
 
   get "gpo/all"

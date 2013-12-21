@@ -35,6 +35,26 @@ header {
     margin-top:-1em;
     margin-left:1.3em;
   }
+  .auth {
+    margin-top:1em;
+    margin-right: 1em;
+    float:right;
+    text-align: right;
+    .username {
+      font-weight:bold;
+    }
+  }
+}
+.notice-alert {
+  margin-top:0;
+  min-width:100%;
+  background-color: lighten($orange,40%);
+  border-bottom: 1px $orange solid;
+  div p.notice, div p.alert {
+    text-align:center;
+    color: darken($orange, 20%);
+    font-weight: bold;
+  }
 }
 
 .flexcontainer {

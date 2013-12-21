@@ -37,6 +37,9 @@ gem 'best_in_place', github: 'bernat/best_in_place'
 gem 'rails-settings-cached', '0.2.4'
 
 gem 'rails-latex', github: 'jacott/rails-latex'
+
+gem 'devise'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
