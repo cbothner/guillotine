@@ -1,13 +1,15 @@
 class SlotsController < ApplicationController
-
+  layout "slots"
   before_filter :authenticate_user!
   # GET /slots
   # GET /slots.json
   def index
     @semester = params[:semester]
     @semester ||= Slot.current_semester
-    @slots = Slot.includes(:show).where("semester = #{@semester}").group_by(&:weekday)
+    @slots = Slot.includes(:show).where("semester = #{@semester}").order(:start).group_by(&:weekday)
     (0..6).each {|i| @slots[i] ||= [] }
+
+    @slot = Slot.new
 
     respond_to do |format|
       format.html # index.html.erb
@@ -37,11 +39,15 @@ class SlotsController < ApplicationController
   # POST /slots
   # POST /slots.json
   def create
+    showID = params[:slot].delete(:show)
+    @show = Show.find(showID)
     @slot = Slot.new(params[:slot])
+    @show.slots << @slot
+    @semester = params[:slot][:semester]
 
     respond_to do |format|
       if @slot.save
-        format.html { redirect_to @slot, notice: 'Slot was successfully created.' }
+        format.html { redirect_to :slots, notice: 'Slot was successfully created.' }
         format.json { render json: @slot, status: :created, location: @slot }
       else
         format.html { render action: "new" }

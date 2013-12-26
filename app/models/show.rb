@@ -12,4 +12,8 @@ class Show < ActiveRecord::Base
   def get_name
     freeform_with? ? "Freeform with #{dj}" : name
   end
+
+  def self.for_select
+    self.where("name != 'ALL FREEFORM'").order(:name,:dj).map { |s| [s.get_name, s.id] }
+  end
 end

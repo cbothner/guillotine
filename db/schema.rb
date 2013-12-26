@@ -9,11 +9,15 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131221222820) do
+ActiveRecord::Schema.define(version: 20131221215135) do
 
-  create_table "donations", :force => true do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "pg_trgm"
+
+  create_table "donations", force: true do |t|
     t.integer  "pledger_id"
     t.integer  "slot_id"
     t.decimal  "amount"
@@ -23,14 +27,14 @@ ActiveRecord::Schema.define(:version => 20131221222820) do
     t.boolean  "gpo_sent"
     t.boolean  "gpo_processed"
     t.string   "phone_operator"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
-  add_index "donations", ["pledger_id"], :name => "index_donations_on_pledger_id"
-  add_index "donations", ["slot_id"], :name => "index_donations_on_slot_id"
+  add_index "donations", ["pledger_id"], name: "index_donations_on_pledger_id", using: :btree
+  add_index "donations", ["slot_id"], name: "index_donations_on_slot_id", using: :btree
 
-  create_table "items", :force => true do |t|
+  create_table "items", force: true do |t|
     t.string   "name"
     t.decimal  "taxable_value"
     t.decimal  "cost"
@@ -38,11 +42,11 @@ ActiveRecord::Schema.define(:version => 20131221222820) do
     t.boolean  "backorderable"
     t.string   "shape"
     t.text     "note"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
-  create_table "pledgers", :force => true do |t|
+  create_table "pledgers", force: true do |t|
     t.boolean  "individual"
     t.string   "email"
     t.string   "affiliation"
@@ -59,62 +63,62 @@ ActiveRecord::Schema.define(:version => 20131221222820) do
     t.string   "perm_state"
     t.string   "perm_zip"
     t.string   "perm_country"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "name"
   end
 
-  add_index "pledgers", ["name"], :name => "trgm_index"
+  add_index "pledgers", ["name"], name: "trgm_index", using: :btree
 
-  create_table "rewards", :force => true do |t|
+  create_table "rewards", force: true do |t|
     t.integer  "pledger_id"
     t.integer  "item_id"
     t.boolean  "premia_sent"
     t.boolean  "taxed"
     t.text     "comment"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  add_index "rewards", ["item_id"], :name => "index_rewards_on_item_id"
-  add_index "rewards", ["pledger_id"], :name => "index_rewards_on_pledger_id"
+  add_index "rewards", ["item_id"], name: "index_rewards_on_item_id", using: :btree
+  add_index "rewards", ["pledger_id"], name: "index_rewards_on_pledger_id", using: :btree
 
-  create_table "shows", :force => true do |t|
+  create_table "shows", force: true do |t|
     t.string   "name"
     t.string   "dj"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "slots", :force => true do |t|
+  create_table "slots", force: true do |t|
     t.integer  "show_id"
     t.float    "semester"
     t.integer  "weekday"
     t.time     "start"
     t.time     "end"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "slots", ["show_id"], :name => "index_rewards_on_show_id"
+  add_index "slots", ["show_id"], name: "index_rewards_on_show_id", using: :btree
 
-  create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+  create_table "users", force: true do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
-    t.integer  "sign_in_count",          :default => 0,  :null => false
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "username"
-    t.datetime "remember_created_at"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

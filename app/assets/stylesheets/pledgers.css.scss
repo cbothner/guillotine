@@ -10,47 +10,6 @@ form#searchForm {
     width: 30em;
   }
 }
-label, b.labelB {
-  color: $green;
-  font-weight: bold;
-}
-.inputP {
-  padding: 0.2em;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  border: 1px solid $base1;
-  background-color: $base3;
-}
-input[type=text],
-input[type=password]
-input[type=tel],
-select,
-input[type=email]{
-  width: 100%;
-  height: 1.5em;
-  margin-top: 2px;
-  margin-bottom: 2px;
-}
-input[type=checkbox] {
-    display: inline;
-}
-select {
-    max-width: 100%;
-}
-textarea {
-    margin-bottom: 10px;
-}
-.middlepadding div:nth-child(1) {
-  padding-right:1em
-}
-.notabene {
-    font-size: x-small;
-    color: #586E75;
-}
-.actions {
-  width: 100%;
-  text-align:center;
-}
 
 section.pledger {
   margin: 1em 1em 0 0;

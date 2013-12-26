@@ -1,6 +1,10 @@
-%h2="#{@semester} Schedule"
+%h2="Show Schedule #{@semester}"
+Semester
+=select_tag("schedule", options_for_select(Slot.pluck(:semester).uniq+["New Semester"], @semester), class: "semester_select")
 
-.schedule_grid.flexcontainer
+=render 'form'
+
+%section.home.flexcontainer
   -(0..6).each do |i|
     .schedule_column.flex1
       .schedule_header

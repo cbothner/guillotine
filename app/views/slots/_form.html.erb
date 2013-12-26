@@ -11,21 +11,24 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :semester %><br />
-    <%= f.text_field :semester %>
-  </div>
-  <div class="field">
-    <%= f.label :weekday %><br />
-    <%= f.text_field :weekday %>
-  </div>
-  <div class="field">
-    <%= f.label :start %><br />
-    <%= f.time_select :start %>
-  </div>
-  <div class="field">
-    <%= f.label :end %><br />
-    <%= f.time_select :end %>
+  <%= f.hidden_field(:semester, :value => @semester) %>
+  <div class="flexcontainer middlepadding">
+    <div class="flex3">
+      <%= f.label :show %>
+      <%= f.select( :show, options_for_select([[],['NEW SHOW','new']] + Show.for_select), {}, {class: "chzn-select"} ) %>
+    </div>
+    <div class="flex2">
+      <%= f.label :weekday %><br />
+      <%= f.select( :weekday, options_for_select((0..6).map {|i| [Weekdays[i],i] }), {}, {class: "chzn-select"} ) %>
+    </div>
+    <div class="flex1">
+      <%= f.label :start %><br />
+      <%= f.time_field :start %>
+    </div>
+    <div class="flex1">
+      <%= f.label :end %><br />
+      <%= f.time_field :end %>
+    </div>
   </div>
   <div class="actions">
     <%= f.submit %>
