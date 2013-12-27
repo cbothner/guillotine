@@ -40,7 +40,13 @@ class SlotsController < ApplicationController
   # POST /slots.json
   def create
     showID = params[:slot].delete(:show)
-    @show = Show.find(showID)
+    name = params[:slot].delete(:name)
+    dj = params[:slot].delete(:dj)
+    if showID
+      @show = Show.find(showID)
+    else
+      @show = Show.new(:name => name, :dj => dj)
+    end
     @slot = Slot.new(params[:slot])
     @show.slots << @slot
     @semester = params[:slot][:semester]
