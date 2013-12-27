@@ -1,5 +1,5 @@
 Guillotine::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "users/registrations" }
 
   get "gpo/single/:id", to: 'gpo#single'
 

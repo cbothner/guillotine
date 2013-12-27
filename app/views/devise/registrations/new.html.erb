@@ -4,7 +4,7 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :username %><br />
+  <div><%= f.label :username, "First and last name" %><br />
   <%= f.text_field :username, :autofocus => true %></div>
 
   <div><%= f.label :email %><br />
@@ -16,7 +16,10 @@
   <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
 
-  <div><%= f.submit "Sign up" %></div>
+  <div><%= f.label :secret %><br />
+  <%= f.password_field :secret %></div>
+
+  <div style="margin-top:5px"><%= f.submit "Sign up" %></div>
 <% end %>
 
 <%= render "devise/shared/links" %>
