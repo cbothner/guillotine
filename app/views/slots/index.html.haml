@@ -1,8 +1,8 @@
 %h2="Show Schedule #{@semester}"
 Semester
-=select_tag("schedule", options_for_select(([@semester.to_f] + Slot.pluck(:semester)).uniq+["New Semester"], @semester), class: "semester_select")
+=select_tag("schedule", options_for_select(([@semester.to_f] + Slot.pluck(:semester)).uniq+(user_is_dd? ? ["New Semester"] : []), @semester), class: "semester_select")
 
-=render 'form'
+=render 'form' if user_is_dd?
 
 %section.home.flexcontainer
   -(0..6).each do |i|
