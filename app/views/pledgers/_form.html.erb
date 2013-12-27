@@ -11,9 +11,13 @@
     </div>
   <% end %>
 
-    <%= f.label :individual %><%= f.check_box :individual %><br />
+    <%= instructions_span_for_operators{"1) Are you donating as an individual today?"} %>
+    <%= f.label :individual, user_is_dd? ? "Individual" : "Yes" %><%= f.check_box :individual %><br />
+    <%= instructions_for_operators{"2) Can I get the EXACT spelling of your first and last name?"} %>
     <%= f.label :name %><%= f.text_field :name %>
+    <%= instructions_for_operators{"3) What is your email address?"} %>
     <%= f.label :email %><%= f.email_field :email %>
+    <%= instructions_for_operators{"4) What is your relationship to WCBN?"} %>
     <%= f.label :affiliation %>
       <%= f.radio_button(:affiliation, "Staff") %>
       <%= label_tag(:affiliation_staff, "Staff") %>
@@ -23,7 +27,9 @@
       <%= label_tag(:affiliation_public, "Public") %>
       <div class="flexcontainer middlepadding">
         <div class="flex1">
-          <%= f.label :perm_phone, "Permanent Phone Number" %><%= f.telephone_field :perm_phone, :class => "phonemasked" %>
+          <%= instructions_for_operators{"5) What's your phone number?"} %>
+          <%= f.label :perm_phone, "Phone Number" %><%= f.telephone_field :perm_phone, :class => "phonemasked" %>
+          <%= instructions_for_operators{"6) And your permanent mailing address?"} %>
           <%= f.label :perm_address, "Permanent Street Address" %><%= f.text_field :perm_address %>
           <%= f.text_field :perm_address2 %>
           <label>USA? </label><input type="checkbox" id="permUSA" checked=""> 
@@ -38,8 +44,9 @@
           </div>
         </div>
         <div class="flex1">
-          <%= f.label :local_phone, "Local Phone Number" %><%= f.telephone_field :local_phone, :class => "phonemasked" %>
-          <%= f.label :local_address %><%= f.text_field :local_address %><%= f.text_field :local_address2 %>
+          <%= instructions_for_operators{"7) Do you have different local information?"} %>
+          <%= f.label :local_phone, "Alternate Phone Number" %><%= f.telephone_field :local_phone, :class => "phonemasked" %>
+          <%= f.label :local_address, "Local Street Address" %><%= f.text_field :local_address %><%= f.text_field :local_address2 %>
           <div id="localCSZDiv" class="flexcontainer">
             <div class="flex1">
               <%= f.label :local_zip, "Zip Code" %><%= f.text_field :local_zip, :maxlength => "5" %>
@@ -50,7 +57,7 @@
           </div>
         </div>
       </div>
-    <div style="margin-top:10px; text-align:center;"><p class="notabene" id="pledgerID" value="<%= @pledger.id %>">Pledger ID: <%= @pledger.id %></p></div>
+    <div style="margin-top:10px; text-align:center;"></div>
   <div class="actions">
     <%= f.submit %>
     <%= button_tag "Cancel", :type => "button", :id => "pledgerFormCancelButton" %>

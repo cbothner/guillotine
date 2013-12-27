@@ -11,6 +11,15 @@ form#searchForm {
   }
 }
 
+.instructions {
+  font-weight: bold;
+  color: $orange;
+  line-height:16px;
+}
+.sidemargins {
+  margin: 0 12px;
+}
+
 section.pledger {
   margin: 1em 1em 0 0;
   border: 1px solid $base1;

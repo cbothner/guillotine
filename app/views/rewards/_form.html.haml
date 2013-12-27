@@ -8,20 +8,24 @@
       %ul
       -@reward.errors.full_messages.each do |msg|
         %li= msg
-  -if @rewardID != 'new'
+  -if @rewardID != 'new' and user_is_dd?
     .deleteRewardLink
       = link_to '[X]', {:action=>'destroy', :id=>@reward}, :confirm=>"Are you sure you want to delete this premium?", :method=>:delete
   .field
     = f.label :item 
     = f.select( :item, options_for_select(Item.for_select, @selectedItem), {}, :class => "chzn-select" )
-  .field.centered
-    %abbr{:title => "Premia Sent?"}
-      = f.label :premia_sent, "&nbsp;".html_safe, :class => "fontawesome-gift icon-large"
-    = f.check_box :premia_sent
+  - if user_is_dd?
+    .field.centered
+      %abbr{:title => "Premia Sent?"}
+        = f.label :premia_sent, "&nbsp;".html_safe, :class => "fontawesome-gift icon-large"
+      = f.check_box :premia_sent
+  - else
+    = f.hidden_field :premia_sent, value: false
   .field
     = f.label :comment
     = f.text_area :comment, :rows => 3
   = f.hidden_field :pledger_id
+  %div{:style => "height: 6px;"}
   .actions
-    = f.submit :disable_with => "Saving..."
+    = f.submit data: { disable_with: 'Saving...' }
     = button_tag "Cancel", :type => "button", :id => "rewardFormCancelButton", :data => { :id => @rewardID }

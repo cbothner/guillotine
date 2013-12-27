@@ -53,9 +53,9 @@ class DonationsController < ApplicationController
   def create
     pledgerID = params[:donation].delete(:pledger_id)
     @pledger = Pledger.find(pledgerID)
-    @donation = pledger.donations.create(params[:donation])
-    @activeDonations = pledger.donations.where("payment_received = 'false'")
-    @archivedDonations = pledger.donations.where("payment_received = 'true'")
+    @donation = @pledger.donations.create(params[:donation])
+    @activeDonations = @pledger.donations.where("payment_received = 'false'")
+    @archivedDonations = @pledger.donations.where("payment_received = 'true'")
 
     respond_to do |format|
       if @donation.save

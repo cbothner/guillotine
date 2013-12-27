@@ -7,7 +7,7 @@
       %ul
       -@donation.errors.full_messages.each do |msg|
         %li= msg
-  - if @donationID != 'new'
+  - if @donationID != 'new' and user_is_dd?
     .deleteDonationLink
       = link_to '[X]', {:action=>'destroy', :id=>@donation}, :confirm=>"Are you sure you want to delete this donation?", :method=>:delete
   .field
@@ -17,25 +17,31 @@
     .flex1.field
       = f.label :amount
       %br
-      = f.text_field :amount
-    .flex3.field
+      = f.number_field :amount
+    .flex2.field
       = f.label :payment_method 
       %br
       = f.select(:payment_method, ["Cash", "Check", "Credit Card"])
-  .flexcontainer
-    .flex1.field.centered
-      %abbr{:title => "Pledge Form Sent?"}
-        = f.label :pledge_form_sent, "&nbsp;".html_safe, :class => "fontawesome-envelope icon-large"
-      = f.check_box :pledge_form_sent
-    .flex1.field.centered
-      %abbr{:title => "Payment Received?"}
-        = f.label :payment_received, "&nbsp;".html_safe, :class => "fontawesome-money icon-large"
-      = f.check_box :payment_received
-    .flex1.field.centered
-      %abbr{:title => "GPO Sent?"}
-        = f.label :gpo_sent, "&nbsp;".html_safe, :class => "fontawesome-cloud-upload icon-large"
-      = f.check_box :gpo_sent
+  -if user_is_dd?
+    .flexcontainer
+      .flex1.field.centered
+        %abbr{:title => "Pledge Form Sent?"}
+          = f.label :pledge_form_sent, "&nbsp;".html_safe, :class => "fontawesome-envelope icon-large"
+        = f.check_box :pledge_form_sent
+      .flex1.field.centered
+        %abbr{:title => "Payment Received?"}
+          = f.label :payment_received, "&nbsp;".html_safe, :class => "fontawesome-money icon-large"
+        = f.check_box :payment_received
+      .flex1.field.centered
+        %abbr{:title => "GPO Sent?"}
+          = f.label :gpo_sent, "&nbsp;".html_safe, :class => "fontawesome-cloud-upload icon-large"
+        = f.check_box :gpo_sent
+  -else
+    = f.hidden_field :pledge_form_sent, value: false
+    = f.hidden_field :payment_received, value: false
+    = f.hidden_field :gpo_sent, value: false
+    %div{:style => "height:6px;"}
   = f.hidden_field :pledger_id
   .actions
-    = f.submit :disable_with => "Saving..."
+    = f.submit data: { disable_with: 'Saving...' }
     = button_tag "Cancel", :type => "button", :id => "donationFormCancelButton", :data => { :id => @donationID }

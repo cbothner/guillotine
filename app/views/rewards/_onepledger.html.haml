@@ -1,5 +1,7 @@
 %aside.pledgerRewards.grid_3
   %h3 Premia
+  .sidemargins
+    =instructions_for_operators{"Can I interest you in any premium items?"}
   .rewardDiv
     %a.clickable.rewardLine#newReward{:data => {:id => "new"}}
       .rewardValue{:style => "padding: 10px 5px 10px 0;font-size:large;"}<
@@ -15,11 +17,12 @@
         .rewardValue="$#{ reward.item.cost.round }"
         .rewardPremia< 
           %span.rewardPremiaName=reward.item.name
-    -if !@archivedRewards.empty?
-      .rewardLine
-        %p Sent Premia
-    -@archivedRewards.each do |reward|
-      %a.clickable.rewardLine{ :data => {:id => reward.id}}
-        .rewardValue.archive="$#{ reward.item.cost.round }"
-        .rewardPremia.archive<
-          %span.rewardPremiaName.archive=reward.item.name
+    -if user_is_dd?
+      -if !@archivedRewards.empty?
+        .rewardLine
+          %p Sent Premia
+      -@archivedRewards.each do |reward|
+        %a.clickable.rewardLine{ :data => {:id => reward.id}}
+          .rewardValue.archive="$#{ reward.item.cost.round }"
+          .rewardPremia.archive<
+            %span.rewardPremiaName.archive=reward.item.name
