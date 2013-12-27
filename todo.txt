@@ -1,4 +1,3 @@
-TODO Phone operator script
 TODO Donations view => unpaid donations
 TODO Generate pledge forms
 TODO Generate shipping forms

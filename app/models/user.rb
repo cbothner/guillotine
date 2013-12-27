@@ -8,7 +8,4 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username
   # attr_accessible :title, :body
   
-  def self.is_dd?
-    self.current_user == User.where("username = 'dd'")
-  end
 end

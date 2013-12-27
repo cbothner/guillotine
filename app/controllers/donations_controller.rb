@@ -29,7 +29,7 @@ class DonationsController < ApplicationController
   def new
     @donation = Donation.new
     @donationID = "new"
-    # TODO @selectedShow = Show.on_now
+    @selectedShow = Slot.on_now
 
     respond_to do |format|
       format.html { render :layout => !request.xhr? }
