@@ -13,4 +13,4 @@ Semester
         -length = ((slot.end - slot.start)/1800).round
         .schedule_slot(class="slot_#{length}")
           .schedule_starttime=slot.start.to_s(:time)
-          .schedule_showname=slot.show.get_name
+          .schedule_showname=link_to(slot.show.get_name,slot.show)
