@@ -1,4 +1,32 @@
+@import "globals";
 select.semester_select {
   width: auto;
   margin-top: -1px;
+}
+
+.schedule_column {
+  border-left:  1px solid $base1;
+  border-top:   1px solid $base1;
+  border-bottom:1px solid $base1;
+  padding-top: 3px;
+}
+.schedule_header {
+  text-align: center;
+}
+.schedule_column:nth-last-child(1) {
+  border-right: 1px solid $base1;
+}
+$halfhour: 21px;
+@for $i from 1 through 10 {
+  .schedule_slot.slot_#{$i} {
+    line-height:16px;
+    padding:3px;
+    min-height: $halfhour * $i;
+  }
+}
+.schedule_slot:nth-child(even) {
+  background-color: $base3;
+}
+.schedule_starttime {
+  color: $base1;
 }

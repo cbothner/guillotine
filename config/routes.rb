@@ -21,7 +21,7 @@ Guillotine::Application.routes.draw do
 
   resources :slots, except: [:show]
 
-  get "slots/:semester", :semester => /[0-9]+\.[0-9]/, to: 'slots#index'
+  get "slots/:semester", :semester => /[0-9]+\.[0-9]{2}/, to: 'slots#index'
 
 
   resources :pledgers do

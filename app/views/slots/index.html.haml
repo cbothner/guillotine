@@ -1,6 +1,6 @@
 %h2="Show Schedule #{@semester}"
 Semester
-=select_tag("schedule", options_for_select(Slot.pluck(:semester).uniq+["New Semester"], @semester), class: "semester_select")
+=select_tag("schedule", options_for_select(([@semester.to_f] + Slot.pluck(:semester)).uniq+["New Semester"], @semester), class: "semester_select")
 
 =render 'form'
 
@@ -10,6 +10,7 @@ Semester
       .schedule_header
         %h6=Weekdays[i]
       -@slots[i].each do |slot|
-        .schedule_slot
+        -length = ((slot.end - slot.start)/1800).round
+        .schedule_slot(class="slot_#{length}")
           .schedule_starttime=slot.start.to_s(:time)
           .schedule_showname=slot.show.get_name
