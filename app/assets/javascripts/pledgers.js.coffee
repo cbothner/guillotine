@@ -80,8 +80,33 @@ jQuery ->
 
   $(".phonemasked").mask("(999) 999-9999")
 
-  $("#pledger_perm_country").val("USA")
-  #TODO Javascript switch for non-USA.
+  $(document).on('change', '#permUSA', ->
+    if $('#permUSA').prop('checked')
+      $("#permCSZDiv").replaceWith("""
+      <div id="permCSZDiv" class="flexcontainer">
+        <div class="flex1">
+          <label for="pledger_perm_zip">Zip Code</label><input id="pledger_perm_zip" maxlength="5" name="pledger[perm_zip]" size="5" type="text" autofocus="autofocus">
+        </div>
+        <div class="flex2" id="permCityState">
+          <input disabled="disabled" id="pledger_perm_city" name="pledger[perm_city]" type="text"> <input disabled="disabled" id="pledger_perm_state" name="pledger[perm_state]" type="text">
+        </div>
+        <input id="pledger_perm_country" name="pledger[perm_country]" type="hidden" value="USA">
+      </div>
+      """)
+    else
+      $("#permCSZDiv").replaceWith("""
+        <div id="permCSZDiv" class="flexcontainer">
+          <div class="flex1">
+            <label for="pledger_perm_city">City</label>
+            <label for="pledger_perm_country" style="display:block; margin-top:5px">Country</label>
+          </div>
+          <div class="flex3">
+            <input id="pledger_perm_city" name="pledger[perm_city]" type="text" autofocus="autofocus">
+            <input id="pledger_perm_country" name="pledger[perm_country]" type="text">
+          </div>
+        </div>
+      """)
+  )
 
   $(document).on('change','#pledger_perm_zip', ->
     $.zipLookup(

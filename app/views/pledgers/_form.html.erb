@@ -12,9 +12,9 @@
   <% end %>
 
     <%= instructions_span_for_operators{"1) Are you donating as an individual today?"} %>
-    <%= f.label :individual, user_is_dd? ? "Individual" : "Yes" %><%= f.check_box :individual %><br />
+    <%= f.label :individual, user_is_dd? ? "Individual" : "Yes" %><%= f.check_box :individual, checked: "checked" %><br />
     <%= instructions_for_operators{"2) Can I get the EXACT spelling of your first and last name?"} %>
-    <%= f.label :name %><%= f.text_field :name %>
+    <%= f.label :name %><%= f.text_field :name, autofocus: "autofocus"%>
     <%= instructions_for_operators{"3) What is your email address?"} %>
     <%= f.label :email %><%= f.email_field :email %>
     <%= instructions_for_operators{"4) What is your relationship to WCBN?"} %>
@@ -40,7 +40,7 @@
             <div class="flex2" id="permCityState">
               <%= f.text_field :perm_city, :disabled => true %> <%= f.text_field :perm_state, :disabled => true %>
             </div>
-            <%= hidden_field(:pledger, :perm_country) %>
+            <%= f.hidden_field(:perm_country, value: "USA") %>
           </div>
         </div>
         <div class="flex1">

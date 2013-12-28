@@ -15,7 +15,7 @@ class Slot < ActiveRecord::Base
     Slot.where("weekday = :weekday and start <= :now and \"end\" > :now and semester = :semester", {weekday: weekday, now: std_now, semester: Slot.current_semester})
   end
 
-  def self.for_select #TODO takes a semester argument
+  def self.for_select
     Slot.where(:semester => Slot.current_semester)
         .order(:weekday,:start)
         .group_by(&:weekday)
@@ -23,19 +23,12 @@ class Slot < ActiveRecord::Base
           r[Weekdays[e.first]] = e.last.map{|s| [s.show.get_name, s.id]}
           r
         end
-    #{
-      #'Monday'    => where(:weekday => 0).order(:start).map { |s| [s.show.get_name, s.id] },
-      #'Tuesday'   => where(:weekday => 1).order(:start).map { |s| [s.show.get_name, s.id] },
-      #'Wednesday' => where(:weekday => 2).order(:start).map { |s| [s.show.get_name, s.id] },
-      #'Thursday'  => where(:weekday => 3).order(:start).map { |s| [s.show.get_name, s.id] },
-      #'Friday'    => where(:weekday => 4).order(:start).map { |s| [s.show.get_name, s.id] },
-      #'Saturday'  => where(:weekday => 5).order(:start).map { |s| [s.show.get_name, s.id] },
-      #'Sunday'    => where(:weekday => 6).order(:start).map { |s| [s.show.get_name, s.id] }
-    #}
   end
+
   def self.current_semester
     self.maximum(:semester)
   end
+
 end
 
 Weekdays = {

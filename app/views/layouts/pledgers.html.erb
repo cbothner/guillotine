@@ -4,7 +4,7 @@
     <%= instructions_for_operators{"My name is #{current_user.username.split(" ")[0]}; may I take your pledge?"} %>
     <%= label_tag(:namesearch, "Search by first or last name:") %>
     <br> 
-    <%= text_field_tag(:namesearch) %>
+    <%= text_field_tag(:namesearch, '', autofocus: "autofocus") %>
     <%= hidden_field_tag(:pledgerid) %>
 <%- end %>
 
