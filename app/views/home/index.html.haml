@@ -1,19 +1,33 @@
 .flexcontainer
-  %section.home.flex1
-    %h2 Information
-    %ul
-      %li Pledger Search
-  %section.home.flex1
+  - if user_is_dd?
+    %section.home.flex1
+      %h2 Information
+      %ul
+        %li Pledger Search
+  -else
+    %section.flex1
+  %section.home{:class => user_is_dd? ? "flex1" : "flex3"}
     %h2 Management
     %ul
       %li= link_to "Pledgers", :pledgers
-      %li= link_to "Donations", :donations
-      %li= link_to "Rewards", :rewards
-      %li= link_to "Premia", :items
-      %li= link_to "Shows", :shows
-      %li= link_to "Schedule", :slots
-  %section.home.flex1
-    %h2 Documents
-    %ul
-      %li All Unsent Pledge Forms
-      %li= link_to "All Unsent GPOs", :controller => "gpo", :action => "all"
+      - if user_is_dd?
+        %li= link_to "Donations", :donations
+        %li= link_to "Rewards", :rewards
+        %li= link_to "Premia", :items
+        %li= link_to "Shows", :shows
+        %li= link_to "Schedule", :slots
+      - else
+        %li= link_to "Progress", :donations
+        %li= link_to "Inventory", :items
+        %li= link_to "Leaderboard", :shows
+        %li Comments
+        %li Blank Credit Card GPO
+  -if user_is_dd?
+    %section.home.flex1
+      %h2 Documents
+      %ul
+        %li All Unsent Pledge Forms
+        %li= link_to "All Unsent GPOs", :controller => "gpo", :action => "all"
+        %li Blank Credit Card GPO
+  -else
+    %section.flex1
