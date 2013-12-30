@@ -1,10 +1,20 @@
 class ShowsController < ApplicationController
-
+  layout "generate"
   before_filter :authenticate_user!
   # GET /shows
   # GET /shows.json
   def index
-    @shows = Show.all
+    @semester = params[:semester]
+    @semester ||= Slot.current_semester
+    @shows = Show.where("name != 'ALL FREEFORM'").includes(:slots).select{ |s| s.slots.collect{ |e| e.semester }.include? @semester.to_f }
+    @shows = @shows.map{ |x| [ x, x.slots.where(:semester => @semester.to_f).inject(0){|sum,e| sum + e.donations.collect{|d| d.amount }.reduce(:+).to_f} ] }
+    @shows = @shows.sort_by{|x| x[1]}.reverse_each
+    @first_place_total = @shows.first[1]
+    @shows = @shows.map{ |x| x + [100 * x[1]/@first_place_total]}
+
+    #TODO Normalize index by time on air?
+
+    #@shows: [ <Show>object, total, percent_of_first_place ]
 
     respond_to do |format|
       format.html # index.html.erb

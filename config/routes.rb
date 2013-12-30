@@ -1,4 +1,6 @@
 Guillotine::Application.routes.draw do
+  resources :comments
+
   devise_for :users, :controllers => { :registrations => "users/registrations" }
 
   get "gpo/single/:id", to: 'gpo#single'
@@ -13,6 +15,7 @@ Guillotine::Application.routes.draw do
   resources :donations
 
 
+  get "shows/sem-:semester", :semester => /[0-9]{4}\.[0-9]{2}/, to: 'shows#index'
   resources :shows
 
 
@@ -20,8 +23,7 @@ Guillotine::Application.routes.draw do
 
 
   resources :slots, except: [:show]
-
-  get "slots/:semester", :semester => /[0-9]+\.[0-9]{2}/, to: 'slots#index'
+  get "slots/:semester", :semester => /[0-9]{4}\.[0-9]{2}/, to: 'slots#index'
 
 
   resources :pledgers do

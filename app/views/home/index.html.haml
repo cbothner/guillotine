@@ -12,12 +12,14 @@
       %li= link_to "Pledgers", :pledgers
       - if user_is_dd?
         %li= link_to "Donations", :donations
+        %li= link_to "Comments", :comments
         %li= link_to "Rewards", :rewards
         %li= link_to "Premia", :items
         %li= link_to "Shows", :shows
         %li= link_to "Schedule", :slots
       - else
         %li= link_to "Progress", :donations
+        %li= link_to "Comments", :comments
         %li= link_to "Inventory", :items
         %li= link_to "Leaderboard", :shows
         %li Comments

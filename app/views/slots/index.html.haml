@@ -1,6 +1,6 @@
 %h2="Show Schedule #{@semester}"
 Semester
-=select_tag("schedule", options_for_select(([@semester.to_f] + Slot.pluck(:semester)).uniq+(user_is_dd? ? ["New Semester"] : []), @semester), class: "semester_select")
+=select_tag("schedule", options_for_select(([@semester.to_f] + Slot.pluck(:semester)).uniq+(user_is_dd? ? ["New Semester"] : []), @semester), class: "semester_select", data:{prefix:'slots/'})
 
 =render 'form' if user_is_dd?
 

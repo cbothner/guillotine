@@ -1,3 +1,35 @@
-// Place all the styles related to the Shows controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "globals";
+
+.leaderboard {
+  margin-top:0.5em;
+}
+.leaderboard_row {
+  position: relative;
+  margin: 5px 0 !important;
+  font-size: 1.1em;
+  color: $base03;
+}
+.leaderboard_bar {
+  position: absolute;
+  background-color:rgb(171,192,95);
+  height: 1.7em;
+  z-index:1;
+}
+.leaderboard_index{
+  padding: 2px 2px 2px 7px;
+}
+.leaderboard_total{
+  text-align: right;
+  font-weight: bold;
+  padding: 2px;
+}
+.leaderboard_showname{
+  font-weight: bold;
+  padding: 2px;
+  width:85%;
+  a {
+    color: darken($blue, 10%);
+  }
+}
+.above { z-index: 10; }
+.below { z-index: 1;  }
