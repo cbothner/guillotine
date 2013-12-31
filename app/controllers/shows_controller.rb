@@ -1,5 +1,4 @@
 class ShowsController < ApplicationController
-  layout "generate"
   before_filter :authenticate_user!
   # GET /shows
   # GET /shows.json
@@ -30,6 +29,7 @@ class ShowsController < ApplicationController
     @slots = @slots.map{ |s| [s,
                               s.donations.collect{|d| d.amount}.reduce(:+).to_f,
                               s.donations.sort_by{|x| x.amount }.reverse]}
+    @comments = @show.comments.sort_by{|c| c.created_at}.reverse
 
     respond_to do |format|
       format.html # show.html.erb

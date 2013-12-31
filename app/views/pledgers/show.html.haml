@@ -18,7 +18,7 @@
       -if !@pledger.perm_address2.blank?
         %p.inputP=best_in_place @pledger, :perm_address2
       .flexcontainer
-        .flex1
+        .flex2
           %b.labelB City
           %p.inputP=best_in_place @pledger, :perm_city
         .flex1
@@ -34,7 +34,7 @@
       -if !@pledger.local_address2.blank?
         %p.inputP=best_in_place @pledger, :local_address2
       .flexcontainer
-        .flex1
+        .flex2
           %b.labelB City
           %p.inputP=best_in_place @pledger, :local_city
         .flex1

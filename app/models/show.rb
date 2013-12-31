@@ -21,9 +21,18 @@ class Show < ActiveRecord::Base
   def self.on_now
     slot_on_now = Slot.on_now
     if slot_on_now.empty?
-      0
+      nil
     else
       slot_on_now[0].show
+    end
+  end
+
+  def self.on_now_id
+    slot_on_now = Slot.on_now
+    if slot_on_now.empty?
+      0
+    else
+      slot_on_now[0].show.id
     end
   end
 end

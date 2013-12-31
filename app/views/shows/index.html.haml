@@ -1,16 +1,20 @@
-%h1 Leaderboard #{@semester}
-Semester
-=select_tag("schedule", options_for_select(([@semester.to_f] + Slot.pluck(:semester)).uniq, @semester), class: "semester_select", data:{prefix: 'shows/sem-'})
+%section.grid_2
+  &nbsp;
 
-.leaderboard
-  -@shows.each_with_index do |arr,i|
-    -show,total,percent = arr
-    .flexcontainer.leaderboard_row
-      .leaderboard_bar.below{style: "width:#{percent}%"}
-        &nbsp;
-      .leaderboard_index.flex1.above
-        =i+1
-      .leaderboard_total.flex2.above
-        ="$#{ number_with_delimiter(total.round, :delimiter => ',') }"
-      .leaderboard_showname.above
-        =link_to(show.get_name, show)
+%section.home.grid_8
+  %h1 Leaderboard #{@semester}
+  Semester
+  =select_tag("schedule", options_for_select(([@semester.to_f] + Slot.pluck(:semester)).uniq, @semester), class: "semester_select", data:{prefix: 'shows/sem-'})
+
+  .leaderboard
+    -@shows.each_with_index do |arr,i|
+      -show,total,percent = arr
+      .flexcontainer.leaderboard_row
+        .leaderboard_bar.below{style: "width:#{percent}%"}
+          &nbsp;
+        .leaderboard_index.flex1.above
+          =i+1
+        .leaderboard_total.flex2.above
+          ="$#{ number_with_delimiter(total.round, :delimiter => ',') }"
+        .leaderboard_showname.above
+          =link_to(show.get_name, show)
