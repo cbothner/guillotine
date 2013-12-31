@@ -29,24 +29,24 @@ section.pledger {
 }
 
 .pledgerDonations,
-.pledgerRewards{
+.pledgerRewards,
+.pledgerComments{
   float: left;
   margin: 1em 1em 0 0;
   background-color: #EEE8D5;
   border: 1px solid #93A1A1;
+  padding: 5px 0px 0px 0px;
+  text-align:left;
+  position: relative;
   h3 {
     color: #93A1A1;
     padding: 0 10px 0 10px;
   }
 }
-.pledgerDonations, 
-.pledgerRewards {
-  padding: 5px 0px 0px 0px;
-  text-align:left;
-  position: relative;
-}
-.donationLine, .rewardLine {
-  padding: 3px 0 3px 0;
+.donationLine,
+.rewardLine,
+.commentLine {
+  padding: 5px 0 3px 0;
   line-height: 16px;
   position:relative;
   display:block;
@@ -55,8 +55,11 @@ section.pledger {
   background-color: inherit;
 }
 .rewardLine {padding-top: 4px;padding-bottom:4px;}
-.donationLine:nth-child(odd) {background-color: #FDF6E3}
-.rewardLine:nth-child(odd) {background-color: #FDF6E3}
+.donationLine:nth-child(odd),
+.rewardLine:nth-child(odd),
+.commentLine:nth-child(odd){
+  background-color: #FDF6E3
+}
 .donationValue, .rewardValue {
   display:inline-block;
   float:left;
@@ -73,7 +76,12 @@ section.pledger {
   text-align: left;
   padding-left:5px;
 }
-.donationShowName, .rewardPremiaName {
+.commentText {
+  color: $green;
+}
+.donationShowName, 
+.rewardPremiaName,
+.commentShowName {
   display:block;
   clear:left;
   color: #268BD2;

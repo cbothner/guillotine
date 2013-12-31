@@ -1,0 +1,16 @@
+%aside.pledgerComments.grid_3
+  %h3 Comments
+  .sidemargins
+    =instructions_for_operators{"Would you like to send a message to the DJ?"}
+  .donationDiv
+    %a.clickable.commentLine#newDonation{ :data => { :id => "new" } }
+      .donationValue{:style => "padding: 10px 5px 10px 0;font-size:large;"}<
+        +
+      .donationShow{:style => "padding: 10px 0; font-size: large;"}<
+        %span.donationShowName{:style => "color:#B58900 !important;"}<
+          Leave Comment
+    -@activeComments.each do |comment|
+      .commentLine
+        .sidemargins
+          .commentText="\"#{comment.comment}\""
+          .commentShowName{:style => "margin-left:10px"}='&rarr;'.html_safe+" #{comment.show.get_name}"

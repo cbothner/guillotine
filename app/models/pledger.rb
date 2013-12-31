@@ -10,6 +10,7 @@ class Pledger < ActiveRecord::Base
   has_many :shows, :through => :slots
   has_many :rewards, :inverse_of => :pledger
   has_many :items, :through => :rewards
+  has_many :comments
   attr_accessible :affiliation, :email, :individual, :name, :local_address, :local_address2, :local_city, :local_phone, :local_state, :local_zip, :perm_address, :perm_address2, :perm_city, :perm_country, :perm_phone, :perm_state, :perm_zip
 
   validates :email, :name, :perm_address, :perm_city, :perm_country, :perm_phone, :presence => true

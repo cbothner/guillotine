@@ -31,6 +31,7 @@ class PledgersController < ApplicationController
     @archivedDonations = @pledger.donations.where("payment_received = 't'").includes(slot: :show)
     @activeRewards = @pledger.rewards.where("premia_sent = 'f'").includes(:item)
     @archivedRewards = @pledger.rewards.where("premia_sent = 't'").includes(:item)
+    @activeComments = @pledger.comments
 
     respond_to do |format|
       format.html # show.html.erb

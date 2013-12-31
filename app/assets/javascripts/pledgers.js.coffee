@@ -64,6 +64,14 @@ $(document).ready ->
     ))
   )
 
+  $(document).on("click",".clickable.commentLine", ->
+    $(this).replaceWith($('<div class="rewardForm rewardLine">').load("/comments/new", ->
+      $(".chzn-select").chosen()
+      $(".chzn-select").trigger("liszt:updated")
+      $("#comment_pledger_id").val($("#pledgerID").attr("data-id"))
+    ))
+  )
+
   $(document).on("click","#rewardFormCancelButton", ->
     rewardID = $(this).attr("data-id")
     $(this).parents(".rewardForm").replaceWith(window.openRewardLine[String(rewardID)])
