@@ -1,15 +1,27 @@
-%h2=@show.get_name
-
 .flexcontainer
-  -@slots.each do |s|
-    -slot,total,donations = s
-    .flex1.slothistory
-      .slothistory_semesternum
-        ="#{Weekdays[slot.weekday]} #{slot.semester}"
-      .slothistory_total
-        ="$#{number_with_precision(total, :precision => 2, :delimiter => ',')}"
-      %ul.slothistory_donorslist
-        -donations.each do |donation|
-          %li
-            %span.slothistory_pledgername=link_to(donation.pledger.name,donation.pledger)
-            %span.slothistory_donationamount="($#{number_with_delimiter(donation.amount.round, :delimiter => ',')})"
+  %section.home.flex3
+    =link_to "&larr;Back".html_safe, :back
+    %h2=@show.get_name 
+    .flexcontainer
+      -@slots.each do |s|
+        -slot,total,donations = s
+        .flex1.slothistory
+          .slothistory_semesternum
+            ="#{Weekdays[slot.weekday]} #{slot.semester}"
+          .slothistory_total
+            ="$#{number_with_precision(total, :precision => 2, :delimiter => ',')}"
+          %ul.slothistory_donorslist
+            -donations.each do |donation|
+              %li
+                %span.slothistory_pledgername=link_to(donation.pledger.name,donation.pledger)
+                %span.slothistory_donationamount="($#{number_with_delimiter(donation.amount.round, :delimiter => ',')})"
+
+  %section.home.grid_4
+    %h4{style: 'margin-top:0.5em;'} Comments
+    -@comments.each do |comment|
+      .comment
+        .comment_pledgername=link_to(comment.pledger.name,comment.pledger) + " — " + comment.created_at.strftime('%m/%d/%Y %k:%M')
+        .comment_text=comment.comment
+
+&nbsp;
+
