@@ -33,3 +33,24 @@
 }
 .above { z-index: 10; }
 .below { z-index: 1;  }
+
+
+.slothistory{ border-right: 1px solid $base0; }
+.slothistory:nth-last-child(1){ border-right: none; }
+.slothistory {
+  text-align: center;
+}
+.slothistory_semesternum{
+  font-weight:bold;
+}
+.slothistory_total{
+  width: 60%;
+  border-top: 1px solid $green;
+  border-bottom: 1px solid $green;
+  font-weight:bold;
+  color: darken($green,8%);
+  margin: 10px auto;
+  font-size: 1.3em;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}

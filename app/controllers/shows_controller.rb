@@ -26,6 +26,10 @@ class ShowsController < ApplicationController
   # GET /shows/1.json
   def show
     @show = Show.find(params[:id])
+    @slots = (@show.slots).sort_by{|s| s.semester}.reverse[0..3].reverse
+    @slots = @slots.map{ |s| [s,
+                              s.donations.collect{|d| d.amount}.reduce(:+).to_f,
+                              s.donations.sort_by{|x| x.amount }.reverse]}
 
     respond_to do |format|
       format.html # show.html.erb
