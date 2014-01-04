@@ -1,5 +1,9 @@
 -@comments.each do |comment|
-  .commentLine
-    .sidemargins
+  .commentLine.flexcontainer
+    .sidemargins.comment_time.flex1="#{comment.created_at.strftime("%l:%M %p")}<br />#{comment.created_at.strftime('%e %b %Y')}".html_safe
+    .sidemargins.flex5
       .commentText="\"#{comment.comment}\""
-      .commentShowName{:style => "margin-left:10px"}='&rarr;'.html_safe+" #{comment.show.get_name}"
+      .commentShowName{:style => "margin-left:10px"}
+        =link_to(comment.pledger.name,comment.pledger)
+        =' &rarr;'.html_safe
+        =link_to(comment.show.get_name,comment.show)

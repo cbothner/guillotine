@@ -9,10 +9,14 @@
   border: 1px $base00 solid;
 }
 .total_progress_bar{
-  background-color: $blue;
+  background-color: transparentize($blue,.10);
   margin: 2px;
 }
 .paid_progress_bar{
   background-color: $green;
   margin: 2px;
+}
+.total_progress_label,
+.paid_progress_label {
+  margin: .5em 0 0 1em;
 }

@@ -77,7 +77,8 @@ section.pledger {
   padding-left:5px;
 }
 .commentText {
-  color: $green;
+  color: $base01;
+  font-weight:bold;
 }
 .donationShowName, 
 .rewardPremiaName,
@@ -86,6 +87,9 @@ section.pledger {
   clear:left;
   color: #268BD2;
   font-weight: bold;
+}
+.commentShowName{
+  font-weight: normal !important;
 }
 .archive {
   color: #839496;

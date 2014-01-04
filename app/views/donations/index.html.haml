@@ -4,18 +4,18 @@ Semester
 
 .progress_container
   .total_progress_label
-    ="Pledged Progress: $#{@total_progress.round} / $#{@semester.goal}"
+    ="Pledged Progress: $#{number_with_delimiter(@total_progress.round)} / $#{number_with_delimiter(@semester.goal)}"
   .progress_bar
     .total_progress_bar{style: "width: #{@total_percent}%;"}
       &nbsp;
   .paid_progress_label
-    ="Paid Progress: $#{@paid_progress.round} / $#{@total_progress}"
+    ="Paid Progress: $#{number_with_delimiter(@paid_progress.round)} / $#{number_with_delimiter(@total_progress.round)}"
   .progress_bar
     .paid_progress_bar{style: "width: #{@paid_percent}%;"}
       &nbsp;
 
 .flexcontainer
-  -[["Pledged", @unpaid_progress, @unpaid_pledgers],
+  -[[user_is_dd? ? "Unpaid" : "Pledged" , @unpaid_progress, @unpaid_pledgers],
     ["Paid", @paid_progress, @paid_pledgers]].each do |section|
     %section.home.flex1
       %h4="#{section[0]}: $#{section[1].round}"

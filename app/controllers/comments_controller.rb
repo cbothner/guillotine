@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
 
   # GET /comments
   def index
-    @comments = Comment.all
+    @comments = Comment.includes(:pledger, :show).sort_by{|s| s.created_at}.reverse
   end
 
   # GET /comments/1
