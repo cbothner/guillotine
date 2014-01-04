@@ -7,7 +7,7 @@
         -slot,total,donations = s
         .flex1.slothistory
           .slothistory_semesternum
-            ="#{Weekdays[slot.weekday]} #{slot.semester}"
+            ="#{Weekdays[slot.weekday]} #{slot.semester.name}"
           .slothistory_total
             ="$#{number_with_precision(total, :precision => 2, :delimiter => ',')}"
           %ul.slothistory_donorslist
@@ -24,4 +24,3 @@
         .comment_text=comment.comment
 
 &nbsp;
-

@@ -1,0 +1,5 @@
+-@comments.each do |comment|
+  .commentLine
+    .sidemargins
+      .commentText="\"#{comment.comment}\""
+      .commentShowName{:style => "margin-left:10px"}='&rarr;'.html_safe+" #{comment.show.get_name}"

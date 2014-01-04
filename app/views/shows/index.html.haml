@@ -2,9 +2,9 @@
   &nbsp;
 
 %section.home.grid_8
-  %h1 Leaderboard #{@semester}
+  %h1 Leaderboard #{@semester.name}
   Semester
-  =select_tag("schedule", options_for_select(([@semester.to_f] + Slot.pluck(:semester)).uniq, @semester), class: "semester_select", data:{prefix: 'shows/sem-'})
+  =select_tag("schedule", options_for_select(Semester.all.map{|s| s.name }, @semester.name), class: "semester_select", data:{prefix: 'shows/'})
 
   .leaderboard
     -@shows.each_with_index do |arr,i|

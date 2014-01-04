@@ -1,11 +1,42 @@
 class DonationsController < ApplicationController
-  layout nil
+  layout "slots"
 
   before_filter :authenticate_user!
   # GET /donations
   # GET /donations.json
   def index
-    @donations = Donation.all
+    @semester = Semester.where(month: params[:month], year: params[:year])[0]
+    @semester ||= Semester.current_semester
+
+    donations = @semester.slots.inject([]){|dons, sem| dons+sem.donations}
+    @total_progress = donations.inject(0){|sum,don| sum+don.amount}
+    @total_percent = 100 * (@total_progress / @semester.goal)
+
+    unpaid_donations = donations.select{ |d| d.payment_received == false}
+    @unpaid_progress = unpaid_donations.inject(0){|sum,don| sum+don.amount}
+    @unpaid_pledgers = unpaid_donations.map{|d| d.pledger}
+                                       .uniq
+                                       .map do |pled|
+                                         pledger_total = pled.donations.select{|d| d.payment_received == false}.inject(0) do |sum,don|
+                                           sum + don.amount
+                                         end
+                                         {pledger: pled, amount: pledger_total}
+                                       end
+    @unpaid_pledgers = @unpaid_pledgers.sort_by{|x| x[:amount]}.reverse
+
+    paid_donations = donations.select{ |d| d.payment_received == true}
+    @paid_progress = paid_donations.inject(0){|sum,don| sum+don.amount}
+    @paid_pledgers = paid_donations.map{|d| d.pledger}
+                                       .uniq
+                                       .map do |pled|
+                                         pledger_total = pled.donations.select{|d| d.payment_received == true}.inject(0) do |sum,don|
+                                           sum + don.amount
+                                         end
+                                         {pledger: pled, amount: pledger_total}
+                                       end
+    @paid_pledgers = @paid_pledgers.sort_by{|x| x[:amount]}.reverse
+    @paid_percent = 100 * (@paid_progress / @total_progress)
+
 
     respond_to do |format|
       format.html # index.html.erb

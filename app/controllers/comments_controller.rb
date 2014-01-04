@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  layout "generate"
+
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   # GET /comments

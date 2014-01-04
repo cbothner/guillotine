@@ -1,0 +1,26 @@
+%h2="Pledges from #{@semester.name}"
+Semester
+=select_tag("schedule", options_for_select(Semester.all.map{|s| s.name }, @semester.name), class: "semester_select", data:{prefix:'donations/'})
+
+.progress_container
+  .total_progress_label
+    ="Pledged Progress: $#{@total_progress.round} / $#{@semester.goal}"
+  .progress_bar
+    .total_progress_bar{style: "width: #{@total_percent}%;"}
+      &nbsp;
+  .paid_progress_label
+    ="Paid Progress: $#{@paid_progress.round} / $#{@total_progress}"
+  .progress_bar
+    .paid_progress_bar{style: "width: #{@paid_percent}%;"}
+      &nbsp;
+
+.flexcontainer
+  -[["Pledged", @unpaid_progress, @unpaid_pledgers],
+    ["Paid", @paid_progress, @paid_pledgers]].each do |section|
+    %section.home.flex1
+      %h4="#{section[0]}: $#{section[1].round}"
+      %ul.donations_list
+        -section[2].each do |d|
+          %li.donation_li.flexcontainer
+            .donation_pledger.flex3=link_to(d[:pledger].name,d[:pledger])
+            .donation_amount.flex1="$%.2f" %d[:amount]

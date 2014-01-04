@@ -2,21 +2,21 @@ class Slot < ActiveRecord::Base
   has_many :donations, :inverse_of => :slot
   has_many :pledgers, :through => :donations
   belongs_to :show, :inverse_of => :slots
-  attr_accessible :end, :semester, :start, :weekday
+  belongs_to :semester, :inverse_of => :slots
+  attr_accessible :end, :semester_id, :start, :weekday
 
-  validates  :end, :semester, :start, :weekday, :presence => true
+  validates  :end, :semester_id, :start, :weekday, :presence => true
   validates :weekday, :numericality => { :less_than_or_equal => 6, :greater_than_or_equal => 0, :only_integer => true } # The week starts with Monday = 0
-  validates :semester, :numericality => { :greater_than => 0 }
 
   def self.on_now
     now = Time.new
     weekday = now.wday == 0 ? 6 : now.wday - 1
     std_now = Time.utc(2000,1,1,now.hour,now.min)
-    Slot.where("weekday = :weekday and start <= :now and \"end\" > :now and semester = :semester", {weekday: weekday, now: std_now, semester: Slot.current_semester})
+    Semester.current_semester.slots.where("weekday = :weekday and start <= :now and \"end\" > :now", {weekday: weekday, now: std_now})
   end
 
   def self.for_select
-    Slot.where(:semester => Slot.current_semester)
+    Semester.current_semester.slots
         .order(:weekday,:start)
         .group_by(&:weekday)
         .inject({}) do |r,e|
@@ -24,11 +24,6 @@ class Slot < ActiveRecord::Base
           r
         end
   end
-
-  def self.current_semester
-    self.maximum(:semester)
-  end
-
 end
 
 Weekdays = {

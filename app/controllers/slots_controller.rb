@@ -4,9 +4,9 @@ class SlotsController < ApplicationController
   # GET /slots
   # GET /slots.json
   def index
-    @semester = params[:semester]
-    @semester ||= Slot.current_semester
-    @slots = Slot.includes(:show).where("semester = #{@semester}").order(:start).group_by(&:weekday)
+    @semester = Semester.where(month: params[:month], year: params[:year])[0]
+    @semester ||= Semester.current_semester
+    @slots = @semester.slots.order(:start).group_by(&:weekday)
     (0..6).each {|i| @slots[i] ||= [] }
 
     @slot = Slot.new
@@ -42,6 +42,7 @@ class SlotsController < ApplicationController
     showID = params[:slot].delete(:show)
     name = params[:slot].delete(:name)
     dj = params[:slot].delete(:dj)
+    @semester = Semester.find(params[:slot].delete(:semester_id))
     if showID
       @show = Show.find(showID)
     else
@@ -49,7 +50,7 @@ class SlotsController < ApplicationController
     end
     @slot = Slot.new(params[:slot])
     @show.slots << @slot
-    @semester = params[:slot][:semester]
+    @semester.slots << @slot
 
     respond_to do |format|
       if @slot.save

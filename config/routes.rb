@@ -12,10 +12,11 @@ Guillotine::Application.routes.draw do
   resources :rewards
 
 
+  get "donations/:year/:month", :year => /[0-9]{4}/, :month => /[0-9]{2}/, to: 'donations#index'
   resources :donations
 
 
-  get "shows/sem-:semester", :semester => /[0-9]{4}\.[0-9]{2}/, to: 'shows#index'
+  get "shows/:year/:month", :year => /[0-9]{4}/, :month => /[0-9]{2}/, to: 'shows#index'
   resources :shows
 
 
@@ -23,7 +24,7 @@ Guillotine::Application.routes.draw do
 
 
   resources :slots, except: [:show]
-  get "slots/:semester", :semester => /[0-9]{4}\.[0-9]{2}/, to: 'slots#index'
+  get "slots/:year/:month", :year => /[0-9]{4}/, :month => /[0-9]{2}/, to: 'slots#index'
 
 
   resources :pledgers do

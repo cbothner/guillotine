@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131229021048) do
+ActiveRecord::Schema.define(version: 20140103162641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,14 @@ ActiveRecord::Schema.define(version: 20131229021048) do
   add_index "rewards", ["item_id"], name: "index_rewards_on_item_id", using: :btree
   add_index "rewards", ["pledger_id"], name: "index_rewards_on_pledger_id", using: :btree
 
+  create_table "semesters", force: true do |t|
+    t.integer  "year"
+    t.integer  "month"
+    t.integer  "goal"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "shows", force: true do |t|
     t.string   "name"
     t.string   "dj"
@@ -100,14 +108,15 @@ ActiveRecord::Schema.define(version: 20131229021048) do
 
   create_table "slots", force: true do |t|
     t.integer  "show_id"
-    t.float    "semester"
     t.integer  "weekday"
     t.time     "start"
     t.time     "end"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "semester_id"
   end
 
+  add_index "slots", ["semester_id"], name: "index_slots_on_semester_id", using: :btree
   add_index "slots", ["show_id"], name: "index_rewards_on_show_id", using: :btree
 
   create_table "users", force: true do |t|
