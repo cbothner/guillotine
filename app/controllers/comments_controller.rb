@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     pledgerID = params[:comment][:pledger_id]
     @pledger = Pledger.find(pledgerID)
-    @activeComments = @pledger.comments
+    @activeComments = @pledger.comments.includes(:show).sort_by{|c| c.created_at}.reverse
 
     respond_to do |format|
       if @comment.save

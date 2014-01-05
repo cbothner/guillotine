@@ -27,11 +27,11 @@ class PledgersController < ApplicationController
   def show
     @pledger = Pledger.find(params[:id])
 
-    @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: :show)
-    @archivedDonations = @pledger.donations.where("payment_received = 't'").includes(slot: :show)
+    @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester])
+    @archivedDonations = @pledger.donations.where("payment_received = 't'").includes(slot: [:show, :semester])
     @activeRewards = @pledger.rewards.where("premia_sent = 'f'").includes(:item)
     @archivedRewards = @pledger.rewards.where("premia_sent = 't'").includes(:item)
-    @activeComments = @pledger.comments
+    @activeComments = @pledger.comments.includes(:show).sort_by{|c| c.created_at}.reverse
 
     respond_to do |format|
       format.html # show.html.erb
