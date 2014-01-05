@@ -17,7 +17,7 @@ class DonationsController < ApplicationController
     @unpaid_pledgers = unpaid_donations.map{|d| d.pledger}
                                        .uniq
                                        .map do |pled|
-                                         pledger_total = pled.donations.select{|d| d.payment_received == false}.inject(0) do |sum,don|
+                                         pledger_total = pled.donations.select{|d| d.payment_received == false and d.slot.semester == @semester}.inject(0) do |sum,don|
                                            sum + don.amount
                                          end
                                          {pledger: pled, amount: pledger_total}
@@ -29,7 +29,7 @@ class DonationsController < ApplicationController
     @paid_pledgers = paid_donations.map{|d| d.pledger}
                                        .uniq
                                        .map do |pled|
-                                         pledger_total = pled.donations.select{|d| d.payment_received == true}.inject(0) do |sum,don|
+                                         pledger_total = pled.donations.select{|d| d.payment_received == true and d.slot.semester == @semester}.inject(0) do |sum,don|
                                            sum + don.amount
                                          end
                                          {pledger: pled, amount: pledger_total}
@@ -44,14 +44,13 @@ class DonationsController < ApplicationController
     end
   end
 
-   #GET /donations/1
-   #GET /donations/1.json
+   #GET /donations/1.pdf
   def show
     @donation = Donation.find(params[:id])
+    @pledger = @donation.pledger
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @donation }
+      format.pdf { render :layout => "application", formats: [:pdf] }
     end
   end
 
@@ -65,6 +64,7 @@ class DonationsController < ApplicationController
     respond_to do |format|
       format.html { render :layout => !request.xhr? }
       format.json { render json: @donation }
+      format.pdf { render :layout => "application", formats: [:pdf] }
     end
   end
 

@@ -1,4 +1,4 @@
-\documentclass[10pt,letterpaper]{article}
+\documentclass[10pt,letterpaper]{amsart}
 
 \usepackage[cm]{fullpage}
 \usepackage{palatino}

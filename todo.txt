@@ -3,5 +3,3 @@ TODO Generate shipping forms
 TODO Mass enter premia
 TODO Premia view =>
 TODO Fix rewards view.
-TODO Credit Cards
-
