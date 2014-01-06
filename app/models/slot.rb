@@ -15,8 +15,8 @@ class Slot < ActiveRecord::Base
     Semester.current_semester.slots.where("weekday = :weekday and start <= :now and \"end\" > :now", {weekday: weekday, now: std_now})
   end
 
-  def self.for_select
-    Semester.current_semester.slots
+  def self.for_select(semester = Semester.current_semester)
+    semester.slots
         .order(:weekday,:start)
         .group_by(&:weekday)
         .inject({}) do |r,e|
