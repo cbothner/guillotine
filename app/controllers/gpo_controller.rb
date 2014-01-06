@@ -14,6 +14,9 @@ class GpoController < ApplicationController
     
     @giftTotal = @depositTotal - @premiaTotal
 
+    @pledger.perm_phone = @pledger.perm_phone == '(000) 000-0000' ? "No Phone" : @pledger.perm_phone
+    @pledger.email = @pledger.email.blank? ? "No Email" : @pledger.email
+
     respond_to do |format|
       format.pdf { render :layout => true, formats: [:pdf]
         # Mark GPOs sent
@@ -32,6 +35,8 @@ class GpoController < ApplicationController
     pledgersForGPO = checksForDeposit.map{ |don| don.pledger_id }.uniq
     @argsForGPO = pledgersForGPO.map{ |id|
       pledger = Pledger.find(id)
+      pledger.perm_phone ||= "No Phone"
+      pledger.email ||= "No Email" 
       { :pledger => pledger, 
         :depositTotal => checksForDeposit
           .select{ |don| don.pledger_id == id }
