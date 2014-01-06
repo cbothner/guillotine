@@ -8,7 +8,7 @@ $(document).ready ->
         <div class="flex3 flexcontainer" id="choose_or_new_show_div">
           <div class="flex3">
             <label for="slot_name">Name</label><br>
-            <input id="slot_name" name="slot[name]" type="text">
+            <input id="slot_name" name="slot[name]" type="text" autofocus="autofocus">
           </div>
           <div class="flex2">
             <label for="slot_dj">DJ</label><br>
