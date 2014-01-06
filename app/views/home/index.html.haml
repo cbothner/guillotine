@@ -3,20 +3,19 @@
     %section.home.flex1
       %h2 Information
       %ul
-        %li Pledger Search
+        %li= link_to "Progress", :donations
+        %li= link_to "Comments", :comments
+        %li= link_to "Premia Shipments", :rewards
   -else
     %section.flex1
   %section.home{:class => user_is_dd? ? "flex1" : "flex3"}
     %h2 Management
     %ul
-      %li= link_to "Pledgers", :pledgers
+      %li= link_to "Pledger Search", :pledgers
       - if user_is_dd?
-        %li= link_to "Donations", :donations
-        %li= link_to "Comments", :comments
-        %li= link_to "Rewards", :rewards
-        %li= link_to "Premia", :items
+        %li= link_to "Premia Inventory", :items
         %li= link_to "Shows", :shows
-        %li= link_to "Schedule", :slots
+        %li= link_to "Show Schedule", :slots
       - else
         %li= link_to "Progress", :donations
         %li= link_to "Comments", :comments

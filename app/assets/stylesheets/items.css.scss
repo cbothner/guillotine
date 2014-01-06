@@ -1,3 +1,15 @@
-// Place all the styles related to the Items controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'globals';
+.items_row {
+  padding: 2px;
+  line-height: 1.3;
+  .out_of_stock{
+    color: $red;
+    font-weight: bold;
+  }
+}
+.items_header {
+  font-weight: bold;
+}
+.inactive {
+  color: $base1;
+}

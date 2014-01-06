@@ -1,10 +1,13 @@
 class ItemsController < ApplicationController
-
+  layout "slots"
   before_filter :authenticate_user!
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    @active_items = Item.active
+    @inactive_items = Item.inactive
+    
+    @item = Item.new
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,8 +49,8 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
-        format.html { redirect_to @item, notice: 'Item was successfully created.' }
-        format.json { render json: @item, status: :created, location: @item }
+        format.html { redirect_to :items, notice: 'Item was successfully created.' }
+        format.json { render json: @item, status: :created, location: @slot }
       else
         format.html { render action: "new" }
         format.json { render json: @item.errors, status: :unprocessable_entity }
@@ -63,10 +66,10 @@ class ItemsController < ApplicationController
     respond_to do |format|
       if @item.update_attributes(params[:item])
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }
-        format.json { head :no_content }
+        format.json { respond_with_bip(@item) }
       else
         format.html { render action: "edit" }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
+        format.json { respond_with_bip(@item) }
       end
     end
   end

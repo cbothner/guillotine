@@ -11,33 +11,35 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :taxable_value %><br />
-    <%= f.text_field :taxable_value %>
-  </div>
-  <div class="field">
-    <%= f.label :cost %><br />
-    <%= f.text_field :cost %>
-  </div>
-  <div class="field">
-    <%= f.label :stock %><br />
-    <%= f.number_field :stock %>
-  </div>
-  <div class="field">
-    <%= f.label :backorderable %><br />
-    <%= f.check_box :backorderable %>
-  </div>
-  <div class="field">
-    <%= f.label :shape %><br />
-    <%= f.text_field :shape %>
-  </div>
-  <div class="field">
-    <%= f.label :note %><br />
-    <%= f.text_area :note %>
+  <div class="flexcontainer middlepadding">
+    <div class="flex3">
+      <%= f.label :name %><br />
+      <%= f.text_field :name %>
+    </div>
+    <div class="flex1">
+      <%= f.label :cost %><br />
+      <%= f.number_field :cost %>
+    </div>
+    <div class="flex1">
+      <%= f.label :taxable_value %><br />
+      <%= f.number_field :taxable_value %>
+    </div>
+    <div class="flex1">
+      <%= f.label :stock %><br />
+      <%= f.number_field :stock %>
+    </div>
+    <div class="flex1">
+      <%= f.label :backorderable, "Backorder?" %><br />
+      <%= f.check_box :backorderable %>
+    </div>
+    <div class="flex1">
+      <%= f.label :shape %><br />
+      <%= f.select( :shape, options_for_select(["box","flat","shirt","sweatshirt","incorporeal"].map{|s| [s.capitalize,s]}), {}, {class: "chzn-select"} ) %>
+    </div>
+    <div class="flex2">
+      <%= f.label :note %><br />
+      <%= f.text_field :note %>
+    </div>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -1,0 +1,37 @@
+%h2="Premia Inventory"
+=render 'form' if user_is_dd?
+
+%section.home
+  %h4 Active
+  .items_row.items_header.flexcontainer
+    .flex6 Item Name
+    .flex2 Cost
+    .flex2 Taxable Value
+    .flex2 Stock
+    .flex2 Backorder?
+    .flex2 Shape
+    .flex4 Note
+    .flex1 &nbsp;
+  -@active_items.each do |i|
+    .items_row.flexcontainer
+      .flex6=best_in_place i, :name
+      .flex2=best_in_place i, :cost, :display_with => :number_to_currency
+      .flex2=best_in_place i, :taxable_value, :display_with => :number_to_currency
+      .flex2{:class => ('out_of_stock' if i.stock <= 0)}=best_in_place i, :stock
+      .flex2=best_in_place i, :backorderable, :type => :checkbox
+      .flex2=best_in_place i, :shape, :type => :select, :collection => (["box","flat","shirt","sweatshirt","incorporeal"].map{|s| [s,s.capitalize]})
+      .flex4=best_in_place i, :note
+      .flex1.deleteDonationLink= link_to '[X]', {:action=>'destroy', :id=>i}, :confirm=>"Are you sure you want to delete this item?", :method=>:delete
+%section.home
+  %h4 Archived
+  -@inactive_items.each do |i|
+    .items_row.flexcontainer
+      .flex6.inactive=best_in_place i, :name
+      .flex2.inactive=best_in_place i, :cost, :display_with => :number_to_currency
+      .flex2.inactive=best_in_place i, :taxable_value, :display_with => :number_to_currency
+      .flex2.inactive=best_in_place i, :stock
+      .flex2.inactive=best_in_place i, :backorderable, :type => :checkbox
+      .flex2.inactive=best_in_place i, :shape, :type => :select, :collection => (["box","flat","shirt","sweatshirt","incorporeal"].map{|s| [s,s.capitalize]})
+      .flex4.inactive=best_in_place i, :note
+      .flex1.deleteDonationLink= link_to '[X]', {:action=>'destroy', :id=>i}, :confirm=>"Are you sure you want to delete this item?", :method=>:delete
+&nbsp;
