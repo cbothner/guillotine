@@ -1,3 +1,2 @@
-TODO Generate pledge forms
 TODO Generate shipping forms
 TODO Fix rewards view.

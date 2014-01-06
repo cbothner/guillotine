@@ -15,10 +15,15 @@
     = f.label :item 
     = f.select( :item, options_for_select(Item.for_select, @selectedItem), {}, :class => "chzn-select" )
   - if user_is_dd?
-    .field.centered
-      %abbr{:title => "Premia Sent?"}
-        = f.label :premia_sent, "&nbsp;".html_safe, :class => "fontawesome-gift icon-large"
-      = f.check_box :premia_sent
+    .flexcontainer
+      .field.centered.flex1
+        %abbr{:title => "Premia Sent?"}
+          = f.label :premia_sent, "&nbsp;".html_safe, :class => "fontawesome-gift icon-large"
+        = f.check_box :premia_sent
+      .field.centered.flex1
+        %abbr{:title => "Taxed?"}
+          =f.label :taxed, "TAX"
+        = f.check_box :taxed
   - else
     = f.hidden_field :premia_sent, value: false
   .field

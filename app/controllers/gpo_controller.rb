@@ -10,8 +10,6 @@ class GpoController < ApplicationController
     unsentPremia = @pledger.rewards.where("premia_sent = 'false' and taxed = 'false'")
     @premiaTotal = unsentPremia.inject(0){ |sum,e| sum += e.item.taxable_value }
 
-    #TODO Set taxed = true after PDFs are generated
-    
     @giftTotal = @depositTotal - @premiaTotal
 
     @pledger.perm_phone = @pledger.perm_phone == '(000) 000-0000' ? "No Phone" : @pledger.perm_phone
@@ -21,7 +19,11 @@ class GpoController < ApplicationController
       format.pdf { render :layout => true, formats: [:pdf]
         # Mark GPOs sent
         checksForDeposit.each do |donation|
-          donation.update_attributes({:gpo_sent => "true"})
+          donation.update_attributes({:gpo_sent => true})
+        end
+        # Mark premia taxed
+        unsentPremia.each do |reward|
+          reward.update_attributes({:taxed => true})
         end
       }
     end
@@ -32,14 +34,15 @@ class GpoController < ApplicationController
     checksForDeposit = Donation.where("payment_received = 'true' and gpo_sent = 'false'")
 
     # Unique list of pledgers in checksForDeposit
-    pledgersForGPO = checksForDeposit.map{ |don| don.pledger_id }.uniq
-    @argsForGPO = pledgersForGPO.map{ |id|
-      pledger = Pledger.find(id)
+    pledgersForGPO = checksForDeposit.map{ |don| Pledger.find(don.pledger_id) }.uniq
+    unsentPremia = pledgersForGPO.inject([]){ |sum, p| sum + p.rewards } & Reward.where("premia_sent = 'false' and taxed = 'false'")
+    
+    @argsForGPO = pledgersForGPO.map{ |pledger|
       pledger.perm_phone ||= "No Phone"
       pledger.email ||= "No Email" 
       { :pledger => pledger, 
         :depositTotal => checksForDeposit
-          .select{ |don| don.pledger_id == id }
+          .select{ |don| don.pledger_id == pledger.id }
           .inject(0){ |sum,e| sum += e.amount },
         :premiaTotal => pledger.rewards.where("premia_sent = 'false' and taxed = 'false'")
           .inject(0){ |sum,e| sum+= e.item.taxable_value }
@@ -52,6 +55,10 @@ class GpoController < ApplicationController
         # Mark GPOs sent
         checksForDeposit.each do |donation|
           donation.update_attributes({:gpo_sent => "true"})
+        end
+        # Mark premia taxed
+        unsentPremia.each do |reward|
+          reward.update_attributes({:taxed => true})
         end
       }
     end

@@ -89,6 +89,7 @@ class RewardsController < ApplicationController
   def update
     pledgerID = params[:reward].delete(:pledger_id)
     @reward = Reward.find(params[:id])
+    params[:reward][:item] = Item.find(params[:reward][:item])
 
     respond_to do |format|
       @activeRewards = @reward.pledger.rewards.where("premia_sent = 'false'")
