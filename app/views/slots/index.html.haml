@@ -1,7 +1,6 @@
 %h2="Show Schedule #{@semester.name}"
 Semester
 =select_tag("schedule", options_for_select(Semester.all.map{|s| s.name } + (user_is_dd? ? ['New Semester'] : []), @semester.name), class: "semester_select", data:{prefix:'slots/'})
--#=select_tag("schedule", options_for_select((Semester.all.map{|s| s.name }.to_a + (user_is_dd? ? ["New Semester"] : []), @semester.name), class: "semester_select", data:{prefix:'slots/'})
 
 =render 'form' if user_is_dd?
 
@@ -13,5 +12,8 @@ Semester
       -@slots[i].each do |slot|
         -length = ((slot.end - slot.start)/1800).round
         .schedule_slot(class="slot_#{length}")
-          .schedule_starttime=slot.start.to_s(:time)
+          .schedule_starttime
+            =slot.start.to_s(:time)
+            -if user_is_dd?
+              %span.deleteDonationLink=link_to '[X]', {:action=>'destroy', :id=>slot}, :confirm=>"Are you sure you want to delete this slot?", :method=>:delete
           .schedule_showname=link_to(slot.show.get_name,slot.show)
