@@ -8,16 +8,16 @@ class Item < ActiveRecord::Base
   validates :stock, :numericality => { :only_integer => true, :greater_than_or_equal => 0 }
   validates :shape, :inclusion => { :in => %w{box flat shirt sweatshirt incorporeal}, :message => "Must be a valid shape" }
 
-  def self.for_select
+  def self.for_select(total_donation)
+    #total_donation = 1_000_000 if user_is_dd?
     not_sold_out = []
-    active.sort_by{|i| i.cost}.each { |i| 
+    active.sort_by{|i| i.cost}.reject{|i| i.cost >= total_donation}.each { |i| 
       numleft = i.get_stock
       not_sold_out.push([i,numleft])
     }
     not_sold_out.map { |i,numleft|
       [i.name + (numleft > 0 ? " — #{numleft} left" : " — Backordered") + " ($%.2f)" % i.cost, i.id]
     }
-    # TODO Only show things that Pledger can afford in the non-DD view
   end
 
   def self.active

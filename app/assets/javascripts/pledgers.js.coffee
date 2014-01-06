@@ -56,7 +56,7 @@ $(document).ready ->
     if $(this).attr('data-id') != 'new'
       editOrNot = "/edit"
     else
-      editOrNot = ""
+      editOrNot = "/pledger-#{$("#pledgerID").attr("data-id")}"
     $(this).replaceWith($('<div class="rewardForm rewardLine">').load("/rewards/#{$(this).attr('data-id')}#{editOrNot}", ->
       $(".chzn-select").chosen()
       $(".chzn-select").trigger("liszt:updated")
