@@ -66,13 +66,14 @@ class RewardsController < ApplicationController
   def create
     pledgerID = params[:reward].delete(:pledger_id)
     pledger = Pledger.find(pledgerID)
-    params[:reward][:item] = Item.find(params[:reward][:item])
+    item = params[:reward][:item] = Item.find(params[:reward][:item])
     @reward = pledger.rewards.create(params[:reward])
     @activeRewards = pledger.rewards.where("premia_sent = 'false'")
     @archivedRewards = pledger.rewards.where("premia_sent = 'true'")
 
     respond_to do |format|
       if @reward.save
+        item.update_attributes(stock: item.stock - 1) if @reward.premia_sent
         format.html { redirect_to @reward, notice: 'Reward was successfully created.' }
         format.json { render json: @reward, status: :created, location: @reward }
         format.js
@@ -89,12 +90,17 @@ class RewardsController < ApplicationController
   def update
     pledgerID = params[:reward].delete(:pledger_id)
     @reward = Reward.find(params[:id])
-    params[:reward][:item] = Item.find(params[:reward][:item])
+    item = params[:reward][:item] = Item.find(params[:reward][:item])
+    premia_sent_before_update = @reward.premia_sent
 
     respond_to do |format|
       @activeRewards = @reward.pledger.rewards.where("premia_sent = 'false'")
       @archivedRewards = @reward.pledger.rewards.where("premia_sent = 'true'")
       if @reward.update_attributes(params[:reward])
+        if @reward.premia_sent != premia_sent_before_update
+          item.update_attributes(stock: item.stock - 1) if @reward.premia_sent
+          item.update_attributes(stock: item.stock + 1) if !@reward.premia_sent
+        end
         format.html { redirect_to @reward, notice: 'Reward was successfully updated.' }
         format.json { head :no_content }
         format.js
