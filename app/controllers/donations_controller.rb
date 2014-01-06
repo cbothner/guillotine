@@ -35,7 +35,11 @@ class DonationsController < ApplicationController
                                          {pledger: pled, amount: pledger_total}
                                        end
     @paid_pledgers = @paid_pledgers.sort_by{|x| x[:amount]}.reverse
-    @paid_percent = 100 * (@paid_progress / @total_progress)
+    begin
+      @paid_percent = 100 * (@paid_progress / @total_progress)
+    rescue
+      @paid_percent = 0
+    end
 
 
     respond_to do |format|
