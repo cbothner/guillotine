@@ -18,15 +18,15 @@
     </div>
     <div class="flex1">
       <%= f.label :cost %><br />
-      <%= f.number_field :cost %>
+      <%= f.number_field :cost, step: "any", min:0 %>
     </div>
     <div class="flex1">
       <%= f.label :taxable_value %><br />
-      <%= f.number_field :taxable_value %>
+      <%= f.number_field :taxable_value, step: "any", min:0 %>
     </div>
     <div class="flex1">
       <%= f.label :stock %><br />
-      <%= f.number_field :stock %>
+      <%= f.number_field :stock, min:0 %>
     </div>
     <div class="flex1">
       <%= f.label :backorderable, "Backorder?" %><br />
