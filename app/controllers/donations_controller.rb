@@ -37,7 +37,7 @@ class DonationsController < ApplicationController
     @paid_pledgers = @paid_pledgers.sort_by{|x| x[:amount]}.reverse
     begin
       @paid_percent = 100 * (@paid_progress / @total_progress)
-    rescue
+    rescue # If it's division by zero, which will be the initial state every semester.
       @paid_percent = 0
     end
 
@@ -63,6 +63,7 @@ class DonationsController < ApplicationController
   def new
     @donation = Donation.new
     @donationID = "new"
+    @selectedSemester = Semester.current_semester
     @selectedShow = Slot.on_now
 
     respond_to do |format|
@@ -76,6 +77,7 @@ class DonationsController < ApplicationController
   def edit
     @donation = Donation.find(params[:id])
     @donationID = params[:id]
+    @selectedSemester = @donation.slot.semester
     @selectedSlot = @donation.slot.id
 
     respond_to do |format|
@@ -136,6 +138,23 @@ class DonationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to pledger_url(pledger) }
       format.json { head :no_content }
+    end
+  end
+
+  def pledge_forms
+    @donations = Donation.where(pledge_form_sent: false)
+    @rewards = Reward.where(premia_sent: false)
+    @pledgers = @donations.map{ |d| d.pledger }.uniq
+
+    respond_to do |format|
+      format.html{ render :layout => 'generate' }
+      format.pdf do
+        render :layout => 'application', formats: [:pdf]
+        @donations.each do |d|
+          d.pledge_form_sent = true
+          d.save
+        end
+      end
     end
   end
 end

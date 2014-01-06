@@ -1,0 +1,8 @@
+-if @donations.empty?
+  %h1 No Unsent Pledge Forms
+-else
+  %h1=(link_to "Generate", :action => "pledge_forms", :format => :pdf)+" Unsent Pledge Forms"
+
+  %ul
+    -@pledgers.each do |pledger|
+      %li=link_to pledger.name, pledger

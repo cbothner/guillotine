@@ -13,6 +13,7 @@ Guillotine::Application.routes.draw do
 
 
   get "donations/:year/:month", :year => /[0-9]{4}/, :month => /[0-9]{2}/, to: 'donations#index'
+  get "donations/pledge_forms", to: 'donations#pledge_forms'
   resources :donations
 
 

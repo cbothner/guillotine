@@ -8,5 +8,8 @@
 \usepackage{float}
 \usepackage{tabularx}
 \usepackage{subfig}
+\usepackage{graphics}
+\graphicspath{ {../../../app/assets/images/} }
+
 
 <%= yield %>
