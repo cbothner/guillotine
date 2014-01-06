@@ -93,6 +93,7 @@ class DonationsController < ApplicationController
     @donation = @pledger.donations.create(params[:donation])
     @activeDonations = @pledger.donations.where("payment_received = 'false'")
     @archivedDonations = @pledger.donations.where("payment_received = 'true'")
+    @donation.phone_operator = current_user.username
 
     respond_to do |format|
       if @donation.save

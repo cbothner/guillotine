@@ -17,11 +17,11 @@
     .flex1.field
       = f.label :amount
       %br
-      = f.number_field :amount
+      = f.number_field :amount, autofocus: "autofocus"
     .flex2.field
       = f.label :payment_method 
       %br
-      = f.select(:payment_method, ["Cash", "Check", "Credit Card"])
+      = f.select(:payment_method, ["Check", "Cash", "Credit Card"])
   -if user_is_dd?
     .flexcontainer
       .flex1.field.centered
@@ -42,6 +42,10 @@
     = f.hidden_field :gpo_sent, value: false
     %div{:style => "height:6px;"}
   = f.hidden_field :pledger_id
+  -if @donation.id
+    %p.notabene{:style => "font-style:normal;margin-top: -2px;padding-left: 0;margin-bottom: -2px;"}<
+      Phone Operator:&nbsp;
+      = @donation.phone_operator
   .actions
     = f.submit data: { disable_with: 'Saving...' }
     = button_tag "Cancel", :type => "button", :id => "donationFormCancelButton", :data => { :id => @donationID }
