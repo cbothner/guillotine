@@ -1,0 +1,38 @@
+%h2=@item.name
+.flexcontainer
+  %section.home.flex1
+    .items_row.items_header.flexcontainer
+      .flex6 Item Name
+      .flex2 Cost
+      .flex3 Taxable Value
+      .flex2 Stock
+      .flex2 Backorder?
+      .flex2 Shape
+      .flex4 Note
+      -if user_is_dd?
+        .flex1 &nbsp;
+    .items_row.flexcontainer
+      .flex6=best_in_place_if user_is_dd?, @item, :name
+      .flex2=best_in_place_if user_is_dd?, @item, :cost, :display_with => :number_to_currency
+      .flex3=best_in_place_if user_is_dd?, @item, :taxable_value, :display_with => :number_to_currency
+      .flex2{:class => ('out_of_stock' if @item.stock <= 0)}=best_in_place_if user_is_dd?, @item, :stock
+      -if user_is_dd?
+        .flex2=best_in_place @item, :backorderable, :type => :checkbox
+      -else
+        .flex2=i.backorderable ? "Yes" : "No"
+      .flex2=best_in_place_if user_is_dd?, @item, :shape, :type => :select, :collection => (["box","flat","shirt","sweatshirt","incorporeal"].map{|s| [s,s.capitalize]})
+      .flex4=best_in_place_if user_is_dd?, @item, :note
+      - if user_is_dd?
+        .flex1.deleteDonationLink= link_to '[X]', {:action=>'destroy', :id=>@item.id}, :confirm=>"Are you sure you want to delete this item?", :method=>:delete
+
+.flexcontainer
+  -[{name: "Requested", rewards: @requested, count: @requested.count},
+    {name: "Fulfilled", rewards: @fulfilled, count: @fulfilled.count}].each do |section|
+    %section.home.flex1
+      %h4="#{section[:count]} #{section[:name]}"
+      %ul
+        -section[:rewards].each do |r|
+          %li
+            =link_to r.pledger.name, r.pledger
+
+&nbsp;

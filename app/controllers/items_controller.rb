@@ -19,6 +19,8 @@ class ItemsController < ApplicationController
   # GET /items/1.json
   def show
     @item = Item.find(params[:id])
+    @requested = @item.rewards.select{|r| !r.premia_sent}.sort_by{|r| r.pledger.name}
+    @fulfilled = @item.rewards.select{|r| r.premia_sent}.sort_by{|r| r.pledger.name}
 
     respond_to do |format|
       format.html # show.html.erb
