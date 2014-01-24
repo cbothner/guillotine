@@ -4,8 +4,9 @@ Guillotine::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => "users/registrations" }
 
   get "gpo/single/:id", to: 'gpo#single'
-
   get "gpo/all"
+  get "gpo/creditcards"
+  post "gpo/creditcards", to: 'gpo#process_creditcards'
 
   get "home/index"
 

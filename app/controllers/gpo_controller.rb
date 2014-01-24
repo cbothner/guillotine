@@ -63,4 +63,37 @@ class GpoController < ApplicationController
       }
     end
   end
+
+  def creditcards
+    unprocessed_cc_donations_by_pledger = Donation.where(payment_method: "Credit Card", gpo_sent: 'false').includes(:pledger => [:rewards]).group_by{|d| d.pledger}.to_a
+
+    @arguments = unprocessed_cc_donations_by_pledger.map do |x|
+      { pledger: x[0],
+        donation_total: x[1].inject(0){|s,d| s+d.amount},
+        tax_liability: x[0].rewards.select{|r| !r.taxed}.inject(0){|s,r| s+r.item.taxable_value}
+      }
+    end
+    @arguments.each do |a|
+      a[:tax_exempt_donation] = a[:donation_total] - a[:tax_liability]
+    end
+
+    respond_to do |format|
+      format.html { render :layout => "generate" }
+    end
+  end
+
+  def process_creditcards
+    unprocessed_cc_donations_by_pledger = Donation.where(payment_method: "Credit Card", gpo_sent: 'false').includes(:pledger).group_by{|d| d.pledger}.to_a
+    unprocessed_donations_and_untaxed_rewards = unprocessed_cc_donations_by_pledger.map do |x|
+      [ x[1],x[0].rewards.select{|r| !r.taxed} ]
+    end
+
+    unprocessed_donations_and_untaxed_rewards.each do |x|
+      x[0].each{|d| d.update_attributes(gpo_sent: true)}  # donations
+      x[1].each{|r| r.update_attributes(taxed: true)}     # rewards
+    end
+    respond_to do |format|
+      format.html { redirect_to controller: 'gpo', action: 'creditcards', notice: 'Successfully processed Credit Card GPOs.' }
+    end
+  end
 end

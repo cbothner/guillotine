@@ -1,0 +1,19 @@
+-if !@arguments.empty?
+  %h2 Tax on Unprocessed Credit Card Donations
+
+  =link_to "Mark sent all CC donations, taxed all associated rewards", "creditcards", method: :post
+
+  .items_header.donationLine.flexcontainer
+    .flex3.sidemargins Pledger Name
+    .flex1 Donation
+    .flex1 Tax Liability
+    .flex1 Tax Exempt Donation
+  -@arguments.each do |a|
+    .donationLine.flexcontainer
+      .flex3.sidemargins=a[:pledger].name
+      .flex1=number_to_currency(a[:donation_total])
+      .flex1=number_to_currency(a[:tax_liability])
+      .flex1=number_to_currency(a[:tax_exempt_donation])
+-else
+
+  %h2 No Unprocessed Credit Card Donations
