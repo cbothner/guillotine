@@ -2,7 +2,10 @@
   %h2 Users
   -@users.each do |user|
     .flexcontainer
-      .flex1.deleteDonationLink= link_to '[X]', {:action=>'destroy', :id=>user}, :confirm=>"Are you sure you want to delete this user?", :method=>:delete
+      -if user.username != 'dd'
+        .flex1.deleteDonationLink= link_to '[X]', {:action=>'destroy', :id=>user}, :confirm=>"Are you sure you want to delete this user?", :method=>:delete
+      -else
+        .flex1.deleteDonationLink
       .flex3=user.username
       .flex6=user.email
 -else
