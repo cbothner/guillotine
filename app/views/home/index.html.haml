@@ -7,6 +7,7 @@
         %li= link_to "Comments", :comments
         %li= link_to "Premia Shipments", :rewards
         %li= link_to "Tax on Credit Card Donations", :controller => "gpo", :action => "creditcards"
+        %li= link_to "Users", :users
   -else
     %section.flex1
   %section.home{:class => user_is_dd? ? "flex1" : "flex3"}

@@ -1,0 +1,8 @@
+-if user_is_dd?
+  %h2 Users
+  -@users.each do |user|
+    .flexcontainer
+      .flex2=user.username
+      .flex4=user.email
+-else
+  %h2 Only DD can see this page.
