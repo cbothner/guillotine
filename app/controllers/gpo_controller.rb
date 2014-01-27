@@ -65,7 +65,7 @@ class GpoController < ApplicationController
   end
 
   def creditcards
-    unprocessed_cc_donations_by_pledger = Donation.where(payment_method: "Credit Card", gpo_sent: 'false').includes(:pledger => [:rewards]).group_by{|d| d.pledger}.to_a
+    unprocessed_cc_donations_by_pledger = Donation.where(payment_method: "Credit Card", gpo_processed: 'false').includes(:pledger => [:rewards]).group_by{|d| d.pledger}.to_a
 
     @arguments = unprocessed_cc_donations_by_pledger.map do |x|
       { pledger: x[0],
@@ -89,7 +89,7 @@ class GpoController < ApplicationController
     end
 
     unprocessed_donations_and_untaxed_rewards.each do |x|
-      x[0].each{|d| d.update_attributes(gpo_sent: true)}  # donations
+      x[0].each{|d| d.update_attributes(gpo_processed: true)}  # donations
       x[1].each{|r| r.update_attributes(taxed: true)}     # rewards
     end
     respond_to do |format|

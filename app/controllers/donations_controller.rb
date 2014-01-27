@@ -98,6 +98,12 @@ class DonationsController < ApplicationController
     end
     @archivedDonations = @pledger.donations.where("payment_received = 'true'")
     @donation.phone_operator = current_user.username
+    if @donation.payment_method == 'Credit Card'
+      @donation.pledge_form_sent = true
+      @donation.payment_received = true
+      @donation.gpo_sent = true
+      @donation.gpo_processed = false
+    end
 
     respond_to do |format|
       if @donation.save
