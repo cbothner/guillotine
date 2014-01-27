@@ -12,7 +12,7 @@ class Slot < ActiveRecord::Base
     now = Time.new
     weekday = now.wday == 0 ? 6 : now.wday - 1
     std_now = Time.utc(2000,1,1,now.hour,now.min)
-    Semester.current_semester.slots.where("weekday = :weekday and start <= :now and \"end\" > :now", {weekday: weekday, now: std_now})
+    Semester.current_semester.slots.where("weekday = :weekday and start <= :now and \"end\" > :now", {weekday: weekday, now: std_now})[0]
   end
 
   def self.for_select(semester = Semester.current_semester)

@@ -27,7 +27,11 @@ class PledgersController < ApplicationController
   def show
     @pledger = Pledger.find(params[:id])
 
-    @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester])
+    if current_user == User.where("username = 'dd'")[0]
+      @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester])
+    else
+      @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester]).select{|d| d.slot.semester == Semester.current_semester}
+    end
     @archivedDonations = @pledger.donations.where("payment_received = 't'").includes(slot: [:show, :semester])
     @activeRewards = @pledger.rewards.where("premia_sent = 'f'").includes(:item)
     @archivedRewards = @pledger.rewards.where("premia_sent = 't'").includes(:item)

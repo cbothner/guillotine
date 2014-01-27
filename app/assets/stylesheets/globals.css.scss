@@ -155,3 +155,11 @@ th {
   -webkit-animation: spin 2s infinite linear;
   animation: spin 2s infinite linear;
 }
+
+.best_in_place { 
+  display: block;
+  width: 100%;
+}
+.best_in_place[data-attribute=individual] {
+  display: inherit !important;
+}

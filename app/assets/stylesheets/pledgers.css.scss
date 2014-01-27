@@ -11,6 +11,12 @@ form#searchForm {
   }
 }
 
+.greytext { 
+  color: $base00 !important;
+  margin-left: -3px;
+  margin-right: 4px;
+}
+
 .instructions {
   font-weight: bold;
   color: $orange;

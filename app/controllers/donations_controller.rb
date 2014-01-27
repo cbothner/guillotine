@@ -64,7 +64,7 @@ class DonationsController < ApplicationController
     @donation = Donation.new
     @donationID = "new"
     @selectedSemester = Semester.current_semester
-    @selectedShow = Slot.on_now
+    @selectedSlot = Slot.on_now.id
 
     respond_to do |format|
       format.html { render :layout => !request.xhr? }
@@ -91,7 +91,11 @@ class DonationsController < ApplicationController
     pledgerID = params[:donation].delete(:pledger_id)
     @pledger = Pledger.find(pledgerID)
     @donation = @pledger.donations.create(params[:donation])
-    @activeDonations = @pledger.donations.where("payment_received = 'false'")
+    if current_user == User.where("username = 'dd'")[0]
+      @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester])
+    else
+      @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester]).select{|d| d.slot.semester == Semester.current_semester}
+    end
     @archivedDonations = @pledger.donations.where("payment_received = 'true'")
     @donation.phone_operator = current_user.username
 
@@ -116,7 +120,11 @@ class DonationsController < ApplicationController
     @donation = Donation.find(params[:id])
     respond_to do |format|
       if @donation.update_attributes(params[:donation])
-        @activeDonations = @donation.pledger.donations.where("payment_received = 'false'")
+        if current_user == User.where("username = 'dd'")[0]
+          @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester])
+        else
+          @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester]).select{|d| d.slot.semester == Semester.current_semester}
+        end
         @archivedDonations = @donation.pledger.donations.where("payment_received = 'true'")
         format.html { redirect_to @donation.pledger, notice: 'Donation was successfully updated.' }
         format.json { head :no_content }

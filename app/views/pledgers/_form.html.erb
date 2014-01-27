@@ -20,11 +20,11 @@
     <%= instructions_for_operators{"4) What is your relationship to WCBN?"} %>
     <%= f.label :affiliation %>
       <%= f.radio_button(:affiliation, "Staff") %>
-      <%= label_tag(:affiliation_staff, "Staff") %>
+      <%= label_tag(:affiliation_staff, "Staff", :class => "greytext") %>
       <%= f.radio_button(:affiliation, "Alumni") %>
-      <%= label_tag(:affiliation_alumni, "Alumni") %>
+      <%= label_tag(:affiliation_alumni, "Alumni", :class => "greytext") %>
       <%= f.radio_button(:affiliation, "Public") %>
-      <%= label_tag(:affiliation_public, "Public") %>
+      <%= label_tag(:affiliation_public, "Public", :class => "greytext") %>
       <div class="flexcontainer middlepadding">
         <div class="flex1">
           <%= instructions_for_operators{"5) What's your phone number?"} %>
