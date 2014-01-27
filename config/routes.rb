@@ -2,7 +2,7 @@ Guillotine::Application.routes.draw do
   resources :comments
 
   devise_for :users, :controllers => { :registrations => "users/registrations" }
-  get "users", to: 'users#index'
+  resources :users, only: [:index,:destroy]
 
   get "gpo/single/:id", to: 'gpo#single'
   get "gpo/all"
