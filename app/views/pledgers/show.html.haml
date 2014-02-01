@@ -1,12 +1,12 @@
 %section.grid_6.pledger
   =instructions_for_operators{ "Verify that this information is accurate." }
-  %b.labelB Individual Donor
+  %b.labelB Individual
   %p.inputP=best_in_place @pledger, :individual, :type => :checkbox, :collection => [ "No", "Yes"], :class => "inputP"
   %b.labelB Name
   %p.inputP=best_in_place @pledger, :name
   %b.labelB Email
   %p.inputP=best_in_place @pledger, :email
-  %b.labelB Affiliation
+  %b.labelB WCBN Affiliation
   %p.inputP=best_in_place @pledger, :affiliation, :type => :select, :collection => [["Staff", "Staff"], ["Alumni", "Alumni"], ["Public", "Public"]]
   .flexcontainer.middlepadding
     .flex1
