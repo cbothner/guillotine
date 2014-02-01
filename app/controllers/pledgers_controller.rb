@@ -28,11 +28,11 @@ class PledgersController < ApplicationController
     @pledger = Pledger.find(params[:id])
 
     if current_user == User.where("username = 'dd'")[0]
-      @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester])
+      @activeDonations = @pledger.donations.includes(slot: [:show, :semester]).select{|d| (d.payment_received == false) or (d.payment_method == 'Credit Card' and d.gpo_processed == false) }
     else
-      @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester]).select{|d| d.slot.semester == Semester.current_semester}
+      @activeDonations = @pledger.donations.includes(slot: [:show, :semester]).select{|d| ((d.payment_received == false) or (d.payment_method == 'Credit Card' and d.gpo_processed == false)) and d.slot.semester == Semester.current_semester}
     end
-    @archivedDonations = @pledger.donations.where("payment_received = 't'").includes(slot: [:show, :semester])
+    @archivedDonations = @pledger.donations.includes(slot: [:show, :semester]).reject{|d| @activeDonations.include? d}
     @activeRewards = @pledger.rewards.where("premia_sent = 'f'").includes(:item)
     @archivedRewards = @pledger.rewards.where("premia_sent = 't'").includes(:item)
     @activeComments = @pledger.comments.includes(:show).sort_by{|c| c.created_at}.reverse

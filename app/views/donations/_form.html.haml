@@ -17,7 +17,7 @@
     .flex1.field
       = f.label :amount
       %br
-      = f.number_field :amount, autofocus: "autofocus"
+      = f.number_field :amount, step: "any", autofocus: "autofocus"
     .flex2.field
       = f.label :payment_method 
       %br

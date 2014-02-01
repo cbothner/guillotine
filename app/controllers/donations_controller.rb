@@ -64,7 +64,11 @@ class DonationsController < ApplicationController
     @donation = Donation.new
     @donationID = "new"
     @selectedSemester = Semester.current_semester
-    @selectedSlot = Slot.on_now.id
+    begin
+      @selectedSlot = Slot.on_now.id
+    rescue
+      @selectedSlot = 0
+    end
 
     respond_to do |format|
       format.html { render :layout => !request.xhr? }
@@ -92,9 +96,9 @@ class DonationsController < ApplicationController
     @pledger = Pledger.find(pledgerID)
     @donation = @pledger.donations.create(params[:donation])
     if current_user == User.where("username = 'dd'")[0]
-      @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester])
+      @activeDonations = @pledger.donations.includes(slot: [:show, :semester]).select{|d| (d.payment_received == false) or (d.payment_method == 'Credit Card' and d.gpo_processed == false) }
     else
-      @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester]).select{|d| d.slot.semester == Semester.current_semester}
+      @activeDonations = @pledger.donations.includes(slot: [:show, :semester]).select{|d| ((d.payment_received == false) or (d.payment_method == 'Credit Card' and d.gpo_processed == false)) and d.slot.semester == Semester.current_semester}
     end
     @archivedDonations = @pledger.donations.where("payment_received = 'true'")
     @donation.phone_operator = current_user.username
@@ -124,12 +128,23 @@ class DonationsController < ApplicationController
     pledgerID = params[:donation].delete(:pledger_id)
     @pledger = Pledger.find(pledgerID)
     @donation = Donation.find(params[:id])
+    if params[:donation][:payment_method] == 'Credit Card'
+      params[:donation][:pledge_form_sent] = true
+      params[:donation][:payment_received] = true
+      params[:donation][:gpo_sent] = true
+      params[:donation][:gpo_processed] = false
+    end
+    if (@donation.payment_method == 'Credit Card' and @donation.gpo_processed == false) and (params[:donation][:payment_method] != 'Credit Card')
+      params[:donation][:pledge_form_sent] = false
+      params[:donation][:payment_received] = false
+      params[:donation][:gpo_sent] = false
+    end
     respond_to do |format|
       if @donation.update_attributes(params[:donation])
         if current_user == User.where("username = 'dd'")[0]
-          @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester])
+          @activeDonations = @pledger.donations.includes(slot: [:show, :semester]).select{|d| (d.payment_received == false) or (d.payment_method == 'Credit Card' and d.gpo_processed == false) }
         else
-          @activeDonations = @pledger.donations.where("payment_received = 'f'").includes(slot: [:show, :semester]).select{|d| d.slot.semester == Semester.current_semester}
+          @activeDonations = @pledger.donations.includes(slot: [:show, :semester]).select{|d| ((d.payment_received == false) or (d.payment_method == 'Credit Card' and d.gpo_processed == false)) and d.slot.semester == Semester.current_semester}
         end
         @archivedDonations = @donation.pledger.donations.where("payment_received = 'true'")
         format.html { redirect_to @donation.pledger, notice: 'Donation was successfully updated.' }

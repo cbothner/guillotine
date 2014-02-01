@@ -21,7 +21,7 @@
     -if user_is_dd?
       -if !@archivedDonations.empty?
         .donationLine
-          %p="Archived Pledges: $#{ '%.2f' % @archivedDonations.sum(:amount) } Total"
+          %p="Archived Pledges: $#{ '%.2f' % @archivedDonations.inject(0){|s,d| s+d.amount} } Total"
       -@archivedDonations.each do |donation|
         %a.clickable.donationLine{:data => {:id => donation.id}}
           .donationValue.archive="$#{ donation.amount.round }"
