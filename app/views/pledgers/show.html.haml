@@ -1,8 +1,7 @@
 %section.grid_6.pledger
   =instructions_for_operators{ "Verify that this information is accurate." }
-  %b.labelB Individual
-  %span.inputP=best_in_place @pledger, :individual, :type => :checkbox, :collection => [ "No", "Yes"], :class => "inputP"
-  %br
+  %b.labelB Individual Donor
+  %p.inputP=best_in_place @pledger, :individual, :type => :checkbox, :collection => [ "No", "Yes"], :class => "inputP"
   %b.labelB Name
   %p.inputP=best_in_place @pledger, :name
   %b.labelB Email
