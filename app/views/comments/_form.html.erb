@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :show_id %><br>
-    <%= f.select(:show_id, options_for_select(Show.for_select, Show.on_now), {}, { :class => "chzn-select" }) %>
+    <%= f.select(:show_id, options_for_select(Show.for_select(Semester.current_semester), Show.on_now_id), {}, { :class => "chzn-select" }) %>
   </div>
   <div class="field">
     <%= f.label :comment %><br>

@@ -14,25 +14,30 @@ class Show < ActiveRecord::Base
     freeform_with? ? "Freeform with #{dj}" : name
   end
 
-  def self.for_select
-    self.where("name != 'ALL FREEFORM'").order(:name,:dj).map { |s| [s.get_name, s.id] }
+  def self.for_select(semester = false)
+    if semester
+      shows = all.order(:name,:dj) & semester.slots.map{|s| s.show}
+    else
+      shows = all.order(:name,:dj)
+    end
+    shows.map { |s| [s.get_name, s.id] }
   end
 
   def self.on_now
     slot_on_now = Slot.on_now
-    if slot_on_now.empty?
-      nil
-    else
-      slot_on_now[0].show
+    begin
+      slot_on_now.show
+    rescue
+      0
     end
   end
 
   def self.on_now_id
     slot_on_now = Slot.on_now
-    if slot_on_now.empty?
+    begin
+      slot_on_now.show.id
+    rescue
       0
-    else
-      slot_on_now[0].show.id
     end
   end
 end
