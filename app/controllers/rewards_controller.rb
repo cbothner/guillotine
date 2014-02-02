@@ -44,7 +44,7 @@ class RewardsController < ApplicationController
     @reward = Reward.new
     @rewardID = "new"
     pledger = Pledger.find(params[:pledger_id])
-    all_donations_amount = pledger.donations.reject{|d| d.gpo_sent }.inject(0){|sum,don| sum + don.amount}
+    all_donations_amount = pledger.donations.select{|d| !d.gpo_sent or (!d.gpo_processed and d.payment_method == 'Credit Card') }.inject(0){|sum,don| sum + don.amount}
     all_rewards_cost = pledger.rewards.reject{|r| r.premia_sent }.inject(0){|sum,rew| sum + rew.item.cost}
     @total_donation = all_donations_amount - all_rewards_cost
     @total_donation = 1_000_000 if current_user == User.where("username = 'dd'")[0]
@@ -61,7 +61,7 @@ class RewardsController < ApplicationController
     @rewardID = params[:id]
     @selectedItem = @reward.item.id
     pledger = @reward.pledger
-    all_donations_amount = pledger.donations.reject{|d| d.gpo_sent }.inject(0){|sum,don| sum + don.amount}
+    all_donations_amount = pledger.donations.select{|d| !d.gpo_sent or (!d.gpo_processed and d.payment_method == 'Credit Card') }.inject(0){|sum,don| sum + don.amount}
     all_rewards_cost = pledger.rewards.reject{|r| r.premia_sent }.inject(0){|sum,rew| sum + rew.item.cost}
     @total_donation = all_donations_amount + @reward.item.cost - all_rewards_cost
     @total_donation = 1_000_000 if current_user == User.where("username = 'dd'")[0]
