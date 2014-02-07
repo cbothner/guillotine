@@ -11,7 +11,7 @@ class Item < ActiveRecord::Base
   def self.for_select(total_donation)
     #total_donation = 1_000_000 if user_is_dd?
     not_sold_out = []
-    active.sort_by{|i| i.cost}.reject{|i| i.cost >= total_donation}.each { |i| 
+    active.sort_by{|i| i.cost}.reject{|i| i.cost > total_donation}.each { |i| 
       numleft = i.get_stock
       not_sold_out.push([i,numleft])
     }
