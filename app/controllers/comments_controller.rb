@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
 
   # GET /comments
   def index
-    @comments = Comment.includes(:pledger, :show).sort_by{|s| s.created_at}.reverse
+    @comments = Comment.includes(:pledger, :show).sort_by{|s| s.created_at}.reverse.first(25)
   end
 
   # GET /comments/1
