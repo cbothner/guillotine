@@ -34,6 +34,7 @@ $(document).ready ->
 
   $(document).on("click",".clickable.donationLine", ->
     window.openDonationLine[String($(this).attr('data-id'))] = $(this)
+    window.editedtext = true
     if $(this).attr('data-id') != 'new'
       editOrNot = "/edit"
     else
@@ -49,10 +50,12 @@ $(document).ready ->
     donationID = $(this).attr("data-id")
     $(this).parents(".donationForm").replaceWith(window.openDonationLine[String(donationID)])
     window.openDonationLine[String(donationID)] = null
+    window.editedtext = false
   )
 
   $(document).on("click",".clickable.rewardLine", ->
     window.openRewardLine[String($(this).attr('data-id'))] = $(this)
+    window.editedtext = true
     if $(this).attr('data-id') != 'new'
       editOrNot = "/edit"
     else
@@ -76,6 +79,7 @@ $(document).ready ->
     rewardID = $(this).attr("data-id")
     $(this).parents(".rewardForm").replaceWith(window.openRewardLine[String(rewardID)])
     window.openRewardLine[String(rewardID)] = null
+    window.editedtext = false
   )
 
   #$(".donationForm").bind('ajax:before', ->
@@ -138,3 +142,7 @@ jQuery ->
         $('#pledger_local_city').val("Error: " + errMsg)
     )
   )
+
+window.onbeforeunload = ->
+  if window.editedtext
+    return "You have unsaved edits; are you sure you'd like to leave this page?"
