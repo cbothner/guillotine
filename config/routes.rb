@@ -12,6 +12,7 @@ Guillotine::Application.routes.draw do
   get "home/index"
 
   get "rewards/new/pledger-:pledger_id", :pledger_id => /[0-9]+/, to: 'rewards#new'
+  get "rewards/packing_slips", to: 'rewards#packing_slips'
   resources :rewards
 
 

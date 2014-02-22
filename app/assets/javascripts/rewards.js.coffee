@@ -12,14 +12,17 @@ $(document).ready ->
   tables = $(".reward-table")
   for table, i in tables
     $(table).children("table").css("display","none")
+    $(table).children("a").css("display","none")
     $(table).children("h4").addClass("reward-table-header-hidden")
 
   $(document).on "click", ".reward-table-header-hidden", ->
     $(this).siblings("table").css("display","inherit")
+    $(this).siblings("a").css("display","inherit")
     $(this).addClass("reward-table-header-visible")
     $(this).removeClass("reward-table-header-hidden")
 
   $(document).on "click", ".reward-table-header-visible", ->
     $(this).siblings("table").css("display","none")
+    $(this).siblings("a").css("display","none")
     $(this).removeClass("reward-table-header-visible")
     $(this).addClass("reward-table-header-hidden")

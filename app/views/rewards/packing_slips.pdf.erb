@@ -1,0 +1,81 @@
+<% @latex_config={:parse_twice => true} %>
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{graphicx}
+\usepackage[absolute]{textpos}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\renewcommand{\arraystretch}{1.3}
+\newcommand{\blank}{ \rule{.7in}{.5pt}\hspace{.05in}}
+\title{}
+
+\begin{document}
+\pagestyle{empty}
+\singlespace
+
+
+<% @pledgers.each do |pledger| %>
+  <% my_rewards = (@rewards & pledger.rewards).group_by{|r| r.item.name}.sort_by{|x| x[0].upcase} %>
+  \newpage
+
+  \begin{textblock*}{2in}[0,0](1in,0.75in)
+    \includegraphics[width=2in]{wcbn}
+  \end{textblock*}
+  \begin{textblock*}{1.5in}[1,0](7.75in,0.86in)
+    \raggedright\Small
+    \textbf{Cameron Bothner}\\
+    Development Director
+    \texttt{dd@wcbn.org}
+  \end{textblock*}
+  \begin{tikzpicture}[remember picture,overlay]
+    \draw[color=black,line width=2pt] (current page.north west)+(3.25in,-1.08in) -- ($(-2.45in,-1.08in)+(current page.north east)$);
+  \end{tikzpicture}
+
+  \vspace{.5in}
+  \begin{center}
+    \bfseries THANK YOU FOR YOUR DONATION TO WCBN
+  \end{center}
+  \vspace{.1in}
+  \begin{center}
+    \small YOU'RE ALL GOOD IN OUR BOOKS!
+  \end{center}
+  \vspace{.1in}
+
+  \begin{tabularx}{1\textwidth}{|XX|}
+      \hline
+      \multicolumn{2}{|X|}{\textbf{Name: }<%=lesc pledger.name%>}\\
+      \textbf{Email Address: }\texttt{<%=lesc pledger.email%>} & 
+        \textbf{WCBN Affiliation:} <%=lesc pledger.affiliation.capitalize%>\\
+      \textbf{Telephone:} <%=lesc pledger.perm_phone%> & \\
+      \parbox{0.4\textwidth}{\vspace{4pt}
+        \textbf{Address:}\\
+        <%=lesc pledger.name %>\\
+        <%=lesc pledger.perm_address%>\\
+        <% if !pledger.perm_address2.blank? %>
+          <%=lesc pledger.perm_address2%>\\
+        <% end %>
+        <%= lesc pledger.perm_city%>, <%=lesc pledger.perm_state%> <%= lesc pledger.perm_zip %>
+        \vspace{4pt}} & \\
+      \hline
+  \end{tabularx}
+
+  \vspace{.1in}
+  Thank you kindly for your generous donation to WCBN-FM! Our turntables, our CDs, our copper wire, our transmitter, and all of our DJs truly appreciate it. Thank you for being excellent.
+
+If you haven't already, you will soon receive a tax receipt from the University of Michigan. If you have any questions, please email \texttt{dd@wcbn.org}.
+
+\vspace{8pt}\begin{table}[h!]
+    \centering
+        \begin{tabularx}{.8\textwidth}{llX}
+            \textbf{Qty}.&\textbf{Enclosed Premium Item}&\textbf{Packing Notes}\\
+            \hline
+            <% my_rewards.each do |r| %>
+              <%=r[1].length %> & <%=lesc r[0] %> & <%=lesc r[1].collect{|x| x.comment}.reject{|r| r.blank?}.join(' --- ') %>\\
+            <% end %>
+\end{tabularx}
+\end{table}
+
+<% end %>
+
+\end{document}

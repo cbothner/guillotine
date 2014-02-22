@@ -131,4 +131,13 @@ class RewardsController < ApplicationController
       format.html { redirect_to pledger_url(pledger) }
     end
   end
+
+  def packing_slips
+    @pledgers = Pledger.find(params[:pledgers].split(','))
+    @rewards = Reward.where(premia_sent: false)
+
+    respond_to do |format|
+      format.pdf{ render :layout => 'application', formats: [:pdf] }
+    end
+  end
 end

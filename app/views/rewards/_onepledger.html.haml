@@ -9,7 +9,7 @@
       .rewardPremia{:style => "padding: 10px 0; font-size: large;"}<
         %span.rewardPremiaName{:style => "color:#B58900 !important;"}<
           New Premium
-    -if !@activeRewards.empty?
+    -unless @activeRewards.empty?
       .rewardLine
         %p Requested Premia
     -@activeRewards.each do |reward|
@@ -18,7 +18,10 @@
         .rewardPremia< 
           %span.rewardPremiaName=reward.item.name
     -if user_is_dd?
-      -if !@archivedRewards.empty?
+      -unless @activeRewards.empty?
+        .donationLine
+          %p=link_to "Generate Packing Slip", :controller => 'rewards', :action => "packing_slips", :format => :pdf, :pledgers => @pledger.id
+      -unless @archivedRewards.empty?
         .rewardLine
           %p Sent Premia
       -@archivedRewards.each do |reward|

@@ -60,8 +60,7 @@
         <% if !pledger.perm_address2.blank? %>
           <%=lesc pledger.perm_address2%>\\
         <% end %>
-        <%= lesc pledger.perm_city%>, <%=lesc pledger.perm_state%>\\
-        <%= lesc pledger.perm_zip %>
+        <%= lesc pledger.perm_city%>, <%=lesc pledger.perm_state%> <%= lesc pledger.perm_zip %>
         \vspace{4pt}} & \\
       \hline
   \end{tabularx}
