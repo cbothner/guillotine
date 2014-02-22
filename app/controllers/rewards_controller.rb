@@ -1,5 +1,5 @@
 class RewardsController < ApplicationController
-
+  layout "slots"
   before_filter :authenticate_user!
   # GET /rewards
   # GET /rewards.json

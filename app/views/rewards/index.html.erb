@@ -1,4 +1,4 @@
-<div class="flexcontainer">
+<section class="home flexcontainer">
   <% @rewards.each do |is_qualified, sizes| %>
     <div class="flex1">
       <h3><%= is_qualified %></h3>
@@ -9,7 +9,7 @@
             <!-- TODO: Size Icons -->
             <table>
               <% dark = true %>
-              <% reward_set.sort_by { |a,b| b[0].pledger.name }.each do |pledger, rewards| %>
+              <% reward_set.sort_by { |a,b| b[0].pledger.name.upcase }.each do |pledger, rewards| %>
                 <% rewards.each do |reward| %>
                   <tr<%= " class='darkrow'".html_safe if dark %>>
                     <td><%= link_to(reward.pledger.name, reward.pledger) if pledger != 0 %></td>
@@ -26,4 +26,4 @@
       <% end %>
     </div>
   <% end %>
-</div>
+</section>
