@@ -6,7 +6,8 @@
         <% size_set.each do |size, reward_set| %>
           <div class="reward-table">
             <h4 class="reward-table-header"><%= size * ", " %></h4>
-            <%=link_to "Generate Packing Slips", "packing_slips.pdf?pledgers=#{reward_set.map{|a,x| a}.join(',')}" %>
+            <%= link_to "Generate Packing Slip", :controller => 'rewards', :action => "packing_slips", :format => :pdf, :pledgers => reward_set.map{|a,x| a}.join(',') %>
+
             <table>
               <% dark = true %>
               <% reward_set.sort_by { |a,b| b[0].pledger.name.upcase }.each do |pledger, rewards| %>
