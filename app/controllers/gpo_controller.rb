@@ -76,6 +76,7 @@ class GpoController < ApplicationController
     @arguments.each do |a|
       a[:tax_exempt_donation] = a[:donation_total] - a[:tax_liability]
     end
+    @arguments = @arguments.sort_by{|a| a[:pledger].name.upcase}
 
     respond_to do |format|
       format.html { render :layout => "generate" }
