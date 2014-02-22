@@ -4,17 +4,15 @@ class RewardsController < ApplicationController
   # GET /rewards
   # GET /rewards.json
   def index
-    rewards = Reward.includes( :pledger, {pledger: :donations}, {pledger: :rewards}, :item )
-    sentRewards = rewards.select { |r| r.premia_sent == true }
-    unsentRewards = rewards - sentRewards
-    unqualifiedRewards = unsentRewards.select { |r| r.pledger.donations.any? { |d| d.payment_received == false } }
-    qualifiedRewards = unsentRewards - unqualifiedRewards
+    rewards = Reward.where(:premia_sent => false).includes( :pledger, {pledger: :donations}, {pledger: :rewards}, :item )
+    unqualifiedRewards = rewards.select { |r| r.pledger.donations.any? { |d| d.payment_received == false } }
+    qualifiedRewards = rewards - unqualifiedRewards
 
     #@rewards = Hash[ [ "Qualified Rewards", "Unqualified Rewards" ].zip( [ qualifiedRewards, unqualifiedRewards ].collect { |a|
       #a.group_by { |p| p.pledger } } ) ]
     @rewards = Hash[ [ "Qualified Rewards", "Unqualified Rewards" ]
       .zip( [ qualifiedRewards, unqualifiedRewards ]
-           .collect { |a| a.group_by{ |r| r.pledger.rewards
+           .collect { |a| a.group_by{ |r| r.pledger.rewards.reject{|r| r.premia_sent}
              .collect { |r| r.item.shape }.sort }
           .collect { |i,e| 
           {i => e.group_by { |r| r.pledger_id } } 
