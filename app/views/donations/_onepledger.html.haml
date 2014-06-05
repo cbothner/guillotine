@@ -28,6 +28,9 @@
           .donationShow.archive<
             for
             %span.donationShowName.archive=donation.slot.show.get_name+" (#{donation.slot.semester.name})"
+      -if @forgivenTotal != 0
+        .donationLine
+          %p.instructions="Forgiven pledges from #{pluralize(@forgivenSemesters, "semester")} total $%.2f" %@forgivenTotal
     -if !@archivedDonations.select{ |don| don[:gpo_sent] == false }.empty?
       .donationLine
         %p=link_to "Generate GPO", :controller => "gpo", :action => "single", :id => @pledger, :format => :pdf

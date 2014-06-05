@@ -37,6 +37,10 @@ class PledgersController < ApplicationController
     @archivedRewards = @pledger.rewards.where("premia_sent = 't'").includes(:item)
     @activeComments = @pledger.comments.includes(:show).sort_by{|c| c.created_at}.reverse
 
+    forgivenDonations = @pledger.forgiven_donations.includes(slot: [:semester])
+    @forgivenTotal = forgivenDonations.inject(0){|sum,don| sum+don.amount}
+    @forgivenSemesters = forgivenDonations.group_by{|d| d.slot.semester}.count
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @pledger }
