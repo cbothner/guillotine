@@ -6,6 +6,7 @@ class Pledger < ActiveRecord::Base
   end
 
   has_many :donations, :inverse_of => :pledger
+  has_many :forgiven_donations, :inverse_of => :pledger
   has_many :slots, :through => :donations
   has_many :shows, :through => :slots
   has_many :rewards, :inverse_of => :pledger

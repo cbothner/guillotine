@@ -1,5 +1,6 @@
 class Slot < ActiveRecord::Base
   has_many :donations, :inverse_of => :slot
+  has_many :forgiven_donations, :inverse_of => :slot
   has_many :pledgers, :through => :donations
   belongs_to :show, :inverse_of => :slots
   belongs_to :semester, :inverse_of => :slots

@@ -24,3 +24,9 @@ Semester
           %li.donation_li.flexcontainer
             .donation_pledger.flex3=link_to(d[:pledger].name,d[:pledger])
             .donation_amount.flex1="$%.2f" %d[:amount]
+      -if section[0] == "Unpaid" and user_is_dd?
+        %p.actions
+          -if @forgiven_donations_total != 0
+            %p.instructions.centered="$%.2f worth of pledges forgiven" %@forgiven_donations_total 
+          -if @unpaid_progress != 0
+            = button_to "Forgive Unpaid Pledges", { action: "forgive", semester: @semester}, :method => "post", :data => { confirm: "Are you sure you want to forgive all unpaid pledges from #{@semester.name}? This action cannot be undone." }

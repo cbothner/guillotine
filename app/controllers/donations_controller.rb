@@ -41,6 +41,8 @@ class DonationsController < ApplicationController
       @paid_percent = 0
     end
 
+    forgiven_donations = @semester.slots.inject([]){|dons, sem| dons+sem.forgiven_donations}
+    @forgiven_donations_total = forgiven_donations.inject(0){|sum,don| sum+don.amount}
 
     respond_to do |format|
       format.html # index.html.erb
@@ -185,6 +187,28 @@ class DonationsController < ApplicationController
           d.save
         end
       end
+    end
+  end
+
+  def forgive
+    @semester = Semester.find(params[:semester])
+    unpaid_donations = @semester.slots.inject([]){|dons, sem| dons+sem.donations}.select{|d| !d.payment_received} 
+    unpaid_donations.each do |don|
+      ForgivenDonation.create do |fd|
+        fd.amount = don.amount
+        fd.gpo_processed = don.gpo_processed
+        fd.gpo_sent = don.gpo_sent
+        fd.payment_method = don.payment_method
+        fd.payment_received = don.payment_received
+        fd.pledge_form_sent = don.pledge_form_sent
+        fd.slot_id = don.slot_id
+        fd.phone_operator = don.phone_operator
+        fd.pledger_id = don.pledger_id
+      end
+      don.destroy
+    end
+    respond_to do |format|
+      format.html{ redirect_to donations_path + "/#{@semester.name}" }
     end
   end
 end
