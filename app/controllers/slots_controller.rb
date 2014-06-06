@@ -1,5 +1,5 @@
 class SlotsController < ApplicationController
-  layout "slots"
+  layout 'slots'
   before_filter :authenticate_user!
   # GET /slots
   # GET /slots.json
@@ -7,7 +7,7 @@ class SlotsController < ApplicationController
     @semester = Semester.where(month: params[:month], year: params[:year])[0]
     @semester ||= Semester.current_semester
     @slots = @semester.slots.order(:start).group_by(&:weekday)
-    (0..6).each {|i| @slots[i] ||= [] }
+    (0..6).each { |i| @slots[i] ||= [] }
 
     @slot = Slot.new
 
@@ -46,7 +46,7 @@ class SlotsController < ApplicationController
     if showID
       @show = Show.find(showID)
     else
-      @show = Show.new(:name => name, :dj => dj)
+      @show = Show.new(name: name, dj: dj)
     end
     @slot = Slot.new(params[:slot])
     @show.slots << @slot
@@ -57,7 +57,7 @@ class SlotsController < ApplicationController
         format.html { redirect_to :slots, notice: 'Slot was successfully created.' }
         format.json { render json: @slot, status: :created, location: @slot }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @slot.errors, status: :unprocessable_entity }
       end
     end
@@ -73,7 +73,7 @@ class SlotsController < ApplicationController
         format.html { redirect_to @slot, notice: 'Slot was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @slot.errors, status: :unprocessable_entity }
       end
     end

@@ -1,0 +1,18 @@
+AllCops:
+  RunRailsCops: true
+
+Style/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
+Style/ClassLength:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/LineLength:
+  Enabled: false
+
+Style/MethodLength:
+  Enabled: false

@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20140605063406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_trgm"
 
   create_table "comments", force: true do |t|
     t.text     "comment"

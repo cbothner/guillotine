@@ -32,6 +32,8 @@ gem 'rails-latex', github: 'jacott/rails-latex'
 
 gem 'devise'
 
+gem 'cells'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

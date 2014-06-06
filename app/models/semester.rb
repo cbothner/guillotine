@@ -1,8 +1,8 @@
 class Semester < ActiveRecord::Base
-  has_many :slots, :inverse_of => :semester
+  has_many :slots, inverse_of: :semester
   validates :year, :month, :goal, presence: true
-  validates :month, numericality: { :greater_than_or_equal_to => 1, :less_than_or_equal_to => 12 }
-  validates :year, :goal, numericality: { :greater_than_or_equal_to => 1 }
+  validates :month, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 12 }
+  validates :year, :goal, numericality: { greater_than_or_equal_to: 1 }
 
   def self.current_semester
     year = maximum(:year)
@@ -11,6 +11,6 @@ class Semester < ActiveRecord::Base
   end
 
   def name
-    "#{year}/#{month<10 ? "0#{month}" : month}"
+    "#{year}/#{month < 10 ? "0#{month}" : month}"
   end
 end

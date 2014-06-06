@@ -47,8 +47,8 @@
   -#= link_to 'Edit', edit_pledger_path(@pledger) |
   -#= link_to 'Back', pledgers_path
 
-= render "donations/onepledger"
+= render_cell :donation_list, :show, pledger: @pledger
 
 .grid_3
-  = render "rewards/onepledger"
+  = render_cell :reward_list, :show, pledger: @pledger
   = render "comments/onepledger"

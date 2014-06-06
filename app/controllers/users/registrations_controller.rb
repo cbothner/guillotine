@@ -3,16 +3,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
     secret = params[:user].delete(:secret)
     @user = User.new(params[:user])
 
-    if secret == "jlambers"
+    if secret == 'jlambers'
       if @user.save
-        flash[:notice] = "Registered successfully!"
+        flash[:notice] = 'Registered successfully!'
         sign_in_and_redirect(User, @user)
       else
-        render :action => :new
+        render action: :new
       end
     else
-      flash[:notice] = "Secret is incorrect."
-      render :action => :new
+      flash[:notice] = 'Secret is incorrect.'
+      render action: :new
     end
   end
 end

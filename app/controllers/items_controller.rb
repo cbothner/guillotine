@@ -1,12 +1,12 @@
 class ItemsController < ApplicationController
-  layout "slots"
+  layout 'slots'
   before_filter :authenticate_user!
   # GET /items
   # GET /items.json
   def index
     @active_items = Item.active
     @inactive_items = Item.inactive
-    
+
     @item = Item.new
 
     respond_to do |format|
@@ -19,8 +19,8 @@ class ItemsController < ApplicationController
   # GET /items/1.json
   def show
     @item = Item.find(params[:id])
-    @requested = @item.rewards.select{|r| !r.premia_sent}.sort_by{|r| r.pledger.name}
-    @fulfilled = @item.rewards.select{|r| r.premia_sent}.sort_by{|r| r.pledger.name}
+    @requested = @item.rewards.select { |r| !r.premia_sent }.sort_by { |r| r.pledger.name }
+    @fulfilled = @item.rewards.select { |r| r.premia_sent }.sort_by { |r| r.pledger.name }
 
     respond_to do |format|
       format.html # show.html.erb
@@ -54,7 +54,7 @@ class ItemsController < ApplicationController
         format.html { redirect_to :items, notice: 'Item was successfully created.' }
         format.json { render json: @item, status: :created, location: @slot }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
@@ -70,7 +70,7 @@ class ItemsController < ApplicationController
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }
         format.json { respond_with_bip(@item) }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { respond_with_bip(@item) }
       end
     end

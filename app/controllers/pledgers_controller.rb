@@ -1,5 +1,5 @@
 class PledgersController < ApplicationController
-  layout "pledgers"
+  layout 'pledgers'
 
   before_filter :authenticate_user!
 
@@ -16,7 +16,7 @@ class PledgersController < ApplicationController
 
   # GET /pledgers/search.json?name=name
   def search
-    @pledgers = Pledger.select_with_args("id, name, perm_address, similarity(name, ?) AS sml", params[:name]).where("name % ?", params[:name]).order("sml DESC,name")
+    @pledgers = Pledger.select_with_args('id, name, perm_address, similarity(name, ?) AS sml', params[:name]).where('name % ?', params[:name]).order('sml DESC,name')
     respond_to do |format|
       format.json { render json: @pledgers }
     end
@@ -27,19 +27,13 @@ class PledgersController < ApplicationController
   def show
     @pledger = Pledger.find(params[:id])
 
-    if current_user == User.where("username = 'dd'")[0]
-      @activeDonations = @pledger.donations.includes(slot: [:show, :semester]).select{|d| (d.payment_received == false) or (d.payment_method == 'Credit Card' and d.gpo_processed == false) }
-    else
-      @activeDonations = @pledger.donations.includes(slot: [:show, :semester]).select{|d| ((d.payment_received == false) or (d.payment_method == 'Credit Card' and d.gpo_processed == false)) and d.slot.semester == Semester.current_semester}
-    end
-    @archivedDonations = @pledger.donations.includes(slot: [:show, :semester]).reject{|d| @activeDonations.include? d}
     @activeRewards = @pledger.rewards.where("premia_sent = 'f'").includes(:item)
     @archivedRewards = @pledger.rewards.where("premia_sent = 't'").includes(:item)
-    @activeComments = @pledger.comments.includes(:show).sort_by{|c| c.created_at}.reverse
+    @activeComments = @pledger.comments.includes(:show).sort_by { |c| c.created_at }.reverse
 
     forgivenDonations = @pledger.forgiven_donations.includes(slot: [:semester])
-    @forgivenTotal = forgivenDonations.inject(0){|sum,don| sum+don.amount}
-    @forgivenSemesters = forgivenDonations.group_by{|d| d.slot.semester}.count
+    @forgivenTotal = forgivenDonations.reduce(0) { |sum, don| sum + don.amount }
+    @forgivenSemesters = forgivenDonations.group_by { |d| d.slot.semester }.count
 
     respond_to do |format|
       format.html # show.html.erb
@@ -73,7 +67,7 @@ class PledgersController < ApplicationController
         format.html { redirect_to @pledger, notice: 'Pledger was successfully created.' }
         format.json { render json: @pledger, status: :created, location: @pledger }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @pledger.errors, status: :unprocessable_entity }
       end
     end
@@ -89,7 +83,7 @@ class PledgersController < ApplicationController
         format.html { redirect_to @pledger, notice: 'Pledger was successfully updated.' }
         format.json { respond_with_bip(@pledger) }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { respond_with_bip(@pledger) }
       end
     end

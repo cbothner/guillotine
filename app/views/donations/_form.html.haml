@@ -9,7 +9,7 @@
         %li= msg
   - if @donationID != 'new' and user_is_dd?
     .deleteDonationLink
-      = link_to '[X]', {:action=>'destroy', :id=>@donation}, :confirm=>"Are you sure you want to delete this donation?", :method=>:delete
+      = link_to '[X]', {action: 'destroy', id: @donation}, confirm: "Are you sure you want to delete this donation?", method: :delete, remote: true
   .field
     = f.label :slot_id, "Dedication"
     = f.select(:slot_id, unsorted_grouped_options_for_select(Slot.for_select(@selectedSemester), @selectedSlot), {}, { :class => "chzn-select" })

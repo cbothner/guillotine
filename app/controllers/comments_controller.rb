@@ -1,11 +1,11 @@
 class CommentsController < ApplicationController
-  layout "generate"
+  layout 'generate'
 
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   # GET /comments
   def index
-    @comments = Comment.includes(:pledger, :show).sort_by{|s| s.created_at}.reverse.first(25)
+    @comments = Comment.includes(:pledger, :show).sort_by { |s| s.created_at }.reverse.first(25)
   end
 
   # GET /comments/1
@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
   def new
     @comment = Comment.new
     respond_to do |format|
-      format.html { render :layout => !request.xhr? }
+      format.html { render layout: !request.xhr? }
     end
   end
 
@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     pledgerID = params[:comment][:pledger_id]
     @pledger = Pledger.find(pledgerID)
-    @activeComments = @pledger.comments.includes(:show).sort_by{|c| c.created_at}.reverse
+    @activeComments = @pledger.comments.includes(:show).sort_by { |c| c.created_at }.reverse
 
     respond_to do |format|
       if @comment.save
@@ -60,13 +60,13 @@ class CommentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comment
-      @comment = Comment.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_comment
+    @comment = Comment.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def comment_params
-      params.require(:comment).permit(:comment, :pledger_id, :show_id)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def comment_params
+    params.require(:comment).permit(:comment, :pledger_id, :show_id)
+  end
 end

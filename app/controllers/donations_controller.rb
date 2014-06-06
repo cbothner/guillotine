@@ -1,48 +1,33 @@
 class DonationsController < ApplicationController
-  layout "slots"
+  layout 'slots'
 
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
+
   # GET /donations
   # GET /donations.json
   def index
     @semester = Semester.where(month: params[:month], year: params[:year])[0]
     @semester ||= Semester.current_semester
 
-    donations = @semester.slots.inject([]){|dons, sem| dons+sem.donations}
-    @total_progress = donations.inject(0){|sum,don| sum+don.amount}
+    donations = @semester.slots.reduce([]) { |a, e| a + e.donations }
+    @total_progress = donations.reduce(0) { |a, e| a + e.amount }
     @total_percent = 100 * (@total_progress / @semester.goal)
 
-    unpaid_donations = donations.select{ |d| d.payment_received == false}
-    @unpaid_progress = unpaid_donations.inject(0){|sum,don| sum+don.amount}
-    @unpaid_pledgers = unpaid_donations.map{|d| d.pledger}
-                                       .uniq
-                                       .map do |pled|
-                                         pledger_total = pled.donations.select{|d| d.payment_received == false and d.slot.semester == @semester}.inject(0) do |sum,don|
-                                           sum + don.amount
-                                         end
-                                         {pledger: pled, amount: pledger_total}
-                                       end
-    @unpaid_pledgers = @unpaid_pledgers.sort_by{|x| x[:amount]}.reverse
+    unpaid_donations = donations.select { |d| d.payment_received == false }
+    @unpaid_progress = unpaid_donations.reduce(0) { |a, e| a + e.amount }
+    @unpaid_pledgers = donations_to_pledgers_and_totals(unpaid_donations)
 
-    paid_donations = donations.select{ |d| d.payment_received == true}
-    @paid_progress = paid_donations.inject(0){|sum,don| sum+don.amount}
-    @paid_pledgers = paid_donations.map{|d| d.pledger}
-                                       .uniq
-                                       .map do |pled|
-                                         pledger_total = pled.donations.select{|d| d.payment_received == true and d.slot.semester == @semester}.inject(0) do |sum,don|
-                                           sum + don.amount
-                                         end
-                                         {pledger: pled, amount: pledger_total}
-                                       end
-    @paid_pledgers = @paid_pledgers.sort_by{|x| x[:amount]}.reverse
-    begin
-      @paid_percent = 100 * (@paid_progress / @total_progress)
-    rescue # If it's division by zero, which will be the initial state every semester.
+    paid_donations = donations.select { |d| d.payment_received == true }
+    @paid_progress = paid_donations.reduce(0) { |a, e| a + e.amount }
+    @paid_pledgers = donations_to_pledgers_and_totals(paid_donations)
+    if @total_progress.zero?
       @paid_percent = 0
+    else
+      @paid_percent = 100 * (@paid_progress / @total_progress)
     end
 
-    forgiven_donations = @semester.slots.inject([]){|dons, sem| dons+sem.forgiven_donations}
-    @forgiven_donations_total = forgiven_donations.inject(0){|sum,don| sum+don.amount}
+    forgiven_donations = @semester.slots.reduce([]) { |a, e| a + e.forgiven_donations }
+    @forgiven_donations_total = forgiven_donations.reduce(0) { |a, e| a + e.amount }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -50,13 +35,13 @@ class DonationsController < ApplicationController
     end
   end
 
-   #GET /donations/1.pdf
+  # GET /donations/1.pdf
   def show
     @donation = Donation.find(params[:id])
     @pledger = @donation.pledger
 
     respond_to do |format|
-      format.pdf { render :layout => "application", formats: [:pdf] }
+      format.pdf { render layout: 'application', formats: [:pdf] }
     end
   end
 
@@ -64,7 +49,7 @@ class DonationsController < ApplicationController
   # GET /donations/new.json
   def new
     @donation = Donation.new
-    @donationID = "new"
+    @donationID = 'new'
     @selectedSemester = Semester.current_semester
     begin
       @selectedSlot = Slot.on_now.id
@@ -73,9 +58,9 @@ class DonationsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render :layout => !request.xhr? }
+      format.html { render layout: !request.xhr? }
       format.json { render json: @donation }
-      format.pdf { render :layout => "application", formats: [:pdf] }
+      format.pdf { render layout: 'application', formats: [:pdf] }
     end
   end
 
@@ -87,7 +72,7 @@ class DonationsController < ApplicationController
     @selectedSlot = @donation.slot.id
 
     respond_to do |format|
-      format.html { render :layout => !request.xhr? }
+      format.html { render layout: !request.xhr? }
     end
   end
 
@@ -97,12 +82,7 @@ class DonationsController < ApplicationController
     pledgerID = params[:donation].delete(:pledger_id)
     @pledger = Pledger.find(pledgerID)
     @donation = @pledger.donations.create(params[:donation])
-    if current_user == User.where("username = 'dd'")[0]
-      @activeDonations = @pledger.donations.includes(slot: [:show, :semester]).select{|d| (d.payment_received == false) or (d.payment_method == 'Credit Card' and d.gpo_processed == false) }
-    else
-      @activeDonations = @pledger.donations.includes(slot: [:show, :semester]).select{|d| ((d.payment_received == false) or (d.payment_method == 'Credit Card' and d.gpo_processed == false)) and d.slot.semester == Semester.current_semester}
-    end
-    @archivedDonations = @pledger.donations.where("payment_received = 'true'")
+
     @donation.phone_operator = current_user.username
     if @donation.payment_method == 'Credit Card'
       @donation.pledge_form_sent = true
@@ -117,7 +97,7 @@ class DonationsController < ApplicationController
         format.json { render json: @donation, status: :created, location: @donation }
         format.js
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @donation.errors, status: :unprocessable_entity }
         format.js
       end
@@ -136,24 +116,18 @@ class DonationsController < ApplicationController
       params[:donation][:gpo_sent] = true
       params[:donation][:gpo_processed] = false
     end
-    if (@donation.payment_method == 'Credit Card' and @donation.gpo_processed == false) and (params[:donation][:payment_method] != 'Credit Card')
+    if (@donation.payment_method == 'Credit Card' && @donation.gpo_processed == false) && (params[:donation][:payment_method] != 'Credit Card')
       params[:donation][:pledge_form_sent] = false
       params[:donation][:payment_received] = false
       params[:donation][:gpo_sent] = false
     end
     respond_to do |format|
       if @donation.update_attributes(params[:donation])
-        if current_user == User.where("username = 'dd'")[0]
-          @activeDonations = @pledger.donations.includes(slot: [:show, :semester]).select{|d| (d.payment_received == false) or (d.payment_method == 'Credit Card' and d.gpo_processed == false) }
-        else
-          @activeDonations = @pledger.donations.includes(slot: [:show, :semester]).select{|d| ((d.payment_received == false) or (d.payment_method == 'Credit Card' and d.gpo_processed == false)) and d.slot.semester == Semester.current_semester}
-        end
-        @archivedDonations = @donation.pledger.donations.where("payment_received = 'true'")
-        format.html { redirect_to @donation.pledger, notice: 'Donation was successfully updated.' }
+        format.html { redirect_to @donation, notice: 'Donation was successfully updated.' }
         format.json { head :no_content }
         format.js
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @donation.errors, status: :unprocessable_entity }
         format.js
       end
@@ -164,24 +138,23 @@ class DonationsController < ApplicationController
   # DELETE /donations/1.json
   def destroy
     @donation = Donation.find(params[:id])
-    pledger = @donation.pledger
+    @pledger = @donation.pledger
     @donation.destroy
 
     respond_to do |format|
-      format.html { redirect_to pledger_url(pledger) }
-      format.json { head :no_content }
+      format.js
     end
   end
 
   def pledge_forms
     @donations = Donation.where(pledge_form_sent: false)
     @rewards = Reward.where(premia_sent: false)
-    @pledgers = @donations.map{ |d| d.pledger }.uniq
+    @pledgers = @donations.map { |d| d.pledger }.uniq
 
     respond_to do |format|
-      format.html{ render :layout => 'generate' }
+      format.html { render layout: 'generate' }
       format.pdf do
-        render :layout => 'application', formats: [:pdf]
+        render layout: 'application', formats: [:pdf]
         @donations.each do |d|
           d.pledge_form_sent = true
           d.save
@@ -192,7 +165,7 @@ class DonationsController < ApplicationController
 
   def forgive
     @semester = Semester.find(params[:semester])
-    unpaid_donations = @semester.slots.inject([]){|dons, sem| dons+sem.donations}.select{|d| !d.payment_received} 
+    unpaid_donations = @semester.slots.reduce([]) { |dons, sem| dons + sem.donations }.select { |d| !d.payment_received }
     unpaid_donations.each do |don|
       ForgivenDonation.create do |fd|
         fd.amount = don.amount
@@ -208,7 +181,21 @@ class DonationsController < ApplicationController
       don.destroy
     end
     respond_to do |format|
-      format.html{ redirect_to donations_path + "/#{@semester.name}" }
+      format.html { redirect_to donations_path + "/#{@semester.name}" }
     end
+  end
+
+  # Process a list of donations into a list of hashes
+  # { :pledger => <Pledger>, :amount => 100 }
+  def donations_to_pledgers_and_totals(donations)
+    donations.map { |d| d.pledger }
+      .uniq
+      .map do |pled|
+        pledger_total = pled.donations
+          .select { |d| d.payment_received == false && d.slot.semester == @semester }
+          .reduce(0) { |sum, don| sum + don.amount }
+        { pledger: pled, amount: pledger_total }
+      end
+      .sort_by { |x| x[:amount] }.reverse
   end
 end
