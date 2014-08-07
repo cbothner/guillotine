@@ -1,9 +1,4 @@
 class Pledger < ActiveRecord::Base
-  def self.select_with_args(sql, args)
-    query = sanitize_sql_array([sql, args].flatten)
-    select(query)
-  end
-
   has_many :donations, inverse_of: :pledger
   has_many :forgiven_donations, inverse_of: :pledger
   has_many :slots, through: :donations
@@ -26,6 +21,20 @@ class Pledger < ActiveRecord::Base
   end
   validate :phone_or_email
 
+  def total_donation(dd_view)
+    return 1_000_000 if dd_view
+    all_donations_amount = donations.select{|d| d.active?(0)}
+      .reduce(0) { |sum, don| sum + don.amount }
+    all_rewards_cost = rewards.reject { |r| r.premia_sent }
+      .reduce(0) { |sum, rew| sum + rew.item.cost }
+    all_donations_amount - all_rewards_cost
+  end
+
+  def self.select_with_args(sql, args)
+    query = sanitize_sql_array([sql, args].flatten)
+    select(query)
+  end
+
   def american?
     :perm_country == 'USA'
   end
@@ -33,8 +42,6 @@ class Pledger < ActiveRecord::Base
   def diff_local?
     :local_address.blank?
   end
-
-  private
 
   def phone_or_email
     if perm_phone.blank? && email.blank?
