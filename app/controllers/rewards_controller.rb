@@ -41,12 +41,8 @@ class RewardsController < ApplicationController
   def new
     @reward = Reward.new
     @rewardID = 'new'
-    pledger = Pledger.find(params[:pledger_id])
-    all_donations_amount = pledger.donations.select { |d| !d.gpo_sent || !d.gpo_processed && d.payment_method == 'Credit Card' }.reduce(0) { |sum, don| sum + don.amount }
-    all_rewards_cost = pledger.rewards.reject { |r| r.premia_sent }.reduce(0) { |sum, rew| sum + rew.item.cost }
-    @total_donation = all_donations_amount - all_rewards_cost
-    @total_donation = 1_000_000 if current_user == User.where("username = 'dd'")[0]
-
+    @total_donation = Pledger.find(params[:pledger_id])
+      .total_donation(current_user == User.where("username = 'dd'")[0])
     respond_to do |format|
       format.html { render layout: !request.xhr? }
       format.json { render json: @reward }
@@ -58,11 +54,8 @@ class RewardsController < ApplicationController
     @reward = Reward.find(params[:id])
     @rewardID = params[:id]
     @selectedItem = @reward.item.id
-    pledger = @reward.pledger
-    all_donations_amount = pledger.donations.select { |d| !d.gpo_sent || !d.gpo_processed && d.payment_method == 'Credit Card' }.reduce(0) { |sum, don| sum + don.amount }
-    all_rewards_cost = pledger.rewards.reject { |r| r.premia_sent }.reduce(0) { |sum, rew| sum + rew.item.cost }
-    @total_donation = all_donations_amount + @reward.item.cost - all_rewards_cost
-    @total_donation = 1_000_000 if current_user == User.where("username = 'dd'")[0]
+    @total_donation = @reward.pledger
+      .total_donation(current_user == User.where("username = 'dd'")[0])
 
     respond_to do |format|
       format.html { render layout: !request.xhr? }
