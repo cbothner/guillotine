@@ -187,12 +187,12 @@ class DonationsController < ApplicationController
 
   # Process a list of donations into a list of hashes
   # { :pledger => <Pledger>, :amount => 100 }
-  def donations_to_pledgers_and_totals(donations, received?)
+  def donations_to_pledgers_and_totals(donations, received)
     donations.map { |d| d.pledger }
       .uniq
       .map do |pled|
         pledger_total = pled.donations
-          .select { |d| d.payment_received == received? && d.slot.semester == @semester }
+          .select { |d| d.payment_received == received && d.slot.semester == @semester }
           .reduce(0) { |sum, don| sum + don.amount }
         { pledger: pled, amount: pledger_total }
       end
