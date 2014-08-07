@@ -4,7 +4,7 @@ class DonationListCell < Cell::Rails
   helper PledgersHelper, ApplicationHelper
 
   def show(params)
-    pledger = params[:pledger]
+    @pledger = params[:pledger]
     donations = pledger.donations.includes(slot: [:show, :semester])
     @activeDonations = donations.select { |d| d.active?(current_user == User.where(username: 'dd')[0]) }
     @archivedDonations = donations - @activeDonations
