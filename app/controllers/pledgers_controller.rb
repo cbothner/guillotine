@@ -27,8 +27,6 @@ class PledgersController < ApplicationController
   def show
     @pledger = Pledger.find(params[:id])
 
-    @activeRewards = @pledger.rewards.where("premia_sent = 'f'").includes(:item)
-    @archivedRewards = @pledger.rewards.where("premia_sent = 't'").includes(:item)
     @activeComments = @pledger.comments.includes(:show).sort_by { |c| c.created_at }.reverse
 
     forgivenDonations = @pledger.forgiven_donations.includes(slot: [:semester])

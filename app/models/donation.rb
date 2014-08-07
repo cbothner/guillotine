@@ -11,6 +11,6 @@ class Donation < ActiveRecord::Base
   # or if it was paid by credit card but the gpo has not been
   # processed.
   def active?(dd_view)
-    (payment_received == false || payment_method == 'Credit Card' && gpo_processed == false) && (dd_view || slot.semester == Semester.current_semester)
+    (payment_received == false || payment_method == 'Credit Card' && gpo_sent == false) && (dd_view || slot.semester == Semester.current_semester)
   end
 end
