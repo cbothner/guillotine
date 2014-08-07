@@ -13,7 +13,7 @@ class Pledger < ActiveRecord::Base
   has_many :comments
   attr_accessible :affiliation, :email, :individual, :name, :local_address, :local_address2, :local_city, :local_phone, :local_state, :local_zip, :perm_address, :perm_address2, :perm_city, :perm_country, :perm_phone, :perm_state, :perm_zip
 
-  validates :name, :perm_address, :perm_city, :perm_country, :perm_phone, presence: true
+  validates :name, :perm_address, :perm_city, :perm_country, presence: true
   validates :affiliation, inclusion: { in: %w(Staff Alumni Public), message: 'Affiliation must be one of staff, alumni, or public' }
   with_options if: :american? do |american|
     american.validates :perm_state, presence: true, length: { is: 2 }
@@ -24,6 +24,7 @@ class Pledger < ActiveRecord::Base
     local.validates :local_state, length: { is: 2 }
     local.validates :local_zip, numericality: { only_integer: true }, length: { is: 5 }
   end
+  validate :phone_or_email
 
   def american?
     :perm_country == 'USA'
@@ -32,4 +33,13 @@ class Pledger < ActiveRecord::Base
   def diff_local?
     :local_address.blank?
   end
+
+  private
+
+  def phone_or_email
+    if perm_phone.blank? && email.blank?
+      errors.add(:base, "Phone number or email is required")
+    end
+  end
+
 end
