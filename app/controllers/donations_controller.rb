@@ -15,11 +15,11 @@ class DonationsController < ApplicationController
 
     unpaid_donations = donations.select { |d| d.payment_received == false }
     @unpaid_progress = unpaid_donations.reduce(0) { |a, e| a + e.amount }
-    @unpaid_pledgers = donations_to_pledgers_and_totals(unpaid_donations)
+    @unpaid_pledgers = donations_to_pledgers_and_totals(unpaid_donations, false)
 
     paid_donations = donations.select { |d| d.payment_received == true }
     @paid_progress = paid_donations.reduce(0) { |a, e| a + e.amount }
-    @paid_pledgers = donations_to_pledgers_and_totals(paid_donations)
+    @paid_pledgers = donations_to_pledgers_and_totals(paid_donations, true)
     if @total_progress.zero?
       @paid_percent = 0
     else
@@ -187,12 +187,12 @@ class DonationsController < ApplicationController
 
   # Process a list of donations into a list of hashes
   # { :pledger => <Pledger>, :amount => 100 }
-  def donations_to_pledgers_and_totals(donations)
+  def donations_to_pledgers_and_totals(donations, received?)
     donations.map { |d| d.pledger }
       .uniq
       .map do |pled|
         pledger_total = pled.donations
-          .select { |d| d.payment_received == false && d.slot.semester == @semester }
+          .select { |d| d.payment_received == received? && d.slot.semester == @semester }
           .reduce(0) { |sum, don| sum + don.amount }
         { pledger: pled, amount: pledger_total }
       end
