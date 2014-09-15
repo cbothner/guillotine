@@ -20,7 +20,7 @@
       .flex6=best_in_place_if user_is_dd?, i, :name
       .flex2=best_in_place_if user_is_dd?, i, :cost, :display_with => :number_to_currency
       .flex3=best_in_place_if user_is_dd?, i, :taxable_value, :display_with => :number_to_currency
-      .flex2=Reward.where(item: i, premia_sent: false).count
+      .flex2=Reward.where(item: i).count
       .flex2{:class => ('out_of_stock' if i.stock <= 0)}=best_in_place_if user_is_dd?, i, :stock
       -if user_is_dd?
         .flex2=best_in_place i, :backorderable, :type => :checkbox
@@ -39,7 +39,7 @@
         .flex6.inactive=best_in_place i, :name
         .flex2.inactive=best_in_place i, :cost, :display_with => :number_to_currency
         .flex3.inactive=best_in_place i, :taxable_value, :display_with => :number_to_currency
-        .flex2.inactive=Reward.where(item: i, premia_sent: false).count
+        .flex2.inactive=Reward.where(item: i).count
         .flex2.inactive=best_in_place i, :stock
         .flex2.inactive=best_in_place i, :backorderable, :type => :checkbox
         .flex2.inactive=best_in_place i, :shape, :type => :select, :collection => (["box","flat","shirt","sweatshirt","incorporeal"].map{|s| [s,s.capitalize]})
