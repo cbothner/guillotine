@@ -42,15 +42,16 @@ class Pledger < ActiveRecord::Base
 
   def self.per_tier(cutoffs, options={})
     pledgers = all.map{|p| [p, p.total_donation_in_semester(options[:semester])]}
+    pledgers.reject!{|p| p[1] == 0}
     pledgers_by_tier = {}
-    cutoffs.sort.each do |c|
-      pledgers_by_tier[c] = pledgers.select{|p| p[1] <= c}
+    cutoffs.sort.reverse.each do |c|
+      pledgers_by_tier[c] = pledgers.select{|p| p[1] >= c}
       pledgers -= pledgers_by_tier[c]
     end
     pledgers_by_tier
   end
 
-  def self.count_per_tier(cutoffs, options={})>
+  def self.count_per_tier(cutoffs, options={})
     pledgers_by_tier = per_tier(cutoffs, options)
     Hash[*cutoffs.map do |c|
       [c, pledgers_by_tier[c].count]
