@@ -30,9 +30,31 @@ class Pledger < ActiveRecord::Base
     all_donations_amount - all_rewards_cost
   end
 
+  def total_donation_in_semester(semester)
+    semester = Semester.current_semester if semester.nil?
+    donations.select{|d| d.slot.semester == semester}.reduce(0) { |sum, don| sum + don.amount }
+  end
+
   def self.select_with_args(sql, args)
     query = sanitize_sql_array([sql, args].flatten)
     select(query)
+  end
+
+  def self.per_tier(cutoffs, options={})
+    pledgers = all.map{|p| [p, p.total_donation_in_semester(options[:semester])]}
+    pledgers_by_tier = {}
+    cutoffs.sort.each do |c|
+      pledgers_by_tier[c] = pledgers.select{|p| p[1] <= c}
+      pledgers -= pledgers_by_tier[c]
+    end
+    pledgers_by_tier
+  end
+
+  def self.count_per_tier(cutoffs, options={})>
+    pledgers_by_tier = per_tier(cutoffs, options)
+    Hash[*cutoffs.map do |c|
+      [c, pledgers_by_tier[c].count]
+    end.flatten]
   end
 
   def american?
