@@ -94,18 +94,31 @@ jQuery ->
 
   $(document).on('change', '#permUSA', ->
     if $('#permUSA').prop('checked')
+      window.nonusa_city = $('#pledger_perm_city').val()
+      window.nonusa_country = $('#pledger_perm_country').val()
       $("#permCSZDiv").replaceWith("""
-      <div id="permCSZDiv" class="flexcontainer">
-        <div class="flex1">
-          <label for="pledger_perm_zip">Zip Code</label><input id="pledger_perm_zip" maxlength="5" name="pledger[perm_zip]" size="5" type="text" autofocus="autofocus">
-        </div>
-        <div class="flex2" id="permCityState">
-          <input disabled="disabled" id="pledger_perm_city" name="pledger[perm_city]" type="text"> <input disabled="disabled" id="pledger_perm_state" name="pledger[perm_state]" type="text">
-        </div>
-        <input id="pledger_perm_country" name="pledger[perm_country]" type="hidden" value="USA">
-      </div>
+          <div id="permCSZDiv" class="flexcontainer">
+            <div class="flex2">
+              <label for="pledger_perm_zip">Zip</label><input class="zip-lookup-field-zipcode" id="pledger_perm_zip" maxlength="5" name="pledger[perm_zip]" size="5" type="text">
+            </div>
+            <div class="flex3" id="permCity">
+              <label for="pledger_perm_city">City</label>
+              <input class="zip-lookup-field-city" id="pledger_perm_city" name="pledger[perm_city]" type="text">
+            </div>
+            <div class="flex1" id="permState">
+              <label for="pledger_perm_state">State</label>
+              <input class="zip-lookup-field-state-short" id="pledger_perm_state" name="pledger[perm_state]" type="text">
+            </div>
+            <input id="pledger_perm_country" name="pledger[perm_country]" type="hidden" value="USA">
+          </div>
       """)
+      $('#pledger_perm_zip').val(window.usa_zip)
+      $('#pledger_perm_city').val(window.usa_city)
+      $('#pledger_perm_state').val(window.usa_state)
     else
+      window.usa_zip = $('#pledger_perm_zip').val()
+      window.usa_city = $('#pledger_perm_city').val()
+      window.usa_state = $('#pledger_perm_state').val()
       $("#permCSZDiv").replaceWith("""
         <div id="permCSZDiv" class="flexcontainer">
           <div class="flex1">
@@ -118,30 +131,32 @@ jQuery ->
           </div>
         </div>
       """)
+      $('#pledger_perm_city').val(window.nonusa_city)
+      $('#pledger_perm_country').val(window.nonusa_country)
   )
 
-  $(document).on('change','#pledger_perm_zip', ->
-    $.zipLookup(
-      $(this).val(), (cityName,stateName,stateShortName) ->
-        $('#pledger_perm_city').val(cityName)
-        $('#pledger_perm_state').val(stateShortName)
-        $('#pledger_perm_city').removeAttr("disabled")
-        $('#pledger_perm_state').removeAttr("disabled")
-      (errMsg) ->
-        $('#pledger_perm_city').val("Error: " + errMsg)
-    )
-  )
-  $(document).on('change','#pledger_local_zip', ->
-    $.zipLookup(
-      $(this).val(), (cityName,stateName,stateShortName) ->
-        $('#pledger_local_city').val(cityName)
-        $('#pledger_local_state').val(stateShortName)
-        $('#pledger_local_city').removeAttr("disabled")
-        $('#pledger_local_state').removeAttr("disabled")
-      (errMsg) ->
-        $('#pledger_local_city').val("Error: " + errMsg)
-    )
-  )
+  #$(document).on('change','#pledger_perm_zip', ->
+    #$.zipLookup(
+      #$(this).val(), (cityName,stateName,stateShortName) ->
+        #$('#pledger_perm_city').val(cityName)
+        #$('#pledger_perm_state').val(stateShortName)
+        #$('#pledger_perm_city').removeAttr("disabled")
+        #$('#pledger_perm_state').removeAttr("disabled")
+      #(errMsg) ->
+        #$('#pledger_perm_city').val("Error: " + errMsg)
+    #)
+  #)
+  #$(document).on('change','#pledger_local_zip', ->
+    #$.zipLookup(
+      #$(this).val(), (cityName,stateName,stateShortName) ->
+        #$('#pledger_local_city').val(cityName)
+        #$('#pledger_local_state').val(stateShortName)
+        #$('#pledger_local_city').removeAttr("disabled")
+        #$('#pledger_local_state').removeAttr("disabled")
+      #(errMsg) ->
+        #$('#pledger_local_city').val("Error: " + errMsg)
+    #)
+  #)
 
 window.onbeforeunload = ->
   if window.editedtext

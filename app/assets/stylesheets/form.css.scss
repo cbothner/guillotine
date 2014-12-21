@@ -26,10 +26,12 @@ select {
 textarea {
     margin-bottom: 10px;
 }
-.middlepadding div {
+.middlepadding div,
+.middlepadding fieldset {
   padding-right:1em
 }
-.middlepadding div:last-child {
+.middlepadding div:last-child,
+.middlepadding fieldset:last-child{
   padding-right:0;
 }
 .notabene {
