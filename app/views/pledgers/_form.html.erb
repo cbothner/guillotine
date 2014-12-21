@@ -28,7 +28,7 @@
       <%= f.radio_button(:affiliation, "Public") %>
       <%= label_tag(:affiliation_public, "Public", :class => "greytext") %>
       <div class="flexcontainer middlepadding">
-        <div class="flex1">
+        <fieldset class="flex1">
           <%= instructions_for_operators{"5) What's your phone number?"} %>
           <%= f.label :perm_phone, "Phone Number" %><%= f.telephone_field :perm_phone, :class => "phonemasked" %>
           <%= instructions_for_operators{"6) And your permanent mailing address?"} %>
@@ -36,28 +36,39 @@
           <%= f.text_field :perm_address2 %>
           <label>USA? </label><input type="checkbox" id="permUSA" checked=""> 
           <div id="permCSZDiv" class="flexcontainer">
-            <div class="flex1">
-              <%= f.label :perm_zip, "Zip Code" %><%= f.text_field :perm_zip, :maxlength => "5" %>
+            <div class="flex2">
+              <%= f.label :perm_zip, "Zip" %><%= f.text_field :perm_zip, :maxlength => "5", class: 'zip-lookup-field-zipcode' %>
             </div>
-            <div class="flex2" id="permCityState">
-              <%= f.text_field :perm_city, :disabled => true %> <%= f.text_field :perm_state, :disabled => true %>
+            <div class="flex3" id="permCity">
+              <%= f.label :perm_city, "City" %>
+              <%= f.text_field :perm_city, class: 'zip-lookup-field-city' %>
+            </div>
+            <div class="flex1" id="permState">
+              <%= f.label :perm_state, "State" %>
+              <%= f.text_field :perm_state, class: 'zip-lookup-field-state-short' %>
             </div>
             <%= f.hidden_field(:perm_country, value: "USA") %>
           </div>
-        </div>
-        <div class="flex1">
+        </fieldset>
+        <fieldset class="flex1">
           <%= instructions_for_operators{"7) Do you have different local information?"} %>
           <%= f.label :local_phone, "Alternate Phone Number" %><%= f.telephone_field :local_phone, :class => "phonemasked" %>
           <%= f.label :local_address, "Local Street Address" %><%= f.text_field :local_address %><%= f.text_field :local_address2 %>
+          <label>&nbsp;</label>
           <div id="localCSZDiv" class="flexcontainer">
-            <div class="flex1">
-              <%= f.label :local_zip, "Zip Code" %><%= f.text_field :local_zip, :maxlength => "5" %>
+            <div class="flex2">
+              <%= f.label :local_zip, "Zip" %><%= f.text_field :local_zip, :maxlength => "5", class: 'zip-lookup-field-zipcode' %>
             </div>
-            <div class="flex2" id="localCityState">
-              <%= f.text_field :local_city, :disabled => true %><%= f.text_field :local_state, :disabled => true %>
+            <div class="flex3" id="localCity">
+              <%= f.label :local_city, "City" %>
+              <%= f.text_field :local_city, class: 'zip-lookup-field-city' %>
+            </div>
+            <div class="flex1" id="localState">
+              <%= f.label :local_state, "State" %>
+              <%= f.text_field :local_state, class: 'zip-lookup-field-state-short' %>
             </div>
           </div>
-        </div>
+        </fieldset>
       </div>
     <div style="margin-top:10px; text-align:center;"></div>
   <div class="actions">
