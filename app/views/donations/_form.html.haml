@@ -48,7 +48,8 @@
   -if @donation.id
     %p.notabene{:style => "font-style:normal;margin-top: -2px;padding-left: 0;margin-bottom: -2px;"}<
       = @donation.updated_at.to_s.split(' ')[0]
-      &nbsp;&mdash; Phone Operator:&nbsp;
+      %br
+      Phone Operator:&nbsp;
       = @donation.phone_operator
   .actions
     = f.submit data: { disable_with: 'Saving...' }
