@@ -47,9 +47,8 @@
   = f.hidden_field :pledger_id
   -if @donation.id
     %p.notabene{:style => "font-style:normal;margin-top: -2px;padding-left: 0;margin-bottom: -2px;"}<
-      = @donation.updated_at.to_s.split(' ')[0]
-      %br
-      Phone Operator:&nbsp;
+      = @donation.created_at.to_s.split(' ')[0]
+      &nbsp;Phone Operator:&nbsp;
       = @donation.phone_operator
   .actions
     = f.submit data: { disable_with: 'Saving...' }
