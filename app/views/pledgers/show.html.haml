@@ -20,11 +20,16 @@
         .flex2
           %b.labelB City
           %p.inputP=best_in_place @pledger, :perm_city
-        .flex1
-          %b.labelB State
-          %p.inputP=best_in_place @pledger, :perm_state
-      %b.labelB Zip Code
-      %p.inputP=best_in_place @pledger, :perm_zip
+        -if @pledger.perm_country == 'USA'
+          .flex1
+            %b.labelB State
+            %p.inputP=best_in_place @pledger, :perm_state
+      -if @pledger.perm_country == 'USA'
+        %b.labelB Zip Code
+        %p.inputP=best_in_place @pledger, :perm_zip
+      -else
+        %b.labelB Country
+        %p.inputP=best_in_place @pledger, :perm_country
     .flex1
       %b.labelB Local Phone Number
       %p.inputP=best_in_place @pledger, :local_phone
