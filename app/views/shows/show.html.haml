@@ -13,7 +13,10 @@
           %ul.slothistory_donorslist
             -donations.each do |donation|
               %li
-                %span.slothistory_pledgername=link_to(donation.pledger.name,donation.pledger)
+                -if donation.pledger.underwriting
+                  %span.slothistory_pledgername=link_to('Underwriting: ' + donation.pledger.name,donation.pledger)
+                -else
+                  %span.slothistory_pledgername=link_to(donation.pledger.name,donation.pledger)
                 %span.slothistory_donationamount="($#{number_with_delimiter(donation.amount.round, :delimiter => ',')})"
 
   %section.home.grid_4

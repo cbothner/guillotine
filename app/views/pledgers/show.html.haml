@@ -1,7 +1,6 @@
 %section.grid_6.pledger
   =instructions_for_operators{ "Verify that this information is accurate." }
-  %b.labelB Individual
-  %p.inputP=best_in_place @pledger, :individual, :type => :checkbox, :collection => [ "No", "Yes"], :class => "inputP"
+  %p.inputP=best_in_place @pledger, :underwriting, :type => :checkbox, :collection => [ "Pledger", "Underwriter"], :class => "inputP"
   %b.labelB Name
   %p.inputP=best_in_place @pledger, :name
   %b.labelB Email
@@ -16,7 +15,7 @@
       %p.inputP=best_in_place @pledger, :perm_address
       -if !@pledger.perm_address2.blank?
         %p.inputP=best_in_place @pledger, :perm_address2
-      .flexcontainer
+      .flexcontainer.middlepadding
         .flex2
           %b.labelB City
           %p.inputP=best_in_place @pledger, :perm_city
@@ -37,7 +36,7 @@
       %p.inputP=best_in_place @pledger, :local_address
       -if !@pledger.local_address2.blank?
         %p.inputP=best_in_place @pledger, :local_address2
-      .flexcontainer
+      .flexcontainer.middlepadding
         .flex2
           %b.labelB City
           %p.inputP=best_in_place @pledger, :local_city

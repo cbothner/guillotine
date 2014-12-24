@@ -4,6 +4,7 @@
       %h2 Information
       %ul
         %li= link_to "Progress", :donations
+        %li= link_to "Underwriting", controller: 'donations', action: 'underwriting'
         %li= link_to "Comments", :comments
         %li= link_to "Premia Shipments", :rewards
         %li= link_to "Tax on Credit Card Donations", :controller => "gpo", :action => "creditcards"
