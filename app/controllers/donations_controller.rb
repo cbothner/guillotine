@@ -10,6 +10,7 @@ class DonationsController < ApplicationController
     @semester ||= Semester.current_semester
 
     donations = @semester.slots.reduce([]) { |a, e| a + e.donations }
+      .reject{ |d| d.pledger.underwriting }
     @total_progress = donations.reduce(0) { |a, e| a + e.amount }
     @total_percent = 100 * (@total_progress / @semester.goal)
 
@@ -32,6 +33,15 @@ class DonationsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @donations }
+    end
+  end
+
+  def underwriting
+    @underwriting = Donation.includes(:pledger).includes(slot: [:show])
+      .select{ |d| d.pledger.underwriting }.sort_by(&:created_at).reverse
+
+    respond_to do |format|
+      format.html { render layout: 'generate' }
     end
   end
 

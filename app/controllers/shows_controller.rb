@@ -7,7 +7,7 @@ class ShowsController < ApplicationController
     @semester ||= Semester.current_semester
     # @shows = Show.where("name != 'ALL FREEFORM'").includes(:slots).select{ |s| s.slots.collect{ |e| e.semester }.include? @semester.to_f }
     @slots = @semester.slots.to_a.uniq { |s| s.show_id }.reject { |s| s.show.get_name == 'ALL FREEFORM' }
-    @shows = @slots.map { |x| [x.show, x.show.slots.where(semester_id: @semester.id).reduce(0) { |sum, e| sum + e.donations.map { |d| d.amount }.reduce(:+).to_f }] }
+    @shows = @slots.map { |x| [x.show, x.show.slots.where(semester_id: @semester.id).reduce(0) { |sum, e| sum + e.donations.reject{|d| d.pledger.underwriting}.map { |d| d.amount }.reduce(:+).to_f }] }
     @shows = @shows.sort_by { |x| x[1] }.reverse_each
     @first_place_total = @shows.first[1]
     @shows = @shows.map { |x| x + [100 * x[1] / @first_place_total] }

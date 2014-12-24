@@ -6,7 +6,7 @@ class Pledger < ActiveRecord::Base
   has_many :rewards, inverse_of: :pledger
   has_many :items, through: :rewards
   has_many :comments
-  attr_accessible :affiliation, :email, :individual, :name, :local_address, :local_address2, :local_city, :local_phone, :local_state, :local_zip, :perm_address, :perm_address2, :perm_city, :perm_country, :perm_phone, :perm_state, :perm_zip
+  attr_accessible :affiliation, :email, :individual, :name, :local_address, :local_address2, :local_city, :local_phone, :local_state, :local_zip, :perm_address, :perm_address2, :perm_city, :perm_country, :perm_phone, :perm_state, :perm_zip, :underwriting
 
   validates :name, :perm_address, :perm_city, :perm_country, presence: true
   validates :affiliation, inclusion: { in: %w(Staff Alumni Public Family), message: 'Affiliation must be one of staff, alumni, family, or public' }

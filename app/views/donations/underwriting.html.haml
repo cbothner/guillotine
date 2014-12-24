@@ -1,0 +1,10 @@
+-@underwriting.each do |donation|
+  .commentLine.flexcontainer
+    .sidemargins.flex1
+      .commentText="$%.2f" %donation.amount
+    .sidemargins.comment_time.flex1="#{donation.created_at.strftime("%e %b %Y")}"
+    .sidemargins.flex5
+      .commentShowName{:style => "margin-left:10px"}
+        =link_to(donation.pledger.name,donation.pledger)
+        =' &rarr;'.html_safe
+        =link_to(donation.slot.show.get_name,donation.slot.show)
