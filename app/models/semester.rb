@@ -14,3 +14,7 @@ class Semester < ActiveRecord::Base
     "#{year}/#{month < 10 ? "0#{month}" : month}"
   end
 end
+
+MONTHS = %w(January February March April May June July 
+August September October November December)
+
