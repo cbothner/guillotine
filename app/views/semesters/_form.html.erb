@@ -1,0 +1,32 @@
+<%= form_for(@semester) do |f| %>
+  <% if @semester.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@semester.errors.count, "error") %> prohibited this semester from being saved:</h2>
+
+      <ul>
+      <% @semester.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="flexcontainer middlepadding">
+    <div class="flex1">
+      <%= f.label :month %><br />
+      <%= f.select( :month, options_for_select(
+        MONTHS.each_with_index.map{|s,i| [s,i+1]}, 2), {}, {class: "chzn-select"} ) %>
+    </div>
+    <div class="flex1">
+      <%= f.label :year %><br />
+      <%= f.number_field :year, value: (Semester.current_semester.year+1), step: "any", min:2014  %>
+    </div>
+    <div class="flex1">
+      <%= f.label :goal %><br />
+      <%= f.number_field :goal, step: "any", min:0 %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit data: {confirm: "Are you sure you want to initialize a new fundraiser?  This will change the active semester and cannot be undone."} %>
+  </div>
+<% end %>

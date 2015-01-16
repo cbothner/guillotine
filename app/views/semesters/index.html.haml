@@ -1,0 +1,20 @@
+%section.grid_2
+  &nbsp;
+
+%section.home.grid_8
+  %h2="Semesters"
+  =render 'form' if user_is_dd?
+  %h4 Active
+  .items_row.items_header.flexcontainer
+    .flex3 Year
+    .flex3 Month
+    .flex3 Revenue
+    .flex3 Goal
+    .flex1 &nbsp;
+  -@semesters.each do |s|
+    .items_row.flexcontainer
+      .flex3=s.year
+      .flex3=MONTHS[s.month-1]
+      .flex3="$%.2f" % @revenue[s]
+      .flex3=best_in_place_if user_is_dd?, s, :goal, :display_with => :number_to_currency
+      .flex1=link_to '[?]', controller: :slots, action: 'index', month: s.month, year: s.year

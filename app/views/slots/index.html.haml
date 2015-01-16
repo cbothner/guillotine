@@ -1,6 +1,6 @@
 %h2="Show Schedule #{@semester.name}"
 Semester
-=select_tag("schedule", options_for_select(Semester.all.map{|s| s.name } + (user_is_dd? ? ['New Semester'] : []), @semester.name), class: "semester_select", data:{prefix:'slots/'})
+=select_tag("schedule", options_for_select(Semester.all.map{|s| s.name }, @semester.name), class: "semester_select", data:{prefix:'slots/'})
 
 =render 'form' if user_is_dd?
 
