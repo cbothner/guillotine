@@ -1,6 +1,7 @@
 %section.grid_6.pledger
   =instructions_for_operators{ "Verify that this information is accurate." }
-  %p.inputP=best_in_place @pledger, :underwriting, :type => :checkbox, :collection => [ "Pledger", "Underwriter"], :class => "inputP"
+  - if user_is_dd?
+    %p.inputP=best_in_place @pledger, :underwriting, :type => :checkbox, :collection => [ "Pledger", "Underwriter"], :class => "inputP"
   %b.labelB Name
   %p.inputP=best_in_place @pledger, :name
   %b.labelB Email
