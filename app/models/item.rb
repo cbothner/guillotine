@@ -4,7 +4,7 @@ class Item < ActiveRecord::Base
   attr_accessible :backorderable, :cost, :name, :note, :shape, :stock, :taxable_value
 
   validates :cost, :name, :shape, :stock, :taxable_value, presence: true
-  validates :cost, :taxable_value, numericality: { greater_than: 0 }
+  validates :cost, :taxable_value, numericality: { greater_than_or_equal: 0 }  # cost = 0 means item is not for sale
   validates :stock, numericality: { only_integer: true, greater_than_or_equal: 0 }
   validates :shape, inclusion: { in: %w(box flat shirt sweatshirt incorporeal), message: 'Must be a valid shape' }
 
@@ -18,11 +18,11 @@ class Item < ActiveRecord::Base
   end
 
   def self.active
-    where("backorderable = 't' or stock > 0").order(:name)
+    where("(backorderable = 't' or stock > 0) and cost > 0").order(:name)
       .reject { |i| i.get_stock <= 0 }
   end
   def self.inactive
-    where("backorderable = 'f' and stock <= 0").order(:name)
+    where("(backorderable = 'f' and stock <= 0) or cost = 0").order(:name)
   end
 
   def get_stock
