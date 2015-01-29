@@ -10,7 +10,7 @@ class Item < ActiveRecord::Base
 
   def self.for_select(total_donation)
     # total_donation = 1_000_000 if user_is_dd?
-    active.sort_by { |i| -i.cost }.reject { |i| i.cost > total_donation }
+    active.sort_by { |i| i.cost }.reject { |i| i.cost > total_donation }
       .map { |i| [i, i.get_stock] }
       .map do |i, numleft|
       [i.name + (numleft > 0 ? " — #{numleft} left" : ' — Backordered') + ' ($%.2f)' % i.cost, i.id]
