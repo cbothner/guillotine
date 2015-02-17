@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Guillotine</title>
+  <title><%= content_for?(:title) ? content_for(:title) + " — " : "" %>Guillotine</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "http://ziplookup.googlecode.com/git/zip-lookup/zip-lookup.js" %>

@@ -1,3 +1,4 @@
+-title "#{@semester.name} — Slots"
 %h2="Show Schedule #{@semester.name}"
 Semester
 =select_tag("schedule", options_for_select(Semester.all.map{|s| s.name }, @semester.name), class: "semester_select", data:{prefix:'slots/'})

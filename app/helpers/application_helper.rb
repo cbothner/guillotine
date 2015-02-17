@@ -11,4 +11,8 @@ module ApplicationHelper
   def user_is_dd?
     current_user == User.where("username = 'dd'")[0]
   end
+
+  def title(page_title)
+    content_for(:title) { page_title }
+  end
 end

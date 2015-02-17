@@ -1,6 +1,8 @@
+-title "Comments"
+-Time.zone="EST"
 -@comments.each do |comment|
   .commentLine.flexcontainer
-    .sidemargins.comment_time.flex1="#{comment.created_at.strftime("%l:%M %p")}<br />#{comment.created_at.strftime('%e %b %Y')}".html_safe
+    .sidemargins.comment_time.flex1="#{Time.zone.at(comment.created_at).strftime("%l:%M %p")}<br />#{Time.zone.at(comment.created_at).strftime('%e %b %Y')}".html_safe
     .sidemargins.flex5
       .commentText="\"#{comment.comment}\""
       .commentShowName{:style => "margin-left:10px"}

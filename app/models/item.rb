@@ -8,21 +8,28 @@ class Item < ActiveRecord::Base
   validates :stock, numericality: { only_integer: true, greater_than_or_equal: 0 }
   validates :shape, inclusion: { in: %w(box flat shirt sweatshirt incorporeal), message: 'Must be a valid shape' }
 
-  def self.for_select(total_donation)
-    # total_donation = 1_000_000 if user_is_dd?
-    active.sort_by { |i| i.cost }.reject { |i| i.cost > total_donation }
-      .map { |i| [i, i.get_stock] }
-      .map do |i, numleft|
-      [i.name + (numleft > 0 ? " — #{numleft} left" : ' — Backordered') + ' ($%.2f)' % i.cost, i.id]
+  def self.for_select(total_donation, selected_item = nil)
+    affordable = all.select(&:active?)
+      .sort_by(&:name)
+      .reject{ |i| i.cost > total_donation }
+      .map{ |i| [i, i.get_stock] }
+    affordable += [[selected_item, selected_item.get_stock + 1]] unless selected_item.nil?
+    return affordable.map do |i, numleft|
+      numleft_str = if numleft > 0
+        "- #{numleft} left"
+      else
+        "- Made to Order"
+      end
+      str = i.name + numleft_str + ' ($%.2f)' % i.cost
+      [str, i.id]
     end
   end
 
-  def self.active
-    where("(backorderable = 't' or stock > 0) and cost > 0").order(:name)
-      .reject { |i| i.get_stock <= 0 }
+  def active?
+    backorderable || get_stock > 0 && cost > 0
   end
-  def self.inactive
-    where("(backorderable = 'f' and stock <= 0) or cost = 0").order(:name)
+  def inactive?
+    !active?
   end
 
   def get_stock

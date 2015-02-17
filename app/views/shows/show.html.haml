@@ -1,3 +1,4 @@
+-title "#{@show.get_name} — Shows"
 .flexcontainer
   %section.home.flex3
     =link_to "&larr;Back".html_safe, :back
@@ -21,9 +22,10 @@
 
   %section.home.grid_4
     %h4{style: 'margin-top:0.5em;'} Comments
+    -Time.zone = "EST"
     -@comments.each do |comment|
       .comment
-        .comment_pledgername=link_to(comment.pledger.name,comment.pledger) + " — " + comment.created_at.strftime('%m/%d/%Y %k:%M')
+        .comment_pledgername=link_to(comment.pledger.name,comment.pledger) + " — " + Time.zone.at(comment.created_at).strftime('%m/%d/%Y %k:%M')
         .comment_text=comment.comment
 
 &nbsp;
