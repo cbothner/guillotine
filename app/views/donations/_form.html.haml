@@ -21,7 +21,7 @@
     .flex2.field
       = f.label :payment_method 
       %br
-      = f.select(:payment_method, ["Check", "Cash", "Credit Card"])
+      = f.select(:payment_method, ["Credit Card", "Check", "Cash"])
   -if user_is_dd?
     .field
       = f.label :comment
@@ -40,9 +40,9 @@
           = f.label :gpo_sent, "&nbsp;".html_safe, :class => "fontawesome-cloud-upload icon-large"
         = f.check_box :gpo_sent
   -else
-    = f.hidden_field :pledge_form_sent
-    = f.hidden_field :payment_received
-    = f.hidden_field :gpo_sent
+    = f.hidden_field :pledge_form_sent, value: false
+    = f.hidden_field :payment_received, value: false
+    = f.hidden_field :gpo_sent, value: false
     %div{:style => "height:6px;"}
   = f.hidden_field :pledger_id
   -if @donation.id

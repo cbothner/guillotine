@@ -19,7 +19,7 @@
       -if user_is_dd?
         .flex2=best_in_place @item, :backorderable, :type => :checkbox
       -else
-        .flex2=i.backorderable ? "Yes" : "No"
+        .flex2=@item.backorderable ? "Yes" : "No"
       .flex2=best_in_place_if user_is_dd?, @item, :shape, :type => :select, :collection => (["box","flat","shirt","sweatshirt","incorporeal"].map{|s| [s,s.capitalize]})
       .flex4=best_in_place_if user_is_dd?, @item, :note
       - if user_is_dd?

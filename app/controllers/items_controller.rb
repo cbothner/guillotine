@@ -4,8 +4,8 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @active_items = Item.active
-    @inactive_items = Item.inactive
+    @active_items = Item.select(&:active?).sort_by(&:name)
+    @inactive_items = Item.select(&:inactive?).sort_by(&:name)
 
     @item = Item.new
 

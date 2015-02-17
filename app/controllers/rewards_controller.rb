@@ -53,9 +53,10 @@ class RewardsController < ApplicationController
   def edit
     @reward = Reward.find(params[:id])
     @rewardID = params[:id]
-    @selectedItem = @reward.item.id
+    @selectedItem = @reward.item
     @total_donation = @reward.pledger
       .total_donation(current_user == User.where("username = 'dd'")[0])
+    @total_donation += @reward.item.cost
 
     respond_to do |format|
       format.html { render layout: !request.xhr? }

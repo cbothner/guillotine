@@ -1,3 +1,4 @@
+-title "Pledges — #{@semester.name}"
 %h2="Pledges from #{@semester.name}"
 Semester
 =select_tag("schedule", options_for_select(Semester.all.map{|s| s.name }, @semester.name), class: "semester_select", data:{prefix:'donations/'})
