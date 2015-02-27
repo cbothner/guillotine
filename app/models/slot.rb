@@ -25,6 +25,12 @@ class Slot < ActiveRecord::Base
           r
         end
   end
+
+  def length 
+    naive_seconds = self.end - start
+    seconds = naive_seconds * (weekday > 3 ? 2 : 1) # Fri, Sat, Sun go twice
+    seconds.to_f / 3600 # return hours
+  end
 end
 
 Weekdays = {
