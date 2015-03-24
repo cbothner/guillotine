@@ -54,7 +54,7 @@ class Pledger < ActiveRecord::Base
     pledgers.reject!{|p| p[1] == 0}
     pledgers_by_tier = {}
     cutoffs.sort.reverse.each do |c|
-      pledgers_by_tier[c] = pledgers.select{|p| p[1] >= c}
+      pledgers_by_tier[c] = pledgers.select{|p| p[1] >= c}.map{|x| x[0]}
       pledgers -= pledgers_by_tier[c]
     end
     pledgers_by_tier
@@ -68,9 +68,8 @@ class Pledger < ActiveRecord::Base
   end
 
   def contact_info()
-    "#{name}, #{total_donation_in_semester}, #{email}, #{perm_address}, " +
-      "#{perm_address2 + ','unless perm_address2.empty?}, #{perm_city}, " +
-      "#{perm_state}, #{perm_zip}"
+    "#{name}, #{total_donation_in_semester nil}, #{email}, #{perm_address}, " +
+      "#{perm_address2}, #{perm_city}, #{perm_state}, #{perm_zip}"
   end
 
   def american?
