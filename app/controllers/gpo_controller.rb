@@ -34,17 +34,14 @@ class GpoController < ApplicationController
 
     # Unique list of pledgers in checksForDeposit
     pledgersForGPO = checksForDeposit.map { |don| Pledger.find(don.pledger_id) }.uniq
-    unsentPremia = pledgersForGPO.reduce([]) { |sum, p| sum + p.rewards } & Reward.where("premia_sent = 'false' and taxed = 'false'")
+    unsentPremia = pledgersForGPO.reduce([]) { |sum, p| sum + p.rewards.reject(&:taxed) }
 
     @argsForGPO = pledgersForGPO.map{ |pledger|
       pledger.perm_phone ||= 'No Phone'
       pledger.email ||= 'No Email'
       { pledger: pledger,
-        depositTotal: checksForDeposit
-          .select { |don| don.pledger_id == pledger.id }
-          .reduce(0) { |sum, e| sum += e.amount },
-        premiaTotal: pledger.rewards.where("premia_sent = 'false' and taxed = 'false'")
-          .reduce(0) { |sum, e| sum += e.item.taxable_value }
+        depositTotal: checksForDeposit.select { |don| don.pledger_id == pledger.id }.reduce(0) { |sum, e| sum += e.amount },
+        premiaTotal: pledger.rewards.reject(&:taxed).reduce(0) { |sum, e| sum += e.item.taxable_value }
       }
     }
 
