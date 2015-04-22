@@ -16,4 +16,5 @@
 //= require jquery.maskedinput.min
 //= require best_in_place.purr
 //= require best_in_place
+//= require turbolinks
 //= require_tree .
