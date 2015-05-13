@@ -6,7 +6,7 @@
       <% sizes.sort_by{ |a| a.keys * "" }.each do |size_set| %>
         <% size_set.each do |size, reward_set| %>
           <div class="reward-table">
-            <h4 class="reward-table-header"><%= size * ", " %></h4>
+            <h4 class="reward-table-header"><%= size * ", " %> (<%= reward_set.length %>)</h4>
             <%= link_to "Generate Packing Slip", :controller => 'rewards', :action => "packing_slips", :format => :pdf, :pledgers => reward_set.map{|a,x| a}.join(',') %>
 
             <table>
@@ -15,7 +15,7 @@
                 <% rewards.each do |reward| %>
                   <tr<%= " class='darkrow'".html_safe if dark %>>
                     <td><%= link_to(reward.pledger.name, reward.pledger) if pledger != 0 %></td>
-                    <td><%= reward.item.name %></td>
+                    <td><%= link_to(reward.item.name, reward.item) %></td>
                     <td class="reward-comment"><%= reward.comment %></td>
                   </tr>
                   <% pledger = 0 %>
