@@ -1,2 +1,0 @@
-TODO Generate shipping forms
-TODO Fix rewards view.
