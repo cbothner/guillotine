@@ -14,6 +14,8 @@ class Show < ActiveRecord::Base
     freeform_with? ? "Freeform with #{dj}" : name
   end
 
+  alias_method :unambiguous_name, :get_name
+
   def self.for_select(semester = false)
     if semester
       shows = all.order(:name, :dj) & semester.slots.map { |s| s.show }

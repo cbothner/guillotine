@@ -76,6 +76,7 @@ class GpoController < ApplicationController
 
     respond_to do |format|
       format.html { render layout: 'generate' }
+      format.csv
     end
   end
 

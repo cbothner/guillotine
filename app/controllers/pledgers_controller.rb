@@ -11,6 +11,7 @@ class PledgersController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @pledgers }
+      format.csv
     end
   end
 

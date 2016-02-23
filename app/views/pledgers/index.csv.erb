@@ -1,0 +1,19 @@
+<%- semesters = Semester.all.map &:name %>
+<%- repeated_columns = semesters.product(["Total Donation", "Shows Supported"]).map { |sem, show| "#{sem} #{show}" } %>
+<%- headers = ["Name", "Underwriting", "WCBN Affiliation", "Email", "Phone", "Address"] + repeated_columns %>
+<%= raw CSV.generate_line headers %>
+<% @pledgers.sort_by(&:name).each do |p| %>
+<%= raw CSV.generate_line([
+                            p.name,
+                            p.underwriting,
+                            p.affiliation,
+                            p.email,
+                            p.perm_phone,
+                            p.address_string
+                          ] + Semester.all.map { |sem| [
+                            p.total_donation_in_semester(sem).to_f,
+                            p.donations.select{ |d| d.slot.semester == sem }.map(&:slot).map(&:show).map(&:unambiguous_name) * ", "
+                          ] }.flatten
+                         )
+ %>
+<% end %>

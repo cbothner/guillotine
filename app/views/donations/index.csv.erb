@@ -1,0 +1,6 @@
+<%- headers = ["Time", "Amount", "Ongoing", "Payment Method", "Show Name", "Pledger Name"] %>
+<%= raw CSV.generate_line headers %>
+<% total = 0 %>
+<% @donations.sort_by(&:created_at).each do |d| %>
+<%= raw CSV.generate_line [d.created_at.getlocal.strftime("%F %T"), d.amount, total += d.amount, d.payment_method, d.slot.show.get_name, d.pledger.name] %>
+<% end %>

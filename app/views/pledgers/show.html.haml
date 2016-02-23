@@ -50,8 +50,8 @@
   %p.notabene#pledgerID{:data => { :id => @pledger.id } }<
     Pledger ID: 
     = @pledger.id
+  = link_to 'Close and return to search', pledgers_path
   -#= link_to 'Edit', edit_pledger_path(@pledger) |
-  -#= link_to 'Back', pledgers_path
 
 = render_cell :donation_list, :show, pledger: @pledger
 

@@ -72,6 +72,10 @@ class Pledger < ActiveRecord::Base
       "#{perm_address2}, #{perm_city}, #{perm_state}, #{perm_zip}"
   end
 
+  def address_string
+    "#{perm_address}#{" #{perm_address2}" unless perm_address2.blank?} / #{perm_city}, #{!american? ? "#{perm_state} #{perm_zip}" : perm_country}"
+  end
+
   def american?
     :perm_country == 'USA'
   end

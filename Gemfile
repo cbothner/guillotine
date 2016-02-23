@@ -7,6 +7,9 @@ gem 'rails', '4.0.2'
 
 gem 'pg'
 
+gem 'puma'
+gem 'rack-cache'
+
 gem 'haml'
 
 gem 'sass-rails',   '~> 4.0.0'
@@ -25,6 +28,8 @@ gem 'protected_attributes'
 gem 'jquery-rails'
 
 gem 'jquery-ui-rails'
+
+gem 'jbuilder'
 
 gem 'best_in_place', github: 'bernat/best_in_place'
 

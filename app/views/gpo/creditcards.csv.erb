@@ -1,0 +1,5 @@
+<%- headers = ["Pledger Name", "Donation", "Benefit", "Tax Exempt Donation"] %>
+<%= raw CSV.generate_line headers %>
+<% @arguments.each do |a| %>
+<%= raw CSV.generate_line [a[:pledger].name, a[:donation_total], a[:tax_liability], a[:tax_exempt_donation]] %>
+<% end %>

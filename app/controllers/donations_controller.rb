@@ -1,7 +1,7 @@
 class DonationsController < ApplicationController
   layout 'slots'
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :index
 
   # GET /donations
   # GET /donations.json
@@ -9,16 +9,16 @@ class DonationsController < ApplicationController
     @semester = Semester.where(month: params[:month], year: params[:year])[0]
     @semester ||= Semester.current_semester
 
-    donations = @semester.slots.reduce([]) { |a, e| a + e.donations }
+    @donations = @semester.slots.reduce([]) { |a, e| a + e.donations }
       .reject{ |d| d.pledger.underwriting }
-    @total_progress = donations.reduce(0) { |a, e| a + e.amount }
+    @total_progress = @donations.reduce(0) { |a, e| a + e.amount }
     @total_percent = 100 * (@total_progress / @semester.goal)
 
-    unpaid_donations = donations.select { |d| d.payment_received == false }
+    unpaid_donations = @donations.select { |d| d.payment_received == false }
     @unpaid_progress = unpaid_donations.reduce(0) { |a, e| a + e.amount }
     @unpaid_pledgers = donations_to_pledgers_and_totals(unpaid_donations, false)
 
-    paid_donations = donations.select { |d| d.payment_received == true }
+    paid_donations = @donations.select { |d| d.payment_received == true }
     @paid_progress = paid_donations.reduce(0) { |a, e| a + e.amount }
     @paid_pledgers = donations_to_pledgers_and_totals(paid_donations, true)
     if @total_progress.zero?
@@ -31,9 +31,20 @@ class DonationsController < ApplicationController
     @forgiven_donations_total = forgiven_donations.reduce(0) { |a, e| a + e.amount }
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @donations }
+      format.html {
+        authenticate_user!
+      }
+      format.json 
+      format.csv {
+        authenticate_user!
+        headers['Content-Disposition'] = "attachment; filename=\"#{@semester.name}_Donations\""
+        headers['Content-Type'] ||= 'text/csv'
+      }
     end
+
+    expires_in 2.minutes, :public => true
+    fresh_when last_modified: Donation.last.created_at, public: true
+
   end
 
   def underwriting
