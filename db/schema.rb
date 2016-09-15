@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20141224202924) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pg_trgm"
+  enable_extension "btree_gist"
 
   create_table "comments", force: true do |t|
     t.text     "comment"
@@ -27,21 +28,20 @@ ActiveRecord::Schema.define(version: 20141224202924) do
 
   create_table "donations", force: true do |t|
     t.integer  "pledger_id"
-    t.integer  "slot_id"
+    t.integer  "show_id"
     t.decimal  "amount"
     t.string   "payment_method"
     t.boolean  "pledge_form_sent"
     t.boolean  "payment_received"
     t.boolean  "gpo_sent"
     t.boolean  "gpo_processed"
-    t.string   "phone_operator"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "comment"
   end
 
   add_index "donations", ["pledger_id"], name: "index_donations_on_pledger_id", using: :btree
-  add_index "donations", ["slot_id"], name: "index_donations_on_slot_id", using: :btree
+  add_index "donations", ["show_id"], name: "index_donations_on_show_id", using: :btree
 
   create_table "forgiven_donations", force: true do |t|
     t.integer  "pledger_id"
@@ -65,8 +65,8 @@ ActiveRecord::Schema.define(version: 20141224202924) do
     t.boolean  "backorderable"
     t.string   "shape"
     t.text     "note"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "pledgers", force: true do |t|
@@ -86,22 +86,21 @@ ActiveRecord::Schema.define(version: 20141224202924) do
     t.string   "perm_state"
     t.string   "perm_zip"
     t.string   "perm_country"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "name"
     t.boolean  "underwriting"
   end
 
-  add_index "pledgers", ["name"], name: "trgm_index", using: :btree
+  add_index "pledgers", ["name"], name: "trgm_index", using: :gist
 
   create_table "rewards", force: true do |t|
     t.integer  "pledger_id"
     t.integer  "item_id"
     t.boolean  "premia_sent"
-    t.boolean  "taxed"
     t.text     "comment"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "rewards", ["item_id"], name: "index_rewards_on_item_id", using: :btree
@@ -118,22 +117,20 @@ ActiveRecord::Schema.define(version: 20141224202924) do
   create_table "shows", force: true do |t|
     t.string   "name"
     t.string   "dj"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "slots", force: true do |t|
-    t.integer  "show_id"
     t.integer  "weekday"
     t.time     "start"
     t.time     "end"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "semester_id"
   end
 
   add_index "slots", ["semester_id"], name: "index_slots_on_semester_id", using: :btree
-  add_index "slots", ["show_id"], name: "index_rewards_on_show_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
