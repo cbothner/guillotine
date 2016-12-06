@@ -1,0 +1,10 @@
+<%- headers = ["Name", "Email", "Phone", "Address", "Quantity", "Other Gifts Requested"] %>
+<%= raw CSV.generate_line headers %>
+<% @pledgers.each do |p, count| %>
+<%= raw CSV.generate_line([
+  p.name,
+  p.email,
+  p.perm_phone,
+  p.address_string,
+  count,
+  p.rewards.reject(&:premia_sent).map(&:item).reject{|i| i == @item}.map(&:name).to_sentence]) %><% end %>

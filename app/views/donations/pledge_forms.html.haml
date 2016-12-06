@@ -2,7 +2,7 @@
 -if @donations.empty?
   %h1 No Unsent Pledge Forms
 -else
-  %h1=(link_to "Generate", :action => "pledge_forms", :format => :pdf)+" Unsent Pledge Forms"
+  %h1=(link_to "Generate", :action => "pledge_forms", :format => :pdf)+" Thank You Notes"
 
   %ul
     -@pledgers.each do |pledger|

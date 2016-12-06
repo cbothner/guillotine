@@ -1,0 +1,18 @@
+\documentclass[UScommercial9,paper=letter,11pt]{scrlttr2}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{bbding}
+\usepackage{setspace}
+\usepackage{graphics}
+\graphicspath{ {../../../app/assets/images/} }
+\usepackage{fontspec}
+\setsansfont[SmallCapsFont={* SC}, Ligatures=TeX]{Alegreya Sans}
+\newfontfamily{\algslt}[Ligatures=TeX, SmallCapsFont={Alegreya Sans SC Light}]{Alegreya Sans Light}
+\renewcommand{\familydefault}{\sfdefault}
+
+
+\KOMAoptions{enlargefirstpage, fromemail=true, fromphone=false,
+fromfax=false}
+
+<%=yield %>

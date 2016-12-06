@@ -1,0 +1,6 @@
+<%- headers = ["Pledger Name", "Email", "Phone", "Mailing Address"] %>
+<%= raw CSV.generate_line headers %>
+<% total = 0 %>
+<% @pledgers.each do |p| %>
+<%= raw CSV.generate_line [ p.name, p.email, p.perm_phone, p.address_string ]%>
+<% end %>

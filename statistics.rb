@@ -13,11 +13,6 @@ last_tot = last_sem.slots.map(&:donations).flatten.reject {|d| d.pledger.underwr
 ratio = ((total / last_tot) - 1) * 100
 x.puts "#{ratio.abs.round 2}% #{ratio > 0 ? "increase" : "decrease"} compared to #{last_sem.name}"
 x.puts
-online = dons.select{|d| d.comment[/[Oo]nline/] unless d.comment.nil?}
-n_online = online.count
-tot_online = online.map(&:amount).inject(0,&:+)
-x.puts "Call in: #{n - n_online} calls ($%.2f)" % (total - tot_online)
-x.puts "Online: #{n_online} calls ($%.2f)" % tot_online
 
 avg = total / n
 x.puts "Average of $%.2f per call" % avg
@@ -73,13 +68,13 @@ x.puts
 x.puts "Top Performing Shows:"
 slot_totals = sem.slots.select{|s| s.length > 0}.map do |slot|
   show = slot.show
-  slot_total = slot.donations.map(&:amount).inject(0,&:+)
+  slot_total = slot.donations.reject{|d| d.pledger.underwriting }.map(&:amount).inject(0,&:+)
   time = slot.length
   [show.get_name, slot_total, time]
 end
 slot_totals.sort_by!{|t| -t[1]}
-slot_totals.first(10).each do |t|
-  x.puts "$%.2f -- #{t[0]}" % t[1]
+slot_totals.first(20).each_with_index do |t,i|
+  x.puts "%2d: $%.2f -- #{t[0]}" % [i+1, t[1]]
 end
 x.puts
 
@@ -87,6 +82,6 @@ x.puts "Top Performing Shows by Show Length:"
 slot_tot_by_time = slot_totals.map do |t|
   [t[0], t[1]/t[2], t[2]]
 end.sort_by{|t| -t[1]}
-slot_tot_by_time.first(10).each do |t|
-  x.puts "$%.2f -- #{t[0]} (#{t[2]} hrs)" % t[1]
+slot_tot_by_time.first(20).each_with_index do |t, i|
+  x.puts "%2d: $%.2f -- #{t[0]} (#{t[2]} hrs)" % [i+1, t[1]]
 end

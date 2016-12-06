@@ -22,6 +22,11 @@ class RewardsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       # format.json { render json: @rewards }
+      format.csv {
+        @pledgers = rewards.map(&:pledger).uniq
+        headers['Content-Disposition'] = "attachment; filename=\"#{Semester.current_semester.name}_Shipments\""
+        headers['Content-Type'] ||= 'text/csv'
+      }
     end
   end
 

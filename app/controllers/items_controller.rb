@@ -25,6 +25,11 @@ class ItemsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @item }
+      format.csv {
+        @pledgers = @requested.map(&:pledger).group_by(&:name).map{ |x,y| [y.first, y.count] }
+        headers['Content-Disposition'] = "attachment; filename=\"#{@item.name} Requests\""
+        headers['Content-Type'] ||= 'text/csv'
+      }
     end
   end
 
