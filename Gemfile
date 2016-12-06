@@ -5,6 +5,8 @@ gem 'rails', '4.0.2'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+gem 'rails_12factor', group: :production
+
 gem 'pg'
 
 gem 'puma'
@@ -31,9 +33,9 @@ gem 'jquery-ui-rails'
 
 gem 'jbuilder'
 
-gem 'best_in_place', github: 'bernat/best_in_place'
+gem 'best_in_place', git: 'https://github.com/bernat/best_in_place'
 
-gem 'rails-latex', github: 'jacott/rails-latex'
+gem 'rails-latex', git: 'https://github.com/jacott/rails-latex'
 
 gem 'devise'
 

@@ -1,17 +1,17 @@
 GIT
-  remote: git://github.com/bernat/best_in_place.git
-  revision: df178520bf9ba405baee9528d5dbb630d6ff760c
+  remote: https://github.com/bernat/best_in_place
+  revision: 332eda290cb133683a99d43a30321bab27d85e70
   specs:
-    best_in_place (2.1.0)
-      jquery-rails
-      rails (>= 3.1)
+    best_in_place (3.1.0)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
 
 GIT
-  remote: git://github.com/jacott/rails-latex.git
-  revision: d875cd928d2fc011b466870c9e7d4ee45071ef2f
+  remote: https://github.com/jacott/rails-latex
+  revision: 37033cdaf8a7eff618a977f971645bde2aa43989
   specs:
-    rails-latex (1.0.12)
-      rails (>= 3.0.0)
+    rails-latex (2.2.0)
+      rails (>= 3.0.0, < 6)
 
 GEM
   remote: https://rubygems.org/
@@ -111,6 +111,11 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.0.2)
       sprockets-rails (~> 2.0.0)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.5)
+    rails_stdout_logging (0.0.5)
     railties (4.0.2)
       actionpack (= 4.0.2)
       activesupport (= 4.0.2)
@@ -173,6 +178,7 @@ DEPENDENCIES
   rack-cache
   rails (= 4.0.2)
   rails-latex!
+  rails_12factor
   sass-rails (~> 4.0.0)
   seed_dumper
   table_print

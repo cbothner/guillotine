@@ -37,7 +37,7 @@ class DonationsController < ApplicationController
       format.json 
       format.csv {
         authenticate_user!
-        headers['Content-Disposition'] = "attachment; filename=\"#{@semester.name}_Donations\""
+        headers['Content-Disposition'] = "attachment; filename=\"#{@semester.name}_Donations.csv\""
         headers['Content-Type'] ||= 'text/csv'
       }
     end
