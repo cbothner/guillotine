@@ -1,6 +1,6 @@
 class Item < ActiveRecord::Base
-  has_many :rewards, inverse_of: :item
-  has_many :pledgers, through: :rewards
+  has_many :rewards, inverse_of: :item, dependent: :restrict_with_error
+  has_many :pledgers, through: :rewards, dependent: :restrict_with_error
   attr_accessible :backorderable, :cost, :name, :note, :shape, :stock, :taxable_value
 
   validates :cost, :name, :shape, :stock, :taxable_value, presence: true

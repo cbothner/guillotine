@@ -1,6 +1,6 @@
 class Show < ActiveRecord::Base
-  has_many :slots, inverse_of: :show
-  has_many :comments
+  has_many :slots, inverse_of: :show, dependent: :restrict_with_error
+  has_many :comments, dependent: :destroy
   attr_accessible :dj, :name, :id
 
   validates :name, presence: true

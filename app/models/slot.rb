@@ -1,7 +1,7 @@
 class Slot < ActiveRecord::Base
-  has_many :donations, inverse_of: :slot
-  has_many :forgiven_donations, inverse_of: :slot
-  has_many :pledgers, through: :donations
+  has_many :donations, inverse_of: :slot, dependent: :restrict_with_error
+  has_many :forgiven_donations, inverse_of: :slot, dependent: :restrict_with_error
+  has_many :pledgers, through: :donations, dependent: :restrict_with_error
   belongs_to :show, inverse_of: :slots
   belongs_to :semester, inverse_of: :slots
   attr_accessible :end, :semester_id, :start, :weekday
