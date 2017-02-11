@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141224202924) do
+ActiveRecord::Schema.define(version: 20170211190922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,10 +86,10 @@ ActiveRecord::Schema.define(version: 20141224202924) do
     t.string   "perm_state"
     t.string   "perm_zip"
     t.string   "perm_country"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.string   "name"
-    t.boolean  "underwriting"
+    t.boolean  "underwriting",   default: false
   end
 
   add_index "pledgers", ["name"], name: "trgm_index", using: :btree

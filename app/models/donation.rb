@@ -7,6 +7,14 @@ class Donation < ActiveRecord::Base
   validates :amount, numericality: { greater_than: 0 }
   validates :payment_method, inclusion: { in: ['Credit Card', 'Cash', 'Check'], message: 'Payment method must be one of the following: Credit Card, Cash, or Check.' }
 
+  scope :unpaid, -> { where payment_received: false }
+  scope :paid, -> { where payment_received: true }
+
+  scope :non_underwriting, -> { joins(:pledger).where pledgers: { underwriting: false } }
+  scope :underwriting, -> { joins(:pledger).where pledgers: { underwriting: true } }
+
+  scope :for_semester, ->(semester) { joins(:slot).where slots: { semester_id: semester.id } }
+
   # A donation is active if payment has not been received
   # or if it was paid by credit card but the gpo has not been
   # processed.
