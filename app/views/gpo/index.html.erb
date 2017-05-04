@@ -1,0 +1,15 @@
+<% title "Unsent GPOs" %>
+<% if @pledgers.empty? %>
+  <h1>No Unsent GPOs</h1>
+<% else %>
+
+  <!-- send to hidden iframe and print -->
+  <iframe src="/gpo/all" style="display:none;" name="frame"></iframe>
+  <h1> <a onclick="frames['frame'].print()">Generate</a> Unsent GPOs</h1>
+
+  <table>
+    <% @pledgers.each do |pledger| %>
+      <tr> <td> <%=pledger.id%> </td> <td> <%=pledger.name%> </td> </tr>
+    <% end %>
+  </table>
+<% end %>

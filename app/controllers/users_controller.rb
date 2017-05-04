@@ -4,6 +4,9 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all.sort_by { |u| u.username.downcase }
+
+    @dd_name = Setting.find_by_key('dd_name')
+    @dd_phone = Setting.find_by_key('dd_phone')
   end
 
   def destroy

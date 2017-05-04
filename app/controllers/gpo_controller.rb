@@ -16,6 +16,7 @@ class GpoController < ApplicationController
     @pledger.email = @pledger.email.blank? ? 'No Email' : @pledger.email
 
     respond_to do |format|
+      format.html
       format.pdf { render layout: true, formats: [:pdf]
                    # Mark GPOs sent
                    checksForDeposit.each do |donation|
@@ -27,6 +28,12 @@ class GpoController < ApplicationController
                    end
       }
     end
+  end
+
+  def index
+    checksForDeposit = Donation.where("payment_received = 'true' and gpo_sent = 'false'")
+    @pledgers = checksForDeposit.map { |don| Pledger.find(don.pledger_id) }.uniq
+    render layout: "generate"
   end
 
   def all
@@ -45,19 +52,20 @@ class GpoController < ApplicationController
       }
     }
 
-    respond_to do |format|
-      format.html { render layout: 'generate' }
-      format.pdf { render layout: true, format: [:pdf]
-                   # Mark GPOs sent
-                   checksForDeposit.each do |donation|
-                     donation.update_attributes(gpo_sent: 'true')
-                   end
-                   # Mark premia taxed
-                   unsentPremia.each do |reward|
-                     reward.update_attributes(taxed: true)
-                   end
-      }
-    end
+    render layout: "printout"
+  end
+
+  def mark_all_sent
+    # Mark GPOs sent
+     checksForDeposit.each do |donation|
+       donation.update_attributes(gpo_sent: 'true')
+     end
+     # Mark premia taxed
+     unsentPremia.each do |reward|
+       reward.update_attributes(taxed: true)
+     end
+
+     render js: "location.reload()"
   end
 
   def creditcards
