@@ -32,7 +32,7 @@
       %h2 Documents
       %ul
         %li= link_to "Thank You Notes and Pledge Forms", :controller => "donations", :action => "pledge_forms"
-        %li= link_to "All Unsent GPOs", :controller => "gpo", :action => "all"
+        %li= link_to "All Unsent GPOs", :controller => "gpo"
         %li= link_to "Blank Credit Card GPO", 'donations/new.pdf'
   -else
     %section.flex1
