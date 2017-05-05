@@ -20,7 +20,7 @@ class DonationsController < ApplicationController
       format.html {
         authenticate_user!
       }
-      format.json 
+      format.json
       format.csv {
         authenticate_user!
         headers['Content-Disposition'] = "attachment; filename=\"#{@semester.name}_Donations.csv\""
@@ -150,25 +150,6 @@ class DonationsController < ApplicationController
 
     respond_to do |format|
       format.js
-    end
-  end
-
-  def pledge_forms
-    #@donations = Semester.current_semester.slots.map(&:donations).flatten
-    @donations = Donation.where(pledge_form_sent: false).map(&:pledger).map(&:donations).flatten.select{|d| d.slot.semester == Semester.current_semester}
-      .sort_by{ |d| -d.pledger.total_donation_in_semester(nil) }
-    @rewards = Reward.where(premia_sent: false)
-    @pledgers = @donations.map { |d| d.pledger }.uniq.reject(&:underwriting)
-
-    respond_to do |format|
-      format.html { render layout: 'generate' }
-      format.pdf do
-        render layout: 'letter', formats: [:pdf]
-        @donations.each do |d|
-          d.pledge_form_sent = true
-          d.save
-        end
-      end
     end
   end
 

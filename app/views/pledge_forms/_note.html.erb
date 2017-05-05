@@ -1,0 +1,231 @@
+<!-- David Talbot 5/5/2017 -->
+
+<% my_donations = (@donations & pledger.donations).sort_by{|d| d.amount}.reverse %>
+<% my_unpaid_donation_total = my_donations.reject(&:payment_received).inject(0) {|sum,don| sum+don.amount} %>
+<% my_paid_donation_total = my_donations.select(&:payment_received).inject(0) {|sum,don| sum+don.amount} %>
+<% my_donation_total = my_unpaid_donation_total + my_paid_donation_total %>
+<% many_donations = (my_donations.length > 17) %>
+<% my_donations = my_donations[0..16] %>
+<% hidden_donations_total = my_donation_total - my_donations.inject(0) {|sum,don| sum+don.amount} %>
+<% my_rewards = @rewards & pledger.rewards %>
+
+<div class = "page">
+
+<return-address>
+<!-- TODO: LOGO -->
+530 Student Activities Bldg<br>
+515 E. Jefferson St.<br>
+Ann Arbor, MI 48109<br>
+dd@wcbn.org
+</return-address>
+<br><br><br><br><br>
+
+
+<mailing-address>
+<%= pledger.name%><br>
+<%= pledger.perm_address%><br>
+<%= pledger.perm_city%>, <%= pledger.perm_state%> <%= pledger.perm_zip%>
+</mailing-address>
+<br><br><br>
+
+
+
+<time>
+  <%= Time.now.strftime("%B %d, %Y") %>
+</time>
+<br><br>
+
+
+<body>
+  Thank you for pledging your support to WCBN!
+  <br><br><br>
+
+
+  Dear <%=pledger.name.split(" ").first %>,
+  <br><br>
+
+  <span>Thanks so much for your support of student-run,
+    freeform, experiential–experimental radio at the University of Michigan.
+    Your donation supports us in providing students with an inimitable creative
+    and professional development experience in music and management, development,
+    engineering, and audio production; and providing the listening public with a
+    unique, eclectic offfering of freeform, specialty, and public afffairs shows.
+  </span>
+
+  <span>
+    <% if my_unpaid_donation_total > 0 %>
+      Please include the form on the reverse of this letter when you send us
+      your payment. Look for a receipt from the University when
+      your donation has been received.
+    <% else %>
+      Since we've already received your payment,
+      there's nothing you need to do now but keep listening.
+    <% end %>
+    <% unless my_rewards.empty? %>
+      Thank you gifts will be mailed out when they are available – we appreciate your patience.
+    <% end %>
+  </span><br><br><br>
+
+  Once again, thank you so much for your support.
+  <br><br><br>
+  Keep listening,
+
+</body>
+<br><br>
+
+<signature>
+<%= Setting.dd_name %><br>
+Development Director<br>
+WCBN-FM Ann Arbor
+</signature>
+
+</div> <!-- Thank You Note -->
+
+
+
+<div class="page">
+  <% if my_unpaid_donation_total > 0 %>
+
+  <h3>Record of Pledge to WCBN-FM Ann Arbor</h3>
+  <em>Please confirm the following information.
+    Please notify us of any corrections by including them on this form, or by email.</em>
+
+  <hr/>
+
+  <!-- OLD TABLE
+  <table>
+    <tr>
+      <td colspan="4">Name: <%= pledger.name%></td>
+    </tr>
+    <tr>
+      <td colspan="2" rowspan="3">Email: <%= pledger.email%></td>
+      <td colspan="2" rowspan="3">Phone: <%= pledger.perm_phone%></td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td colspan="4">Address: <%= pledger.perm_address%></td>
+    </tr>
+    <tr>
+      <td>City: <%= pledger.perm_city%></td>
+      <td>State: <%= pledger.perm_state%></td>
+      <td colspan="2">Zip Code: <%= pledger.perm_zip%></td>
+    </tr>
+  </table>
+  <hr/>-->
+
+
+
+
+
+
+  <div class="tables">
+    <div class="left">
+      <table>
+        <tr><td>Name: <%= pledger.name%></td></tr>
+        <tr><td>Email: <%= pledger.email%></td></tr>
+        <tr><td>Phone: <%= pledger.perm_phone%></td></tr>
+      </table>
+    </div>
+    <div class="right">
+      <table>
+        <tr><td>
+          Address:
+        </td><td><%= pledger.perm_address%></td></tr>
+        <tr><td></td><td><%= pledger.perm_city%>, <%= pledger.perm_state%> <%= pledger.perm_zip%></td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <hr />
+
+  <div class="tables">
+
+  <div class = "left">
+    <table>
+      <tr class="underline">
+        <td>Paid?</td>
+        <td>Itemized Donations</td>
+        <td>Amount</td>
+      </tr>
+      <% my_donations.each do |d| %>
+        <tr class="underline">
+          <% if d.payment_received %>
+            <!-- <td><input type="checkbox" checked></td> -->
+            <td>✓</td>
+          <% else %>
+            <!-- <td><input type="checkbox"></td> -->
+            <td>✗</td>
+          <% end %>
+          <td><%= d.slot.show.unambiguous_name %></td>
+          <td><%= number_to_currency(d.amount) %></td>
+        </tr>
+      <% end %>
+      <% if many_donations %>
+        <tr class="underline">
+          <td></td>
+          <td>Various other shows</td>
+          <td><%= number_to_currency(hidden_donations_total) %></td>
+        </tr>
+      <% end %>
+      <% if my_paid_donation_total > 0 %>
+      <tr>
+        <td></td>
+        <td>Paid Total:</td>
+        <td><%=number_to_currency(my_paid_donation_total)%></td>
+      </tr>
+      <% end %>
+      <% if my_unpaid_donation_total > 0 %>
+      <tr>
+        <td></td>
+        <td>Unpaid Total:</td>
+        <td><%=number_to_currency(my_unpaid_donation_total)%></td>
+      </tr>
+      <% end %>
+    </table>
+  </div><!-- left table of donations -->
+
+
+
+  <% if not my_rewards.nil? %>
+    <div class = "right">
+      <table>
+        <tr class="underline">
+          <td>
+            Requested Premia
+          </td>
+        </tr>
+        <% my_rewards.each do |r| %>
+          <tr class="underline">
+            <td><%= r.item.name %></td>
+          </tr>
+        <% end %>
+
+      </table>
+    </div>
+
+  <% end %> <!-- right table of premia -->
+  <hr/>
+  </div> <!-- tables -->
+
+  <div class="tables">
+    <div class="left">
+      ❑ Check enclosed, payable to WCBN <br />
+    </div>
+    <div class="right">
+      ❑ Charge my credit card <br /><br />
+      Cardholder Name: __________________________<br />
+      ❑ Visa ❑ Mastercard ❑ AmEx ❑ Other <br />
+      Card Number: _____________________________ <br />
+      Expiration: _______<br />
+    </div>
+  </div>
+
+  <% else %>
+  <!-- TODO figure out how to not print this dot -->.
+  <% end %> <!-- if not paid up -->
+
+</div> <!-- Pledge Form -->

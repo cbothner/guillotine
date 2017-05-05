@@ -7,9 +7,13 @@
   <iframe src="/gpo/all" style="display:none;" name="frame"></iframe>
   <h1> <a onclick="frames['frame'].print()">Generate</a> Unsent GPOs</h1>
 
-  <table>
+  <ul>
     <% @pledgers.each do |pledger| %>
-      <tr> <td> <%=pledger.id%> </td> <td> <%=pledger.name%> </td> </tr>
+      <li><%= link_to pledger.name, pledger%> </li>
     <% end %>
-  </table>
+  </ul>
+
+  <%= button_to "Mark All As Sent", { action: "mark_all_sent"},
+  method: :put, data: { confirm: "Are you sure you want to mark all GPOs as sent? This action cannot be undone." }%>
+
 <% end %>

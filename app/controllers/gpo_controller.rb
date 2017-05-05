@@ -56,6 +56,14 @@ class GpoController < ApplicationController
   end
 
   def mark_all_sent
+
+    #TODO these are defined in basically everything so they should probably be private vars
+    checksForDeposit = Donation.where("payment_received = 'true' and gpo_sent = 'false'")
+
+    # Unique list of pledgers in checksForDeposit
+    pledgersForGPO = checksForDeposit.map { |don| Pledger.find(don.pledger_id) }.uniq
+    unsentPremia = pledgersForGPO.reduce([]) { |sum, p| sum + p.rewards.reject(&:taxed) }
+
     # Mark GPOs sent
      checksForDeposit.each do |donation|
        donation.update_attributes(gpo_sent: 'true')
@@ -65,7 +73,7 @@ class GpoController < ApplicationController
        reward.update_attributes(taxed: true)
      end
 
-     render js: "location.reload()"
+     redirect_to action: 'index'
   end
 
   def creditcards
