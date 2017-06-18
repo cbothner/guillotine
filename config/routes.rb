@@ -23,7 +23,10 @@ Guillotine::Application.routes.draw do
   get "donations/:year/:month", :year => /[0-9]{4}/, :month => /[0-9]{2}/, to: 'donations#index'
   get "donations/underwriting", to: 'donations#underwriting'
   post "donations/forgive", to: 'donations#forgive'
-  resources :donations
+  resources :donations do
+    resource :credit_card_form, only: [:show]
+  end
+  resources :credit_card_forms, only: [:new]
 
   get "pledge_forms", to: "pledge_forms#index"
   get "pledge_forms/all"

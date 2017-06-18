@@ -17,7 +17,7 @@ x.style.right = '0';
 x.style.bottom = '0';
 x.style.width = '8.5in';
 x.style.height = '11in';
-x.src = '/gpo/single/<%= donation_id %>';
+x.src = '<%= donation_credit_card_form_path(donation_id) %>';
 x.onload = setPrint;
 
 document.body.appendChild(x);

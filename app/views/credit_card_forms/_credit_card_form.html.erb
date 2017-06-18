@@ -1,0 +1,21 @@
+<!--
+  I'm making heavy use of `.try` in this template since when it is used to
+  render a blank credit card form `donation` (and thus `donation.pledger`) will
+  be nil. `.try` is a rails addition to ruby which returns nil instead of
+  throwing when a method doesn't exist.
+
+  `donation.try(:pledger)` is the same as `donation.pledger rescue nil` but it
+  can be chained like `donation.try(:pledger).try(:name)` or whatever.
+-->
+
+<% pledger = donation.try(:pledger) %>
+
+<pre>
+Rendering credit card form.
+
+Donation:
+<%= number_to_currency donation.try(:amount) %>
+
+Pledger:
+<%= pledger.try(:name) %>
+</pre>
