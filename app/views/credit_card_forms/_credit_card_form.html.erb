@@ -10,12 +10,103 @@
 
 <% pledger = donation.try(:pledger) %>
 
-<pre>
-Rendering credit card form.
 
-Donation:
-<%= number_to_currency donation.try(:amount) %>
+<title>Credit Card GPO</title>
+<br /><h3>Credit Card Gift Processing Order</h3><br />
+<table class="gpo-table border">
+<tr class="border"><!-- Header -->
+	<td>
+		<strong>Today's Date<br></strong>
+		<p><%= Time.now.strftime("%B %d, %Y") %></p>
+	</td>
+	<td>
+		<strong>Prepared by<br></strong>
+		<p><%= Setting.dd_name %></p>
+	</td>
+	<td>
+		<strong>Phone Number<br></strong>
+		<p><%= Setting.dd_phone %></p>
+	</td>
+	<td>
+		<strong>SCU<br></strong>
+		<p>WCBN-FM</p>
+	</td>
+</tr>
 
-Pledger:
-<%= pledger.try(:name) %>
-</pre>
+<tr><!-- Pledger Info -->
+	<td colspan="2" rowspan="2">
+    <% unless pledger.try(:name)%>
+      <strong>Donor's Name and Mailing Address:<br><br><br></strong>
+    <% end %>
+    <h4><%= pledger.try(:name) %></h4>
+		<p><%= pledger.try(:perm_address) %><br>
+		<%= pledger.try(:perm_city) %><% if pledger.try(:perm_city)%>,<% end %>
+		<%= pledger.try(:perm_state) %><br>
+		<%= pledger.try(:perm_zip) %>
+		<%= pledger.try(:perm_country) %>
+	</td>
+
+	<td colspan="2" class = "border">
+		<strong>Charge Amount:</strong>
+    <p><%= number_to_currency donation.try(:amount) %></p>
+	</td>
+
+</tr>
+
+<tr class = "border">
+
+	<td colspan="2">
+		<strong>Premia Value:<br></strong>
+	</td>
+</tr>
+<tr>
+  <td class = "border">
+		<strong>Donor's Email:</strong>
+    <p><%= pledger.try(:email) %></p>
+	</td>
+  <td class = "border">
+		<strong>Donor's Phone:</strong>
+    <p><%= pledger.try(:perm_phone) %></p>
+	</td>
+	<td colspan="2">
+		<strong>Net Gift Amount:<br><br></strong>
+	</td>
+</tr>
+
+
+<tr class = "border"><!-- Card Info -->
+	<td class = "border">
+		<strong>Card Type:<br><br></strong>
+	</td>
+	<td colspan="2" class = "border">
+		<strong>Card Number:<br></strong>
+	</td>
+
+	<td>
+		<strong>Expiration (MM/YYYY):<br></strong>
+		<p></p>
+	</td>
+</tr>
+
+<tr class = "border"><!-- Footer -->
+	<td class = "border">
+		<strong>Lookup ID<br></strong>
+		<p>__________</p>
+	</td>
+	<td class = "border">
+		<strong>Designation<br></strong>
+		<p>361991</p>
+	</td>
+	<td class = "border">
+		<strong>Designation Name<br></strong>
+		<p>WCBN-FM</p>
+	</td>
+	<td>
+		<strong>Amount:<br></strong>
+		<p><%= number_to_currency donation.try(:amount) %></p>
+	</td>
+</tr>
+
+</table>
+
+<br>

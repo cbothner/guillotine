@@ -1,38 +1,39 @@
 class GpoController < ApplicationController
-  def single
-    @pledger = Pledger.find(params[:id]) rescue nil
 
-    if @pledger
-      # Sum value of unprocessed cheque
-      checksForDeposit = @pledger.donations.where("payment_received = 'true' and gpo_sent = 'false'")
-      @depositTotal = checksForDeposit.reduce(0) { |sum, e| sum += e.amount }
-
-      # Sum value of unsent premia
-      unsentPremia = @pledger.rewards.where("premia_sent = 'false' and taxed = 'false'")
-      @premiaTotal = unsentPremia.reduce(0) { |sum, e| sum += e.item.taxable_value }
-
-      @giftTotal = @depositTotal - @premiaTotal
-
-      @pledger.perm_phone = @pledger.perm_phone == '(000) 000-0000' ? 'No Phone' : @pledger.perm_phone
-      @pledger.email = @pledger.email.blank? ? 'No Email' : @pledger.email
-    end
-
-    # respond_to do |format|
-    #   format.html
-    #   format.pdf { render layout: true, formats: [:pdf]
-    #                # Mark GPOs sent
-    #                checksForDeposit.each do |donation|
-    #                  donation.update_attributes(gpo_sent: true)
-    #                end
-    #                # Mark premia taxed
-    #                unsentPremia.each do |reward|
-    #                  reward.update_attributes(taxed: true)
-    #                end
-    #   }
-    # end
-
-    render layout: "printout"
-  end
+  # def single
+  #   @pledger = Pledger.find(params[:id]) rescue nil
+  #
+  #   if @pledger
+  #     # Sum value of unprocessed cheque
+  #     checksForDeposit = @pledger.donations.where("payment_received = 'true' and gpo_sent = 'false'")
+  #     @depositTotal = checksForDeposit.reduce(0) { |sum, e| sum += e.amount }
+  #
+  #     # Sum value of unsent premia
+  #     unsentPremia = @pledger.rewards.where("premia_sent = 'false' and taxed = 'false'")
+  #     @premiaTotal = unsentPremia.reduce(0) { |sum, e| sum += e.item.taxable_value }
+  #
+  #     @giftTotal = @depositTotal - @premiaTotal
+  #
+  #     @pledger.perm_phone = @pledger.perm_phone == '(000) 000-0000' ? 'No Phone' : @pledger.perm_phone
+  #     @pledger.email = @pledger.email.blank? ? 'No Email' : @pledger.email
+  #   end
+  #
+  #   # respond_to do |format|
+  #   #   format.html
+  #   #   format.pdf { render layout: true, formats: [:pdf]
+  #   #                # Mark GPOs sent
+  #   #                checksForDeposit.each do |donation|
+  #   #                  donation.update_attributes(gpo_sent: true)
+  #   #                end
+  #   #                # Mark premia taxed
+  #   #                unsentPremia.each do |reward|
+  #   #                  reward.update_attributes(taxed: true)
+  #   #                end
+  #   #   }
+  #   # end
+  #
+  #   render layout: "printout"
+  # end
 
   def index
     checksForDeposit = Donation.where("payment_received = 'true' and gpo_sent = 'false'")
