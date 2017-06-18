@@ -16,19 +16,19 @@
 <table class="gpo-table border">
 <tr class="border"><!-- Header -->
 	<td>
-		<strong>Today's Date<br></strong>
+		<strong>Today's Date:</strong>
 		<p><%= Time.now.strftime("%B %d, %Y") %></p>
 	</td>
 	<td>
-		<strong>Prepared by<br></strong>
+		<strong>Prepared by:</strong>
 		<p><%= Setting.dd_name %></p>
 	</td>
 	<td>
-		<strong>Phone Number<br></strong>
+		<strong>Phone Number:</strong>
 		<p><%= Setting.dd_phone %></p>
 	</td>
 	<td>
-		<strong>SCU<br></strong>
+		<strong>SCU:</strong>
 		<p>WCBN-FM</p>
 	</td>
 </tr>
@@ -36,17 +36,19 @@
 <tr><!-- Pledger Info -->
 	<td colspan="3" rowspan="2">
     <strong>Donor's Name and Mailing Address:</strong>
-    <% unless pledger.try(:name)%><br><br><br><% end %>
+    <% unless pledger.try(:name)%><br><br><br><br><br><% end %>
     <h4><%= pledger.try(:name) %></h4>
-		<p><%= pledger.try(:perm_address) %><br>
-		<%= pledger.try(:perm_city) %><% if pledger.try(:perm_city)%>,<% end %>
-		<%= pledger.try(:perm_state) %><br>
-		<%= pledger.try(:perm_zip) %>
-		<%= pledger.try(:perm_country) %>
+		<p><%= pledger.try(:perm_address) %></p>
+    <p>
+      <%= pledger.try(:perm_city) %><% if pledger.try(:perm_city)%>,<% end %>
+  		<%= pledger.try(:perm_state) %>
+  		<%= pledger.try(:perm_zip) %>
+  		<%= pledger.try(:perm_country) %>
+    </p>
 	</td>
 
 	<td colspan="1" class = "border">
-		<strong>Charge Amount:</strong><br>
+		<strong>Charge Amount:</strong>
     <p><%= number_to_currency donation.try(:amount) %></p>
 	</td>
 
@@ -55,20 +57,20 @@
 <tr class = "border">
 
 	<td>
-		<strong>Premia Value:</strong><br>
+		<strong>Premia Value:</strong>
 	</td>
 </tr>
 <tr>
   <td colspan="2" class = "border">
-		<strong>Donor's Email:</strong><br>
+		<strong>Donor's Email:</strong>
     <p><%= pledger.try(:email) %></p>
 	</td>
   <td class = "border">
-		<strong>Donor's Phone:</strong><br>
+		<strong>Donor's Phone:</strong>
     <p><%= pledger.try(:perm_phone) %></p>
 	</td>
 	<td>
-		<strong>Net Gift Amount:</strong><br>
+		<strong>Net Gift Amount:</strong>
 	</td>
 </tr>
 
@@ -88,23 +90,24 @@
 
 <tr class = "border"><!-- Footer -->
 	<td class = "border">
-		<strong>Lookup ID<br></strong>
-		<p>__________</p>
+		<strong>Lookup ID:</strong>
+    <p></p>
 	</td>
 	<td class = "border">
-		<strong>Designation<br></strong>
+		<strong>Designation:</strong>
 		<p>361991</p>
 	</td>
 	<td class = "border">
-		<strong>Designation Name<br></strong>
+		<strong>Designation Name:</strong>
 		<p>WCBN-FM</p>
 	</td>
 	<td>
-		<strong>Amount:<br></strong>
+		<strong>Amount:</strong>
 		<p><%= number_to_currency donation.try(:amount) %></p>
 	</td>
 </tr>
 
 </table>
-
 <br>
+
+<!-- TODO: figure out how to not print a second blank page -->
