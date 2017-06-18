@@ -13,7 +13,7 @@ class PledgeFormsController < ApplicationController
 
   def mark_all_sent
     @donations.each do |d|
-      d.update_attributes(pledge_form_sent: 'true')
+      d.update pledge_form_sent: 'true'
     end
     redirect_to action: 'index'
   end

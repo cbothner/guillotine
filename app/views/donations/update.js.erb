@@ -2,7 +2,29 @@
   alert("<%= escape_javascript(error_messages_for(@donation)) %>");
 <% else %>
   <% if @donation.payment_method == "Credit Card" and @donation.gpo_processed == false %>
-    window.open("/donations/<%= @donation.id %>.pdf",'popUpWindow','height=800,width=1000,left=50,top=100,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no, status=yes')
+    function closePrint () {
+      document.body.removeChild(this.__container__);
+    }
+
+    function setPrint () {
+      this.contentWindow.__container__ = this;
+      this.contentWindow.onbeforeunload = closePrint;
+      this.contentWindow.onafterprint = closePrint;
+      this.contentWindow.focus(); // Required for IE
+      this.contentWindow.print();
+    }
+
+    var x = document.createElement("iframe");
+    x.style.visibility = "hidden";
+    x.style.position = "fixed";
+    x.style.right = "0";
+    x.style.bottom = "0";
+    x.style.width = "8.5in";
+    x.style.height = "11in";
+    x.src = "/gpo/single/<%= @donation.id %>";
+    x.onload = setPrint;
+
+    document.body.appendChild(x);
   <% end %>
   $("aside.pledgerDonations.grid_3").replaceWith('<%= j render_cell :donation_list, :show, pledger: @pledger %>');
   window.editedtext = false

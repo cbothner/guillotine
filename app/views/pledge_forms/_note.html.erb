@@ -44,7 +44,7 @@ dd@wcbn.org
   Dear <%=pledger.name.split(" ").first %>,
   <br><br>
 
-  <span>Thanks so much for your support of student-run,
+  <span class="indent">Thanks so much for your support of student-run,
     freeform, experiential–experimental radio at the University of Michigan.
     Your donation supports us in providing students with an inimitable creative
     and professional development experience in music and management, development,
@@ -52,7 +52,7 @@ dd@wcbn.org
     unique, eclectic offfering of freeform, specialty, and public afffairs shows.
   </span>
 
-  <span>
+  <span class="indent">
     <% if my_unpaid_donation_total > 0 %>
       Please include the form on the reverse of this letter when you send us
       your payment. Look for a receipt from the University when
@@ -91,33 +91,6 @@ WCBN-FM Ann Arbor
     Please notify us of any corrections by including them on this form, or by email.</em>
 
   <hr/>
-
-  <!-- OLD TABLE
-  <table>
-    <tr>
-      <td colspan="4">Name: <%= pledger.name%></td>
-    </tr>
-    <tr>
-      <td colspan="2" rowspan="3">Email: <%= pledger.email%></td>
-      <td colspan="2" rowspan="3">Phone: <%= pledger.perm_phone%></td>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-      <td colspan="4">Address: <%= pledger.perm_address%></td>
-    </tr>
-    <tr>
-      <td>City: <%= pledger.perm_city%></td>
-      <td>State: <%= pledger.perm_state%></td>
-      <td colspan="2">Zip Code: <%= pledger.perm_zip%></td>
-    </tr>
-  </table>
-  <hr/>-->
-
-
-
 
 
 
@@ -225,7 +198,7 @@ WCBN-FM Ann Arbor
   </div>
 
   <% else %>
-  <!-- TODO figure out how to not print this dot -->.
+  &nbsp;
   <% end %> <!-- if not paid up -->
 
 </div> <!-- Pledge Form -->
