@@ -12,7 +12,7 @@
 
 
 <title>Credit Card GPO</title>
-<br /><h3>Credit Card Gift Processing Order</h3><br />
+<h3 id="cc-gpo-title">Credit Card Gift Processing Order</h3><br />
 <table class="gpo-table border">
 <tr class="border"><!-- Header -->
 	<td>
@@ -34,10 +34,9 @@
 </tr>
 
 <tr><!-- Pledger Info -->
-	<td colspan="2" rowspan="2">
-    <% unless pledger.try(:name)%>
-      <strong>Donor's Name and Mailing Address:<br><br><br></strong>
-    <% end %>
+	<td colspan="3" rowspan="2">
+    <strong>Donor's Name and Mailing Address:</strong>
+    <% unless pledger.try(:name)%><br><br><br><% end %>
     <h4><%= pledger.try(:name) %></h4>
 		<p><%= pledger.try(:perm_address) %><br>
 		<%= pledger.try(:perm_city) %><% if pledger.try(:perm_city)%>,<% end %>
@@ -46,8 +45,8 @@
 		<%= pledger.try(:perm_country) %>
 	</td>
 
-	<td colspan="2" class = "border">
-		<strong>Charge Amount:</strong>
+	<td colspan="1" class = "border">
+		<strong>Charge Amount:</strong><br>
     <p><%= number_to_currency donation.try(:amount) %></p>
 	</td>
 
@@ -55,36 +54,35 @@
 
 <tr class = "border">
 
-	<td colspan="2">
-		<strong>Premia Value:<br></strong>
+	<td>
+		<strong>Premia Value:</strong><br>
 	</td>
 </tr>
 <tr>
-  <td class = "border">
-		<strong>Donor's Email:</strong>
+  <td colspan="2" class = "border">
+		<strong>Donor's Email:</strong><br>
     <p><%= pledger.try(:email) %></p>
 	</td>
   <td class = "border">
-		<strong>Donor's Phone:</strong>
+		<strong>Donor's Phone:</strong><br>
     <p><%= pledger.try(:perm_phone) %></p>
 	</td>
-	<td colspan="2">
-		<strong>Net Gift Amount:<br><br></strong>
+	<td>
+		<strong>Net Gift Amount:</strong><br>
 	</td>
 </tr>
 
 
 <tr class = "border"><!-- Card Info -->
 	<td class = "border">
-		<strong>Card Type:<br><br></strong>
+		<strong>Card Type:</strong><br><br>
 	</td>
 	<td colspan="2" class = "border">
-		<strong>Card Number:<br></strong>
+		<strong>Card Number:</strong><br><br>
 	</td>
 
 	<td>
-		<strong>Expiration (MM/YYYY):<br></strong>
-		<p></p>
+		<strong>Expiration (MM/YYYY):</strong><br><br>
 	</td>
 </tr>
 

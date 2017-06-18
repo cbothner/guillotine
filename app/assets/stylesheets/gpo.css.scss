@@ -3,7 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "globals";
 
-strong { font-size: 13pt; }
+#cc-gpo-title {
+	margin-top: 0.5in;
+	color: black;
+	text-align: center;
+}
 
 .gpo-table {
 	font-size: 11pt;
@@ -18,6 +22,9 @@ strong { font-size: 13pt; }
 	vertical-align: middle;
 }
 
+.gpo-table strong {
+	//font-size: 13pt;
+}
 
 .border {
 	border: 1px solid black;
