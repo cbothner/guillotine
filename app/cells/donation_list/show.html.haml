@@ -15,7 +15,7 @@
     -@activeDonations.each do |donation|
       %a.clickable.donationLine{:data => {:id => donation.id}}
         .donationValue="$#{ donation.amount.round }"
-        .donationShow< 
+        .donationShow<
           for
           %span.donationShowName=donation.slot.show.get_name+" (#{donation.slot.semester.name})"
     -if user_is_dd?
@@ -33,4 +33,4 @@
           %p.instructions="Forgiven pledges from #{pluralize(@forgivenSemesters, "semester")} total $%.2f" %@forgivenTotal
     -if !@archivedDonations.select{ |don| don[:gpo_sent] == false }.empty?
       .donationLine
-        %p=link_to "Generate GPO", :controller => "gpo", :action => "single", :id => @pledger, :format => :pdf if user_is_dd?
+        %p=link_to "Generate GPO", :controller => "gpo", :action => "single", :id => @pledger if user_is_dd?

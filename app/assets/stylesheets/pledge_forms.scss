@@ -27,16 +27,14 @@ time {
 	text-indent: .5in;
 }
 
-.tables div {
-  width: 50% !important;
+.tables {
+    display: flex;
+    justify-content: center;
 }
 
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
+.tables > * {
+    flex: 1;
+    max-width: 50%;
 }
 
 .underline {

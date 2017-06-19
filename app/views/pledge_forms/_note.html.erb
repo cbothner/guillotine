@@ -89,20 +89,19 @@ WCBN-FM Ann Arbor
   <h3>Record of Pledge to WCBN-FM Ann Arbor</h3>
   <em>Please confirm the following information.
     Please notify us of any corrections by including them on this form, or by email.</em>
-
   <hr/>
 
 
 
   <div class="tables">
-    <div class="left">
+    <div>
       <table>
         <tr><td>Name: <%= pledger.name%></td></tr>
         <tr><td>Email: <%= pledger.email%></td></tr>
         <tr><td>Phone: <%= pledger.perm_phone%></td></tr>
       </table>
     </div>
-    <div class="right">
+    <div>
       <table>
         <tr><td>
           Address:
@@ -117,7 +116,7 @@ WCBN-FM Ann Arbor
 
   <div class="tables">
 
-  <div class = "left">
+  <div>
     <table>
       <tr class="underline">
         <td>Paid?</td>
@@ -164,7 +163,7 @@ WCBN-FM Ann Arbor
 
 
   <% unless my_rewards.empty? %>
-    <div class = "right">
+    <div>
       <table>
         <tr class="underline">
           <td>
@@ -179,16 +178,17 @@ WCBN-FM Ann Arbor
 
       </table>
     </div>
-
   <% end %> <!-- right table of premia -->
+
+  </div>
+
   <hr/>
-  </div> <!-- tables -->
 
   <div class="tables">
-    <div class="left">
+    <div>
       ❑ Check enclosed, payable to WCBN <br />
     </div>
-    <div class="right">
+    <div>
       ❑ Charge my credit card <br /><br />
       Cardholder Name: __________________________<br />
       ❑ Visa ❑ Mastercard ❑ AmEx ❑ Other <br />
