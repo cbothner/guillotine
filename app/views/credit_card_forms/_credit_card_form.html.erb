@@ -43,7 +43,7 @@
       <%= pledger.try(:perm_city) %><% if pledger.try(:perm_city)%>,<% end %>
   		<%= pledger.try(:perm_state) %>
   		<%= pledger.try(:perm_zip) %>
-  		<%= pledger.try(:perm_country) %>
+  		<%= pledger.try(:perm_country) unless pledger.perm_country === 'USA'%>
     </p>
 	</td>
 

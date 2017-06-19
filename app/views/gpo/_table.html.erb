@@ -3,19 +3,19 @@
 <table class="gpo-table border">
 <tr class="border"><!-- Header -->
 	<td>
-		<strong>Today's Date<br></strong>
+		<strong>Today's Date:<br></strong>
 		<p><%= Time.now.strftime("%B %d, %Y") %></p>
 	</td>
 	<td>
-		<strong>Prepared by<br></strong>
+		<strong>Prepared by:<br></strong>
 		<p><%= Setting.dd_name %></p>
 	</td>
 	<td>
-		<strong>Phone Number<br></strong>
+		<strong>Phone Number:<br></strong>
 		<p><%= Setting.dd_phone %></p>
 	</td>
 	<td>
-		<strong>SCU<br></strong>
+		<strong>SCU:<br></strong>
 		<p>WCBN-FM</p>
 	</td>
 </tr>
@@ -23,30 +23,32 @@
 
 <tr><!-- Pledger Info -->
 	<td colspan="2" rowspan="3">
+		<strong>Donor's Name and Mailing Address:</strong>
 		<h4><%= pledger.name %></h4>
 		<p><%= pledger.perm_address %><br>
 		<%= pledger.perm_city %>,
-		<%= pledger.perm_state %><br>
+		<%= pledger.perm_state %>
 		<%= pledger.perm_zip %>
-		<%= pledger.perm_country %><br><br>
+		<%= pledger.perm_country unless pledger.perm_country === 'USA'%>
+		<br><br>
 		<%= pledger.email %><br>
-		<%= pledger.perm_phone %><br></p>
+		<%= pledger.perm_phone %></p>
 	</td>
 	<td colspan="2" class = "border">
-		<strong>Revenue Amount</strong>
+		<strong>Revenue Amount:</strong>
 		<p><%= number_to_currency(depositTotal) %></p>
 	</td>
 </tr>
 
 <tr>
 	<td colspan="2" class = "border">
-		<strong>Premia Value</strong>
+		<strong>Premia Value:</strong>
 		<p><%= number_to_currency(premiaTotal) %></p>
 	</td>
 </tr>
 <tr>
 	<td colspan="2">
-		<strong>Net Gift Amount</strong>
+		<strong>Net Gift Amount:</strong>
 		<p><%= number_to_currency(giftTotal) %></p>
 	</td>
 </tr>
@@ -56,19 +58,18 @@
 
 <tr class = "border"><!-- Footer -->
 	<td>
-		<strong>Lookup ID<br></strong>
-		<p>__________</p>
+		<strong>Lookup ID:</strong>
 	</td>
 	<td>
-		<strong>Designation<br></strong>
+		<strong>Designation:</strong>
 		<p>361991</p>
 	</td>
 	<td>
-		<strong>Designation Name<br></strong>
+		<strong>Designation Name:</strong>
 		<p>WCBN-FM</p>
 	</td>
 	<td>
-		<strong>Amount<br></strong>
+		<strong>Amount:</strong>
 		<p><%= number_to_currency(giftTotal) %></p>
 	</td>
 </tr>
