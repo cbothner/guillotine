@@ -24,13 +24,7 @@ print_single_gpo = ->
   x.style.bottom = '0'
   x.style.width = '8.5in'
   x.style.height = '11in'
-
-  url = window.location.href
-  last = url[url.length - 1]
-  penultimate = url[url.length - 2]
-  pledger_id = if last == '#' then penultimate else last
-
-  x.src =  '/gpo/single/' + pledger_id
+  x.src =  '/gpo/single/' + $('#pledger-id').val()
   x.onload = setPrint
   document.body.appendChild x
 
