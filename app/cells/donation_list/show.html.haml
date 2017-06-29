@@ -33,5 +33,6 @@
           %p.instructions="Forgiven pledges from #{pluralize(@forgivenSemesters, "semester")} total $%.2f" %@forgivenTotal
     -if !@archivedDonations.select{ |don| don[:gpo_sent] == false }.empty?
       .donationLine
-        = hidden_field_tag "pledger_id", @pledger.id, { :id => "pledger-id" }
-        %p=link_to "Generate GPO", "#", id: "print-single-gpo" if user_is_dd?
+        -if user_is_dd?
+          %p
+            %a#print-gpo-single Generate GPO

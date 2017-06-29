@@ -3,5 +3,5 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
-  $("#print-gpo-single").click ->
-    printURL('/gpo/single/' + $('#pledger-id').val());
+  $("#print-pledge-forms-all").click ->
+    printURL('/pledge_forms/all/');

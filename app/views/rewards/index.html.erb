@@ -7,7 +7,12 @@
         <% size_set.each do |size, reward_set| %>
           <div class="reward-table">
             <h4 class="reward-table-header"><%= size * ", " %> (<%= reward_set.length %>)</h4>
-            <%= link_to "Generate Packing Slip", :controller => 'rewards', :action => "packing_slips", :format => :pdf, :pledgers => reward_set.map{|a,x| a}.join(',') %>
+
+            <!-- hidden value passed to view for printing -->
+            <!-- print-packing-slip-multi class is dependent on the value of this.prev -->
+            <%= hidden_field_tag "pledgers", reward_set.map{|a,x| a}.join(','), { :class => "pledger-ids" } %>
+            <a class="print-packing-slip-multi">Generate Packing Slip</a>
+
 
             <table>
               <% dark = true %>

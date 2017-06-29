@@ -15,12 +15,13 @@
     -@activeRewards.each do |reward|
       %a.clickable.rewardLine{:data => {:id => reward.id}}
         .rewardValue="$#{ reward.item.cost.round }"
-        .rewardPremia< 
+        .rewardPremia<
           %span.rewardPremiaName=reward.item.name
     -if user_is_dd?
       -unless @activeRewards.empty?
         .donationLine
-          %p=link_to "Generate Packing Slip", :controller => 'rewards', :action => "packing_slips", :format => :pdf, :pledgers => @pledger.id
+          %p
+            %a#print-packing-slip-single Generate Packing Slip
       -unless @archivedRewards.empty?
         .rewardLine
           %p Sent Premia

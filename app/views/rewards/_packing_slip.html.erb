@@ -1,0 +1,7 @@
+<p>
+  Packing slips
+</p>
+
+<% @pledgers.each do |pledger| %>
+  <%= "packing slip for pledger number:  " + pledger.id.to_s %><br />
+<% end %>

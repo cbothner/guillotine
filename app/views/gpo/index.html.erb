@@ -3,9 +3,7 @@
   <h1>No Unsent GPOs</h1>
 <% else %>
 
-  <!-- send to hidden iframe and print -->
-  <iframe src="/gpo/all" style="display:none;" name="frame"></iframe>
-  <h1> <a onclick="frames['frame'].print()">Generate</a> Unsent GPOs</h1>
+  <h1> <a id="print-gpo-all">Generate</a> Unsent GPOs</h1>
 
   <ul>
     <% @pledgers.each do |pledger| %>
