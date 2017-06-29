@@ -33,6 +33,7 @@
       %ul
         %li= link_to "Thank You Notes and Pledge Forms", :controller => "pledge_forms"
         %li= link_to "All Unsent GPOs", :controller => "gpo"
-        %li= link_to "Blank Credit Card GPO", "#", id: "blank-cc-gpo"
+        %li
+          %a#blank-cc-gpo Blank Credit Card GPO
   -else
     %section.flex1
