@@ -26,7 +26,8 @@
         %li= link_to "Show Schedule", :slots
         %li= link_to "Listener Comments", :comments
         %li= link_to "Inventory", :items
-        %li= link_to "Blank Credit Card Processing Form", 'donations/new.pdf'
+        %li
+          %a#blank-cc-gpo Blank Credit Card GPO
   -if user_is_dd?
     %section.home.flex1
       %h2 Documents

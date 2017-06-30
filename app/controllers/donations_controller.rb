@@ -43,14 +43,14 @@ class DonationsController < ApplicationController
   end
 
   # GET /donations/1.pdf
-  def show
-    @donation = Donation.find(params[:id])
-    @pledger = @donation.pledger
-
-    respond_to do |format|
-      format.pdf { render layout: 'application', formats: [:pdf] }
-    end
-  end
+  # def show
+  #   @donation = Donation.find(params[:id])
+  #   @pledger = @donation.pledger
+  #
+  #   respond_to do |format|
+  #     format.pdf { render layout: 'application', formats: [:pdf] }
+  #   end
+  # end
 
   # GET /donations/new
   # GET /donations/new.json
@@ -67,7 +67,7 @@ class DonationsController < ApplicationController
     respond_to do |format|
       format.html { render layout: !request.xhr? }
       format.json { render json: @donation }
-      format.pdf { render layout: 'application', formats: [:pdf] }
+      # format.pdf { render layout: 'application', formats: [:pdf] }
     end
   end
 
