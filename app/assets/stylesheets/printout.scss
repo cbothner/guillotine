@@ -1,0 +1,103 @@
+// Place all the styles related to the gpo controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "globals";
+
+
+
+//GPO
+#cc-gpo-title {
+	margin-top: 0.5in;
+	color: black;
+	text-align: center;
+}
+
+.gpo-table {
+	font-size: 11pt;
+	color: black;
+	font-family: avenir;
+	page-break-inside: avoid;
+	margin: auto;
+	table-layout: fixed;
+}
+
+.gpo-table tr {
+	height: 50px;
+}
+
+.gpo-table strong {
+	font-size: 12px;
+}
+
+.gpo-table p {
+	font-size: 15px;
+}
+
+
+
+
+//PLEDGEFORMS
+return-address {
+  position: absolute;
+  margin: -.5in;
+}
+
+mailing-address {
+  position: absolute;
+  margin-left: -.5in;
+}
+
+time {
+  float: right;
+}
+
+
+
+//PACKING SLIPS
+#dd-contact {
+  text-align: right;
+}
+
+#packing-slip-premia th {
+  color: black;
+  text-align: left;
+}
+
+
+
+//GENERIC
+.page {
+	color: black;
+	font-family: avenir;
+	font-size: 12pt;
+	page-break-after: always !important;
+	margin: 1in;
+}
+
+.indent {
+	display: inline-block;
+	text-indent: .5in;
+}
+
+.halves {
+    display: flex;
+    justify-content: center;
+}
+
+.halves > * {
+    flex: 1;
+    max-width: 50%;
+    padding: 10px;
+}
+
+.underline {
+  border-bottom: solid black 1px;
+}
+
+.border {
+	border: 1px solid black;
+}
+
+.center {
+  text-align: center;
+}

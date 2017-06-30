@@ -1,7 +1,68 @@
-<p>
-  Packing slips
-</p>
-
 <% @pledgers.each do |pledger| %>
-  <%= "packing slip for pledger number:  " + pledger.id.to_s %><br />
+<% my_rewards = (@rewards & pledger.rewards).group_by{|r| r.item.name}.sort_by{|x| x[0].upcase} %>
+
+
+<div class="page">
+
+  <div class="halves">
+    <div>
+      Logo coming soon
+    </div>
+    <div id="dd-contact">
+      <p><%= Setting.dd_name %><br />
+         Development Director<br />
+         dd@wcbn.org</p>
+    </div>
+  </div>
+
+  <br />
+
+  <h1 class="center">Thank you for donating to WCBN</h1>
+  <h2 class="center">You're all good in our books!</h2>
+  <br />
+  <div class="halves ">
+    <div>
+      <p class="underline">Address</p>
+      <p><%= pledger.name%><br />
+         <%= pledger.perm_address%><br />
+      <% if pledger.perm_country == 'USA' %>
+        <%= pledger.perm_city%>, <%= pledger.perm_state%> <%= pledger.perm_zip %></p>
+      <% else %>
+        <%= pledger.perm_city %>, <%= pledger.perm_country %></p>
+      <% end %>
+    </div>
+    <div>
+      <p class="underline">Contact</p>
+      <p>Email: <%= pledger.email%><br />
+         Phone: <%= pledger.perm_phone%><br />
+         WCBN Affiliation: <%= pledger.affiliation.capitalize%></p>
+    </div>
+  </div>
+
+  <br /><br />
+  <div>
+    Thank you kindly for your generous donation to WCBN-FM! Our turntables,
+    our CDs, our copper wire, our transmitter, and all of our DJs truly
+    appreciate it. Thank you for being excellent.
+    <br /><br />
+    If you haven’t already, you will soon receive a tax receipt from the University of Michigan. If you have any questions, please email dd@wcbn.org.
+  </div>
+
+  <br /><br />
+
+  <div class="halves">
+    <table id = "packing-slip-premia">
+      <tr class ="underline">
+        <th>Qty.</th><th>Enclosed Premium</th><th>Packing Notes</th>
+      </tr>
+      <% my_rewards.each do |r| %>
+        <tr>
+          <td><%=r[1].length %></td>
+          <td><%= r[0] %></td>
+          <td><%= r[1].collect{|x| x.comment}.reject{|r| r.blank?}.join(' --- ') %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
 <% end %>
