@@ -14,6 +14,9 @@
  *= require_tree .
  */
 
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+
 a:hover {
   cursor: pointer;
   cursor: hand;
