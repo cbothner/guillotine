@@ -35,8 +35,6 @@ gem 'jbuilder'
 
 gem 'best_in_place', git: 'https://github.com/bernat/best_in_place'
 
-gem 'rails-latex', git: 'https://github.com/jacott/rails-latex'
-
 gem 'devise'
 
 gem 'cells'

@@ -6,13 +6,6 @@ GIT
       actionpack (>= 3.2)
       railties (>= 3.2)
 
-GIT
-  remote: https://github.com/jacott/rails-latex
-  revision: 37033cdaf8a7eff618a977f971645bde2aa43989
-  specs:
-    rails-latex (2.2.0)
-      rails (>= 3.0.0, < 6)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -177,7 +170,6 @@ DEPENDENCIES
   puma
   rack-cache
   rails (= 4.0.2)
-  rails-latex!
   rails_12factor
   sass-rails (~> 4.0.0)
   seed_dumper
@@ -186,4 +178,4 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
 
 BUNDLED WITH
-   1.10.6
+   1.12.5
