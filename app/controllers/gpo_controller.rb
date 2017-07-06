@@ -55,9 +55,7 @@ class GpoController < ApplicationController
     unsentPremia = pledgersForGPO.reduce([]) { |sum, p| sum + p.rewards.reject(&:taxed) }
 
     # Mark GPOs sent
-     checksForDeposit.each do |donation|
-       donation.update gpo_sent: true
-     end
+     checksForDeposit.update_all gpo_sent: 'true'
      # Mark premia taxed
      unsentPremia.each do |reward|
        reward.update taxed: true
