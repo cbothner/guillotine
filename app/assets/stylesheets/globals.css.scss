@@ -138,23 +138,6 @@ th {
   color: inherit;
 }
 
-/* fontawesome */
-[class*="fontawesome-"]:before {
-  font-family: 'FontAwesome', sans-serif;
-}
-.icon-large {
-  font-size: 1.3em;
-  position: relative;
-  top: 0.05em;
-}
-.icon-spin {
-  display: inline-block;
-  -moz-animation: spin 2s infinite linear;
-  -o-animation: spin 2s infinite linear;
-  -webkit-animation: spin 2s infinite linear;
-  animation: spin 2s infinite linear;
-}
-
 .best_in_place {
   display: block;
   width: 100%;

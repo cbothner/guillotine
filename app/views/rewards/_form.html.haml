@@ -12,14 +12,14 @@
     .deleteRewardLink
       = link_to '[X]', {:action=>'destroy', :id=>@reward}, :confirm=>"Are you sure you want to delete this premium?", :method=>:delete, :remote => true
   .field
-    = f.label :item 
+    = f.label :item
     - id = @selectedItem.nil? ? 0 : @selectedItem.id
     = f.select( :item, options_for_select(Item.for_select(@total_donation, @selectedItem), id), {}, :class => "chzn-select" )
   - if user_is_dd?
     .flexcontainer
       .field.centered.flex1
         %abbr{:title => "Premia Sent?"}
-          = f.label :premia_sent, "&nbsp;".html_safe, :class => "fontawesome-gift icon-large"
+          = f.label :premia_sent, "&nbsp;".html_safe, :class => "fa fa-lg fa-gift"
         = f.check_box :premia_sent
       .field.centered.flex1
         %abbr{:title => "Taxed?"}
