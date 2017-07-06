@@ -23,7 +23,7 @@ class GpoController < ApplicationController
 
   def index
     checksForDeposit = Donation.where("payment_received = 'true' and gpo_sent = 'false'")
-    @pledgers = checksForDeposit.map { |don| Pledger.find(don.pledger_id) }.uniq
+    @pledgers = Pledger.where(id: checksForDeposit.map(&:pledger_id).uniq)
     render layout: "generate"
   end
 
@@ -31,7 +31,8 @@ class GpoController < ApplicationController
     checksForDeposit = Donation.where("payment_received = 'true' and gpo_sent = 'false'")
 
     # Unique list of pledgers in checksForDeposit
-    pledgersForGPO = checksForDeposit.map { |don| Pledger.find(don.pledger_id) }.uniq
+    pledgersForGPO = Pledger.where(id: checksForDeposit.map(&:pledger_id).uniq)
+                            .includes(rewards: [:item])
     unsentPremia = pledgersForGPO.reduce([]) { |sum, p| sum + p.rewards.reject(&:taxed) }
 
     @argsForGPO = pledgersForGPO.map{ |pledger|

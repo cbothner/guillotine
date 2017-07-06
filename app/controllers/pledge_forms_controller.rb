@@ -12,9 +12,7 @@ class PledgeFormsController < ApplicationController
   end
 
   def mark_all_sent
-    @donations.each do |d|
-      d.update pledge_form_sent: 'true'
-    end
+    @donations.update_all pledge_form_sent: 'true'
     redirect_to action: 'index'
   end
 
@@ -22,12 +20,13 @@ class PledgeFormsController < ApplicationController
   private
   def set_pledgers
     @pledgers = Pledger
+      .includes(:donations, :rewards)
       .joins(:donations)
       .where(donations: {pledge_form_sent: false}).uniq
   end
   def set_donations
     @donations = Donation
-      .where(pledger_id: @pledgers.select('pledgers.id'))
+      .where(pledger_id: @pledgers.map(&:id))
       .order(amount: :desc)
   end
   def set_rewards

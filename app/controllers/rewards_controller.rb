@@ -128,7 +128,9 @@ class RewardsController < ApplicationController
   end
 
   def packing_slips
-    @pledgers = Pledger.find(params[:pledgers].split(',')).sort_by(&:name)
+    @pledgers = Pledger.where(id: params[:pledgers].split(','))
+                       .includes(:rewards)
+                       .sort_by(&:name)
     @rewards = Reward.where(premia_sent: false)
 
     render layout: "printout"
