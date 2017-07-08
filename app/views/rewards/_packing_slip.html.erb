@@ -23,13 +23,11 @@
   <div class="halves ">
     <div>
       <p class="underline">Address</p>
-      <p><%= pledger.name%><br />
-         <%= pledger.perm_address%><br />
-      <% if pledger.perm_country == 'USA' %>
-        <%= pledger.perm_city%>, <%= pledger.perm_state%> <%= pledger.perm_zip %></p>
-      <% else %>
-        <%= pledger.perm_city %>, <%= pledger.perm_country %></p>
-      <% end %>
+      <p><%= pledger.name%><br>
+         <%= pledger.perm_address%><br>
+         <%= pledger.perm_city%>, <%= pledger.perm_state%> <%= pledger.perm_zip%>
+         <%= pledger.perm_country unless pledger.perm_country === 'USA'%>
+      </p>
     </div>
     <div>
       <p class="underline">Contact</p>

@@ -25,6 +25,7 @@ dd@wcbn.org
 <%= pledger.name%><br>
 <%= pledger.perm_address%><br>
 <%= pledger.perm_city%>, <%= pledger.perm_state%> <%= pledger.perm_zip%>
+<%= pledger.perm_country unless pledger.perm_country === 'USA'%>
 </mailing-address>
 <br><br><br>
 
@@ -87,32 +88,29 @@ WCBN-FM Ann Arbor
   <% if my_unpaid_donation_total > 0 %>
 
   <h3>Record of Pledge to WCBN-FM Ann Arbor</h3>
-  <em>Please confirm the following information.
-    Please notify us of any corrections by including them on this form, or by email.</em>
-  <hr/>
+  <em>Please confirm the following information and notify us of any corrections by including them on this form, or by email.</em>
+  <br /><br />
 
 
-
-  <div class="halves">
+  <div class="halves ">
     <div>
-      <table>
-        <tr><td>Name: <%= pledger.name%></td></tr>
-        <tr><td>Email: <%= pledger.email%></td></tr>
-        <tr><td>Phone: <%= pledger.perm_phone%></td></tr>
-      </table>
+      <p class="underline">Address</p>
+      <p><%= pledger.name%><br>
+         <%= pledger.perm_address%><br>
+         <%= pledger.perm_city%>, <%= pledger.perm_state%> <%= pledger.perm_zip%>
+         <%= pledger.perm_country unless pledger.perm_country === 'USA'%>
+      </p>
     </div>
     <div>
-      <table>
-        <tr><td>
-          Address:
-        </td><td><%= pledger.perm_address%></td></tr>
-        <tr><td></td><td><%= pledger.perm_city%>, <%= pledger.perm_state%> <%= pledger.perm_zip%></td></tr>
-      </table>
+      <p class="underline">Contact</p>
+      <p>Email: <%= pledger.email%><br />
+         Phone: <%= pledger.perm_phone%><br />
+         WCBN Affiliation: <%= pledger.affiliation.capitalize%></p>
     </div>
-
   </div>
+  <br />
 
-  <hr />
+
 
   <div class="halves">
 
