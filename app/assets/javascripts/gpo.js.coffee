@@ -4,4 +4,5 @@
 
 $ ->
   $("#print-gpo-all").click ->
+    window.alert 'Be sure to print these single-sided!'
     printURL('/gpo/all/');

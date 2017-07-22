@@ -4,4 +4,5 @@
 
 $ ->
   $("#print-pledge-forms-all").click ->
+    window.alert 'Be sure to print these double-sided!'
     printURL('/pledge_forms/all/');
