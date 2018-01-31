@@ -19,7 +19,7 @@
       %br
       = f.number_field :amount, step: "any", autofocus: "autofocus"
     .flex2.field
-      = f.label :payment_method 
+      = f.label :payment_method
       %br
       = f.select(:payment_method, ["Credit Card", "Check", "Cash"])
   -if user_is_dd?
@@ -29,15 +29,15 @@
     .flexcontainer
       .flex1.field.centered
         %abbr{:title => "Pledge Form Sent?"}
-          = f.label :pledge_form_sent, "&nbsp;".html_safe, :class => "fontawesome-envelope icon-large"
+          = f.label :pledge_form_sent, "&nbsp;".html_safe, :class => "fa fa-lg fa-envelope"
         = f.check_box :pledge_form_sent
       .flex1.field.centered
         %abbr{:title => "Payment Received?"}
-          = f.label :payment_received, "&nbsp;".html_safe, :class => "fontawesome-money icon-large"
+          = f.label :payment_received, "&nbsp;".html_safe, :class => "fa fa-lg fa-money"
         = f.check_box :payment_received
       .flex1.field.centered
         %abbr{:title => "GPO Sent?"}
-          = f.label :gpo_sent, "&nbsp;".html_safe, :class => "fontawesome-cloud-upload icon-large"
+          = f.label :gpo_sent, "&nbsp;".html_safe, :class => "fa fa-lg fa-cloud-upload"
         = f.check_box :gpo_sent
   -else
     = f.hidden_field :pledge_form_sent, value: false

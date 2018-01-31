@@ -3,5 +3,6 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
-  $("#blank-cc-gpo").click ->
-    printURL('/credit_card_forms/new');
+  $("#print-pledge-forms-all").click ->
+    window.alert 'Be sure to print these double-sided!'
+    printURL('/pledge_forms/all/');

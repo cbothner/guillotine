@@ -48,7 +48,7 @@
       %b.labelB Zip Code
       %p.inputP=best_in_place @pledger, :local_zip
   %p.notabene#pledgerID{:data => { :id => @pledger.id } }<
-    Pledger ID: 
+    Pledger ID:
     = @pledger.id
   = link_to 'Close and return to search', pledgers_path
   -#= link_to 'Edit', edit_pledger_path(@pledger) |
@@ -58,3 +58,6 @@
 .grid_3
   = render_cell :reward_list, :show, pledger: @pledger
   = render "comments/onepledger"
+
+-#hidden value passed to view for printing
+= hidden_field_tag "pledger_id", @pledger.id, { :id => "pledger-id" }

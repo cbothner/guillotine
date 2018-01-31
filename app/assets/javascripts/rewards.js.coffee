@@ -26,3 +26,10 @@ $(document).ready ->
     $(this).siblings("a").css("display","none")
     $(this).removeClass("reward-table-header-visible")
     $(this).addClass("reward-table-header-hidden")
+
+
+  $("#print-packing-slip-single").click ->
+    printURL('/rewards/packing_slips?pledgers=' + $('#pledger-id').val());
+
+  $(".print-packing-slip-multi").click ->
+    printURL('/rewards/packing_slips?pledgers=' + $(this).prev().val());

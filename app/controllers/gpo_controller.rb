@@ -1,39 +1,38 @@
 class GpoController < ApplicationController
+
   def single
-    @pledger = Pledger.find(params[:id])
+    @pledger = Pledger.find(params[:id]) rescue nil
 
-    # Sum value of unprocessed cheque
-    checksForDeposit = @pledger.donations.where("payment_received = 'true' and gpo_sent = 'false'")
-    @depositTotal = checksForDeposit.reduce(0) { |sum, e| sum += e.amount }
+    if @pledger
+      # Sum value of unprocessed cheque
+      checksForDeposit = @pledger.donations.where("payment_received = 'true' and gpo_sent = 'false'")
+      @depositTotal = checksForDeposit.reduce(0) { |sum, e| sum += e.amount }
 
-    # Sum value of unsent premia
-    unsentPremia = @pledger.rewards.where("premia_sent = 'false' and taxed = 'false'")
-    @premiaTotal = unsentPremia.reduce(0) { |sum, e| sum += e.item.taxable_value }
+      # Sum value of unsent premia
+      unsentPremia = @pledger.rewards.where("premia_sent = 'false' and taxed = 'false'")
+      @premiaTotal = unsentPremia.reduce(0) { |sum, e| sum += e.item.taxable_value }
 
-    @giftTotal = @depositTotal - @premiaTotal
+      @giftTotal = @depositTotal - @premiaTotal
 
-    @pledger.perm_phone = @pledger.perm_phone == '(000) 000-0000' ? 'No Phone' : @pledger.perm_phone
-    @pledger.email = @pledger.email.blank? ? 'No Email' : @pledger.email
-
-    respond_to do |format|
-      format.pdf { render layout: true, formats: [:pdf]
-                   # Mark GPOs sent
-                   checksForDeposit.each do |donation|
-                     donation.update_attributes(gpo_sent: true)
-                   end
-                   # Mark premia taxed
-                   unsentPremia.each do |reward|
-                     reward.update_attributes(taxed: true)
-                   end
-      }
+      @pledger.perm_phone = @pledger.perm_phone == '(000) 000-0000' ? 'No Phone' : @pledger.perm_phone
+      @pledger.email = @pledger.email.blank? ? 'No Email' : @pledger.email
     end
+
+    render layout: "printout"
+  end
+
+  def index
+    checksForDeposit = Donation.where("payment_received = 'true' and gpo_sent = 'false'")
+    @pledgers = Pledger.where(id: checksForDeposit.map(&:pledger_id).uniq)
+    render layout: "generate"
   end
 
   def all
     checksForDeposit = Donation.where("payment_received = 'true' and gpo_sent = 'false'")
 
     # Unique list of pledgers in checksForDeposit
-    pledgersForGPO = checksForDeposit.map { |don| Pledger.find(don.pledger_id) }.uniq
+    pledgersForGPO = Pledger.where(id: checksForDeposit.map(&:pledger_id).uniq)
+                            .includes(rewards: [:item])
     unsentPremia = pledgersForGPO.reduce([]) { |sum, p| sum + p.rewards.reject(&:taxed) }
 
     @argsForGPO = pledgersForGPO.map{ |pledger|
@@ -45,19 +44,24 @@ class GpoController < ApplicationController
       }
     }
 
-    respond_to do |format|
-      format.html { render layout: 'generate' }
-      format.pdf { render layout: true, format: [:pdf]
-                   # Mark GPOs sent
-                   checksForDeposit.each do |donation|
-                     donation.update_attributes(gpo_sent: 'true')
-                   end
-                   # Mark premia taxed
-                   unsentPremia.each do |reward|
-                     reward.update_attributes(taxed: true)
-                   end
-      }
-    end
+    render layout: "printout"
+  end
+
+  def mark_all_sent
+    checksForDeposit = Donation.paid.where gpo_sent: false
+
+    # Unique list of pledgers in checksForDeposit
+    pledgersForGPO = checksForDeposit.map { |don| Pledger.find(don.pledger_id) }.uniq
+    unsentPremia = pledgersForGPO.reduce([]) { |sum, p| sum + p.rewards.reject(&:taxed) }
+
+    # Mark GPOs sent
+     checksForDeposit.update_all gpo_sent: 'true'
+     # Mark premia taxed
+     unsentPremia.each do |reward|
+       reward.update taxed: true
+     end
+
+     redirect_to action: 'index'
   end
 
   def creditcards

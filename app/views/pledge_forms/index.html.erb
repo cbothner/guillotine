@@ -1,0 +1,16 @@
+<% title "Pledge Forms" %>
+<% if @donations.empty? %>
+  <h1>No Unsent Pledge Forms</h1>
+<% else %>
+
+  <h1> <a id="print-pledge-forms-all">Generate</a> Thank You Notes</h1>
+
+  <ul>
+    <% @pledgers.each do |pledger| %>
+      <li><%= link_to pledger.name, pledger%> </li>
+    <% end %>
+  </ul>
+
+  <%= button_to "Mark All As Sent", { action: "mark_all_sent"},
+  method: :put, data: { confirm: "Are you sure you want to mark all Thank You Notes and Pledge Forms as sent? This action cannot be undone." }%>
+<% end %>

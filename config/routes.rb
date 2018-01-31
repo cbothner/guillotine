@@ -6,8 +6,10 @@ Guillotine::Application.routes.draw do
 
   resources :semesters, only: [:index,:update,:create,:destroy]
 
+  get 'gpo', to: "gpo#index"
   get "gpo/single/:id", to: 'gpo#single'
   get "gpo/all"
+  put 'gpo/mark_all_sent'
   get "gpo/creditcards"
   post "gpo/creditcards", to: 'gpo#process_creditcards'
 
@@ -19,10 +21,17 @@ Guillotine::Application.routes.draw do
 
 
   get "donations/:year/:month", :year => /[0-9]{4}/, :month => /[0-9]{2}/, to: 'donations#index'
-  get "donations/pledge_forms", to: 'donations#pledge_forms'
   get "donations/underwriting", to: 'donations#underwriting'
   post "donations/forgive", to: 'donations#forgive'
-  resources :donations
+  resources :donations do
+    resource :credit_card_form, only: [:show]
+  end
+  resources :credit_card_forms, only: [:new]
+
+  get "pledge_forms", to: "pledge_forms#index"
+  get "pledge_forms/all"
+  put "pledge_forms/mark_all_sent"
+  resources :pledge_forms, only: [:index]
 
 
   get "shows/:year/:month", :year => /[0-9]{4}/, :month => /[0-9]{2}/, to: 'shows#index'
@@ -41,6 +50,8 @@ Guillotine::Application.routes.draw do
       get 'search'
     end
   end
+
+  resources :settings, only: [:update], param: :id
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

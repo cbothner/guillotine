@@ -1,0 +1,111 @@
+<!--
+  I'm making heavy use of `.try` in this template since when it is used to
+  render a blank credit card form `donation` (and thus `donation.pledger`) will
+  be nil. `.try` is a rails addition to ruby which returns nil instead of
+  throwing when a method doesn't exist.
+
+  `donation.try(:pledger)` is the same as `donation.pledger rescue nil` but it
+  can be chained like `donation.try(:pledger).try(:name)` or whatever.
+-->
+
+<% pledger = donation.try(:pledger) %>
+
+
+<title>Credit Card GPO</title>
+<h3 id="cc-gpo-title">Credit Card Gift Processing Order</h3><br />
+<table class="gpo-table border">
+<tr class="border"><!-- Header -->
+	<td>
+		<strong>Today's Date:</strong>
+		<p><%= Time.now.strftime("%B %d, %Y") %></p>
+	</td>
+	<td>
+		<strong>Prepared by:</strong>
+		<p><%= Setting.dd_name %></p>
+	</td>
+	<td>
+		<strong>Phone Number:</strong>
+		<p><%= Setting.dd_phone %></p>
+	</td>
+	<td>
+		<strong>SCU:</strong>
+		<p>WCBN-FM</p>
+	</td>
+</tr>
+
+<tr><!-- Pledger Info -->
+	<td colspan="3" rowspan="2">
+    <strong>Donor's Name and Mailing Address:</strong>
+    <% unless pledger.try(:name)%><br><br><br><br><br><% end %>
+    <h4><%= pledger.try(:name) %></h4>
+		<p><%= pledger.try(:perm_address) %></p>
+    <p>
+      <%= pledger.try(:perm_city) %><% if pledger.try(:perm_city)%>,<% end %>
+  		<%= pledger.try(:perm_state) %>
+  		<%= pledger.try(:perm_zip) %>
+  		<%= pledger.try(:perm_country) unless pledger.try(:perm_country) === 'USA'%>
+    </p>
+	</td>
+
+	<td colspan="1" class = "border">
+		<strong>Charge Amount:</strong>
+    <p><%= number_to_currency donation.try(:amount) %></p>
+	</td>
+
+</tr>
+
+<tr class = "border">
+
+	<td>
+		<strong>Premia Value:</strong>
+	</td>
+</tr>
+<tr>
+  <td colspan="2" class = "border">
+		<strong>Donor's Email:</strong>
+    <p><%= pledger.try(:email) %></p>
+	</td>
+  <td class = "border">
+		<strong>Donor's Phone:</strong>
+    <p><%= pledger.try(:perm_phone) %></p>
+	</td>
+	<td>
+		<strong>Net Gift Amount:</strong>
+	</td>
+</tr>
+
+
+<tr class = "border"><!-- Card Info -->
+	<td class = "border">
+		<strong>Card Type:</strong><br><br>
+	</td>
+	<td colspan="2" class = "border">
+		<strong>Card Number:</strong><br><br>
+	</td>
+
+	<td>
+		<strong>Expiration (MM/YYYY):</strong><br><br>
+	</td>
+</tr>
+
+<tr class = "border"><!-- Footer -->
+	<td class = "border">
+		<strong>Lookup ID:</strong>
+    <p></p>
+	</td>
+	<td class = "border">
+		<strong>Designation:</strong>
+		<p>361991</p>
+	</td>
+	<td class = "border">
+		<strong>Designation Name:</strong>
+		<p>WCBN-FM</p>
+	</td>
+	<td>
+		<strong>Amount:</strong>
+		<p><%= number_to_currency donation.try(:amount) %></p>
+	</td>
+</tr>
+
+</table>
+<br>

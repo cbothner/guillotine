@@ -1,5 +1,16 @@
 -title "Users"
 -if user_is_dd?
+  %br
+  %h2 DD Information
+  %section.grid_6.setting
+  %b.labelB Name
+  First and Last
+  %p.inputP=best_in_place @dd_name, :value
+  %b.labelB Phone Number
+  (123) 456-7890
+  %p.inputP=best_in_place @dd_phone, :value, :type=>'tel'
+
+  %br
   %h2 Users
   -@users.each do |user|
     .flexcontainer
@@ -9,5 +20,6 @@
         .flex1.deleteDonationLink
       .flex3=user.username
       .flex6=user.email
+
 -else
   %h2 Only DD can see this page.

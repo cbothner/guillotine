@@ -5,6 +5,7 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "http://ziplookup.googlecode.com/git/zip-lookup/zip-lookup.js" %>
+  <%= javascript_include_tag "https://use.fontawesome.com/d7a9acf5bd.js" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -15,12 +16,12 @@
       <% if user_signed_in? %>
         <span class="username">[<%= current_user.username %>]</span> • <span class="signlink"><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></span>
       <% else %>
-        <span class="signlink"><%= link_to "Log In", new_user_session_path %></span> • 
+        <span class="signlink"><%= link_to "Log In", new_user_session_path %></span> •
         <span class="signlink"><%= link_to "Register", new_user_registration_path %></span>
       <% end %>
     </div>
-    <h1 class="logotype"><%= link_to "guillotine", root_url %></h1>   
-    <div class="tagline">wcbn's close cutting fundraiser</div>
+    <h1 class="logotype"><%= link_to "guillotine", root_url %></h1>
+    <div class="tagline">wcbn’s close cutting fundraiser</div>
   </div>
 </header>
 <% if notice or alert %>

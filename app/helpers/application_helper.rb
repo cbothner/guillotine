@@ -4,10 +4,6 @@ module ApplicationHelper
     self.output_buffer = render(file: "layouts/#{layout}")
   end
 
-  def lesc(text)
-    LatexToPdf.escape_latex(text)
-  end
-
   def user_is_dd?
     current_user == User.where("username = 'dd'")[0]
   end
