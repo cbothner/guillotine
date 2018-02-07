@@ -13,15 +13,18 @@
   .field
     = f.label :slot_id, "Dedication"
     = f.select(:slot_id, unsorted_grouped_options_for_select(Slot.for_select(@selectedSemester), @selectedSlot), {}, { :class => "chzn-select" })
-  .flexcontainer.middlepadding
+  .flexcontainer
     .flex1.field
       = f.label :amount
       %br
-      = f.number_field :amount, step: "any", autofocus: "autofocus"
-    .flex2.field
-      = f.label :payment_method
-      %br
-      = f.select(:payment_method, ["Credit Card", "Check", "Cash"])
+      = f.number_field :amount, step: "any", min: 0, autofocus: "autofocus"
+    - if user_is_dd?
+      .flex2.field
+        = f.label :payment_method
+        %br
+        = f.select :payment_method, %w[Online Check Cash]
+    - else
+      = f.hidden_field :payment_method, value: 'Check'
   -if user_is_dd?
     .field
       = f.label :comment
@@ -51,5 +54,5 @@
       &nbsp;Phone Operator:&nbsp;
       = @donation.phone_operator
   .actions
-    = f.submit data: { disable_with: 'Saving...' }
+    = f.submit 'Submit', data: { disable_with: 'Saving...' }
     = button_tag "Cancel", :type => "button", :id => "donationFormCancelButton", :data => { :id => @donationID }

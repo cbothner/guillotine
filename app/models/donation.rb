@@ -5,7 +5,7 @@ class Donation < ActiveRecord::Base
 
   validates :amount, :payment_method, presence: true
   validates :amount, numericality: { greater_than: 0 }
-  validates :payment_method, inclusion: { in: ['Credit Card', 'Cash', 'Check'], message: 'Payment method must be one of the following: Credit Card, Cash, or Check.' }
+  validates :payment_method, inclusion: { in: %w[Cash Check Online] }
 
   scope :unpaid, -> { where payment_received: false }
   scope :paid, -> { where payment_received: true }
