@@ -43,3 +43,30 @@ textarea {
   width: 100%;
   text-align:center;
 }
+
+
+.field_with_errors {
+  display: inline;
+
+  & label {
+    color: $red;
+  }
+}
+
+#error_explanation {
+  background-color: rgba($red, 0.2);
+  border: 1px solid $red;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+
+  & h2 {
+    font-size: 1rem;
+    line-height: 1;
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  ul {
+    margin-left: 1rem;
+    margin-bottom: 0.25rem;
+  }
+}
