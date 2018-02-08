@@ -24,10 +24,16 @@
     <div class="tagline">wcbn’s close cutting fundraiser</div>
   </div>
 </header>
-<% if notice or alert %>
-<div class="notice-alert">
+<% if notice %>
+<div class="notice-container">
   <div class="container_12">
     <p class="notice"><%= notice %></p>
+  </div>
+</div>
+<% end %>
+<% if alert %>
+<div class="alert-container">
+  <div class="container_12">
     <p class="alert"><%= alert %></p>
   </div>
 </div>
