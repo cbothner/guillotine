@@ -26,15 +26,11 @@
         %li= link_to "Show Schedule", :slots
         %li= link_to "Listener Comments", :comments
         %li= link_to "Inventory", :items
-        %li
-          %a#blank-cc-gpo Blank Credit Card GPO
   -if user_is_dd?
     %section.home.flex1
       %h2 Documents
       %ul
         %li= link_to "Thank You Notes and Pledge Forms", :controller => "pledge_forms"
         %li= link_to "All Unsent GPOs", :controller => "gpo"
-        %li
-          %a#blank-cc-gpo Blank Credit Card GPO
   -else
     %section.flex1

@@ -14,7 +14,7 @@ class Pledger < ActiveRecord::Base
   validates :name, :perm_address, :perm_city, :perm_country, presence: true
   validates :affiliation, inclusion: {
     in: %w(Staff Alumni Public Family),
-    message: 'Affiliation must be one of staff, alumni, family, or public' }
+    message: 'must be one of staff, alumni, family, or public' }
   with_options if: :american? do |american|
     american.validates :perm_state, presence: true, length: { is: 2 }
     american.validates :perm_zip, presence: true,

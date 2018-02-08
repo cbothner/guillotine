@@ -45,15 +45,31 @@ header {
     }
   }
 }
-.notice-alert {
+.notice-container,
+.alert-container {
   margin-top:0;
   min-width:100%;
-  background-color: lighten($orange,40%);
-  border-bottom: 1px $orange solid;
   div p.notice, div p.alert {
     text-align:center;
-    color: darken($orange, 20%);
     font-weight: bold;
+  }
+}
+
+.notice-container {
+  background-color: rgba($green, 0.3);
+  border-bottom: 1px $green solid;
+
+  div p.notice {
+    color: darken($green, 20%);
+  }
+}
+
+.alert-container {
+  background-color: lighten($orange,40%);
+  border-bottom: 1px $orange solid;
+
+  div p.alert {
+    color: darken($orange, 20%);
   }
 }
 

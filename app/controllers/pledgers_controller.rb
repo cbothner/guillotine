@@ -43,7 +43,7 @@ class PledgersController < ApplicationController
   # GET /pledgers/new
   # GET /pledgers/new.json
   def new
-    @pledger = Pledger.new
+    @pledger = Pledger.new(params[:pledger])
 
     respond_to do |format|
       format.html # new.html.erb

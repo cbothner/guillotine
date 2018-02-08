@@ -16,7 +16,9 @@ class Semester < ActiveRecord::Base
 
   def totals
     Rails.cache.fetch "semester_totals/#{self.name}/#{Donation.last.created_at}" do
-      donations = Donation.for_semester(self).non_underwriting
+      donations = Donation.includes(:pledger)
+                          .for_semester(self)
+                          .non_underwriting
       total_progress = donations.sum(:amount)
       total_percent = 100 * (total_progress / goal)
 
@@ -60,6 +62,5 @@ class Semester < ActiveRecord::Base
   end
 end
 
-MONTHS = %w(January February March April May June July 
+MONTHS = %w(January February March April May June July
 August September October November December)
-

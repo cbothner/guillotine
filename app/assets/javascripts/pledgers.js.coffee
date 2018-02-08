@@ -18,10 +18,14 @@ $(document).ready ->
             id: "new"
             value: "New Pledger"
             desc: ""
+            term: request.term
           response names # Callback an array of values.
           return false
       select: (event, ui) ->
-        window.location = "/pledgers/#{ui.item.id}"
+        if ui.item.id != 'new'
+          return window.location = "/pledgers/#{ui.item.id}"
+        window.location =
+          "/pledgers/new?pledger[name]=#{encodeURI ui.item.term}"
       )
       .data("ui-autocomplete")._renderItem = (ul,item) ->
         $("<li>")

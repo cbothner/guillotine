@@ -11,7 +11,7 @@ form#searchForm {
   }
 }
 
-.greytext { 
+.greytext {
   color: $base00 !important;
   margin-left: -3px;
   margin-right: 4px;
@@ -32,6 +32,11 @@ section.pledger {
   background-color: $base2;
   padding: 12px;
   width: 460px - 25px !important;
+  height: 100%;
+}
+
+.pledgerDonations {
+  height: 100%;
 }
 
 .pledgerDonations,
@@ -86,7 +91,7 @@ section.pledger {
   color: $base01;
   font-weight:bold;
 }
-.donationShowName, 
+.donationShowName,
 .rewardPremiaName,
 .commentShowName {
   display:block;
@@ -101,8 +106,8 @@ section.pledger {
   color: #839496;
   text-decoration: line-through;
 }
-.donationLine p, .rewardLine p {
-  padding-left:10px; 
+.donationLine > p, .rewardLine > p {
+  padding-left:10px;
   font-style:italic;
 }
 .donationForm, .rewardForm {
@@ -117,4 +122,10 @@ section.pledger {
     color: $base3;
     background-color: $red;
   }
+}
+
+.donationForm p.instructions {
+  margin-bottom: 5px;
+  font-size: 90%;
+  line-height: 1.2;
 }

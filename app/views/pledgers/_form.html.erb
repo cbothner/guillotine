@@ -35,7 +35,7 @@
           <%= instructions_for_operators{"5) And your permanent mailing address?"} %>
           <%= f.label :perm_address, "Permanent Street Address" %><%= f.text_field :perm_address %>
           <%= f.text_field :perm_address2 %>
-          <label>USA? </label><input type="checkbox" id="permUSA" checked=""> 
+          <label>USA? </label><input type="checkbox" id="permUSA" checked="">
           <div id="permCSZDiv" class="flexcontainer">
             <div class="flex2">
               <%= f.label :perm_zip, "Zip" %><%= f.text_field :perm_zip, :maxlength => "5", class: 'zip-lookup-field-zipcode' %>
