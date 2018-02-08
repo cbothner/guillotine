@@ -1,3 +1,13 @@
+:javascript
+  function alertPledgeProcessInfo() {
+    alert(
+      'After fundraiser, we will pass our list of pledges to the Development ' +
+      'Office and they will send pledge forms to the listeners. Listeners ' +
+      'may fulfill their pledges by check or with a credit card by mailing ' +
+      'their forms to the Gift Office directly.'
+    )
+  }
+
 = form_for(@donation, :remote => true) do |f|
   - if @donation.errors.any?
     #error_explanation
@@ -7,9 +17,11 @@
       %ul
       -@donation.errors.full_messages.each do |msg|
         %li= msg
+
   - if @donationID != 'new' and user_is_dd?
     .deleteDonationLink
       = link_to '[X]', {action: 'destroy', id: @donation}, confirm: "Are you sure you want to delete this donation?", method: :delete, remote: true
+
   .field
     = f.label :slot_id, "Dedication"
     = f.select(:slot_id, unsorted_grouped_options_for_select(Slot.for_select(@selectedSemester), @selectedSlot), {}, { :class => "chzn-select" })
@@ -25,6 +37,7 @@
         = f.select :payment_method, %w[Online Check Cash]
     - else
       = f.hidden_field :payment_method, value: 'Check'
+
   -if user_is_dd?
     .field
       = f.label :comment
@@ -42,17 +55,21 @@
         %abbr{:title => "GPO Sent?"}
           = f.label :gpo_sent, "&nbsp;".html_safe, :class => "fa fa-lg fa-cloud-upload"
         = f.check_box :gpo_sent
-  -else
-    = f.hidden_field :pledge_form_sent, value: false
-    = f.hidden_field :payment_received, value: false
-    = f.hidden_field :gpo_sent, value: false
-    %div{:style => "height:6px;"}
+
   = f.hidden_field :pledger_id
+
   -if @donation.id
-    %p.notabene{:style => "font-style:normal;margin-top: -2px;padding-left: 0;margin-bottom: -2px;"}<
+    %p.notabene
       = @donation.created_at.to_s.split(' ')[0]
       &nbsp;Phone Operator:&nbsp;
       = @donation.phone_operator
+  - elsif !user_is_dd?
+    = instructions_for_operators do
+      We aren’t asking for your payment today. The University will send you a
+      pledge form.
+      %a{ href: '#', onclick: 'alertPledgeProcessInfo()' }
+        [?]
+
   .actions
     = f.submit 'Submit', data: { disable_with: 'Saving...' }
     = button_tag "Cancel", :type => "button", :id => "donationFormCancelButton", :data => { :id => @donationID }
