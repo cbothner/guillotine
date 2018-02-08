@@ -32,6 +32,11 @@ section.pledger {
   background-color: $base2;
   padding: 12px;
   width: 460px - 25px !important;
+  height: 100%;
+}
+
+.pledgerDonations {
+  height: 100%;
 }
 
 .pledgerDonations,

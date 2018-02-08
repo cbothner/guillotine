@@ -1,63 +1,65 @@
 - title @pledger.name + " — Pledgers"
-%section.grid_6.pledger
-  =instructions_for_operators{ "Verify that this information is accurate." }
-  - if user_is_dd?
-    %p.inputP=best_in_place @pledger, :underwriting, as: :checkbox, collection: [ "Pledger", "Underwriter"]
-  %b.labelB Name
-  %p.inputP=best_in_place @pledger, :name
-  %b.labelB Email
-  %p.inputP=best_in_place @pledger, :email
-  %b.labelB WCBN Affiliation
-  %p.inputP=best_in_place @pledger, :affiliation, as: :select, collection: [["Staff", "Staff"], ["Alumni", "Alumni"], ["Family", "Family"], ["Public", "Public"]]
-  .flexcontainer.middlepadding
-    .flex1
-      %b.labelB Permanent Phone Number
-      %p.inputP=best_in_place @pledger, :perm_phone
-      %b.labelB Permanent Street Address
-      %p.inputP=best_in_place @pledger, :perm_address
-      -if !@pledger.perm_address2.blank?
-        %p.inputP=best_in_place @pledger, :perm_address2
-      .flexcontainer.middlepadding
-        .flex2
-          %b.labelB City
-          %p.inputP=best_in_place @pledger, :perm_city
+
+.flexcontainer
+  %section.flex2.pledger
+    =instructions_for_operators{ "Verify that this information is accurate." }
+    - if user_is_dd?
+      %p.inputP=best_in_place @pledger, :underwriting, as: :checkbox, collection: [ "Pledger", "Underwriter"]
+    %b.labelB Name
+    %p.inputP=best_in_place @pledger, :name
+    %b.labelB Email
+    %p.inputP=best_in_place @pledger, :email
+    %b.labelB WCBN Affiliation
+    %p.inputP=best_in_place @pledger, :affiliation, as: :select, collection: [["Staff", "Staff"], ["Alumni", "Alumni"], ["Family", "Family"], ["Public", "Public"]]
+    .flexcontainer.middlepadding
+      .flex1
+        %b.labelB Permanent Phone Number
+        %p.inputP=best_in_place @pledger, :perm_phone
+        %b.labelB Permanent Street Address
+        %p.inputP=best_in_place @pledger, :perm_address
+        -if !@pledger.perm_address2.blank?
+          %p.inputP=best_in_place @pledger, :perm_address2
+        .flexcontainer.middlepadding
+          .flex2
+            %b.labelB City
+            %p.inputP=best_in_place @pledger, :perm_city
+          -if @pledger.perm_country == 'USA'
+            .flex1
+              %b.labelB State
+              %p.inputP=best_in_place @pledger, :perm_state
         -if @pledger.perm_country == 'USA'
+          %b.labelB Zip Code
+          %p.inputP=best_in_place @pledger, :perm_zip
+        -else
+          %b.labelB Country
+          %p.inputP=best_in_place @pledger, :perm_country
+      .flex1
+        %b.labelB Local Phone Number
+        %p.inputP=best_in_place @pledger, :local_phone
+        %b.labelB Local Street Address
+        %p.inputP=best_in_place @pledger, :local_address
+        -if !@pledger.local_address2.blank?
+          %p.inputP=best_in_place @pledger, :local_address2
+        .flexcontainer.middlepadding
+          .flex2
+            %b.labelB City
+            %p.inputP=best_in_place @pledger, :local_city
           .flex1
             %b.labelB State
-            %p.inputP=best_in_place @pledger, :perm_state
-      -if @pledger.perm_country == 'USA'
+            %p.inputP=best_in_place @pledger, :local_state
         %b.labelB Zip Code
-        %p.inputP=best_in_place @pledger, :perm_zip
-      -else
-        %b.labelB Country
-        %p.inputP=best_in_place @pledger, :perm_country
-    .flex1
-      %b.labelB Local Phone Number
-      %p.inputP=best_in_place @pledger, :local_phone
-      %b.labelB Local Street Address
-      %p.inputP=best_in_place @pledger, :local_address
-      -if !@pledger.local_address2.blank?
-        %p.inputP=best_in_place @pledger, :local_address2
-      .flexcontainer.middlepadding
-        .flex2
-          %b.labelB City
-          %p.inputP=best_in_place @pledger, :local_city
-        .flex1
-          %b.labelB State
-          %p.inputP=best_in_place @pledger, :local_state
-      %b.labelB Zip Code
-      %p.inputP=best_in_place @pledger, :local_zip
-  %p.notabene#pledgerID{:data => { :id => @pledger.id } }<
-    Pledger ID:
-    = @pledger.id
-  = link_to 'Close and return to search', pledgers_path
-  -#= link_to 'Edit', edit_pledger_path(@pledger) |
+        %p.inputP=best_in_place @pledger, :local_zip
+    %p.notabene#pledgerID{:data => { :id => @pledger.id } }<
+      Pledger ID:
+      = @pledger.id
+    = link_to 'Close and return to search', pledgers_path
+    -#= link_to 'Edit', edit_pledger_path(@pledger) |
 
-= render_cell :donation_list, :show, pledger: @pledger
+  = render_cell :donation_list, :show, pledger: @pledger
 
-.grid_3
-  = render_cell :reward_list, :show, pledger: @pledger
-  = render "comments/onepledger"
+  .flex1
+    = render_cell :reward_list, :show, pledger: @pledger
+    = render "comments/onepledger"
 
 -#hidden value passed to view for printing
 = hidden_field_tag "pledger_id", @pledger.id, { :id => "pledger-id" }
