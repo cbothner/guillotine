@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503215052) do
+ActiveRecord::Schema.define(version: 20180209141515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,13 +30,13 @@ ActiveRecord::Schema.define(version: 20170503215052) do
     t.integer  "slot_id"
     t.decimal  "amount"
     t.string   "payment_method"
-    t.boolean  "pledge_form_sent"
-    t.boolean  "payment_received"
-    t.boolean  "gpo_sent"
-    t.boolean  "gpo_processed"
+    t.boolean  "pledge_form_sent", default: false, null: false
+    t.boolean  "payment_received", default: false, null: false
+    t.boolean  "gpo_sent",         default: false, null: false
+    t.boolean  "gpo_processed",    default: false, null: false
     t.string   "phone_operator"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "comment"
   end
 
@@ -48,13 +48,13 @@ ActiveRecord::Schema.define(version: 20170503215052) do
     t.integer  "slot_id"
     t.decimal  "amount"
     t.string   "payment_method"
-    t.boolean  "pledge_form_sent"
-    t.boolean  "payment_received"
-    t.boolean  "gpo_sent"
-    t.boolean  "gpo_processed"
+    t.boolean  "pledge_form_sent", default: false, null: false
+    t.boolean  "payment_received", default: false, null: false
+    t.boolean  "gpo_sent",         default: false, null: false
+    t.boolean  "gpo_processed",    default: false, null: false
     t.string   "phone_operator"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "items", force: true do |t|
@@ -62,15 +62,15 @@ ActiveRecord::Schema.define(version: 20170503215052) do
     t.decimal  "taxable_value"
     t.decimal  "cost"
     t.integer  "stock"
-    t.boolean  "backorderable"
+    t.boolean  "backorderable", default: false, null: false
     t.string   "shape"
     t.text     "note"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "pledgers", force: true do |t|
-    t.boolean  "individual"
+    t.boolean  "individual",     default: false, null: false
     t.string   "email"
     t.string   "affiliation"
     t.string   "local_phone"
@@ -97,11 +97,11 @@ ActiveRecord::Schema.define(version: 20170503215052) do
   create_table "rewards", force: true do |t|
     t.integer  "pledger_id"
     t.integer  "item_id"
-    t.boolean  "premia_sent"
-    t.boolean  "taxed"
+    t.boolean  "premia_sent", default: false, null: false
+    t.boolean  "taxed",       default: false, null: false
     t.text     "comment"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "rewards", ["item_id"], name: "index_rewards_on_item_id", using: :btree
