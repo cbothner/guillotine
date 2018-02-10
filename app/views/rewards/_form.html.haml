@@ -33,5 +33,5 @@
   = f.hidden_field :pledger_id
   %div{:style => "height: 6px;"}
   .actions
-    = f.submit data: { disable_with: 'Saving...' }
+    = f.submit 'Submit', data: { disable_with: 'Saving...' }
     = button_tag "Cancel", :type => "button", :id => "rewardFormCancelButton", :data => { :id => @rewardID }
