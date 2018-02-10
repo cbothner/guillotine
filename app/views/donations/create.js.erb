@@ -3,4 +3,9 @@
 <% else %>
   $("aside.pledgerDonations.grid_3").replaceWith('<%= j render_cell :donation_list, :show, pledger: @pledger %>');
   window.editedtext = false;
+
+  // Reset the reward list if the form is open so the gifts
+  // list is not out of date
+  var rewardFormCancel = document.getElementById('rewardFormCancelButton')
+  rewardFormCancel && rewardFormCancel.click()
 <% end %>
