@@ -11,20 +11,20 @@ class DonationsController < ApplicationController
     @semester = semester.decorate
 
     respond_to do |format|
-      format.html {
+      format.html do
         authenticate_user!
-      }
-      format.json
-      format.csv {
+      end
+      format.json do
+        fresh_when last_modified: Donation.last.created_at, public: true
+      end
+      format.csv do
         authenticate_user!
         headers['Content-Disposition'] =
           "attachment; filename=\"#{@semester.name}_Donations.csv\""
         headers['Content-Type'] ||= 'text/csv'
-      }
+      end
     end
 
-    # expires_in 2.minutes, :public => true
-    # fresh_when last_modified: Donation.last.created_at, public: true
   end
 
   def underwriting
