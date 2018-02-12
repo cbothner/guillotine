@@ -1,2 +1,2 @@
-json.total_progress @total_progress
-json.total_percent @total_percent
+json.total_progress @semester.total_progress
+json.total_percent @semester.total_percent
