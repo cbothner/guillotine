@@ -3,3 +3,9 @@
 
 en:
   hello: "Hello world"
+
+  donations:
+    index:
+      confirm_forgive: >
+        Are you sure you want to forgive all unpaid pledges from %{semester}?
+        This action cannot be undone.

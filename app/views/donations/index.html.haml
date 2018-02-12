@@ -1,33 +1,61 @@
--title "Pledges — #{@semester.name}"
-%h2="Pledges from #{@semester.name}"
+- title "Pledges — #{@semester.name}"
+
+%h2= "Pledges from #{@semester.name}"
+
 Semester
-=select_tag("schedule", options_for_select(Semester.all.map{|s| s.name }, @semester.name), class: "semester_select", data:{prefix:'donations/'})
+= select_tag "schedule",
+             options_for_select(Semester.all.map{|s| s.name }, @semester.name),
+             class: "semester_select", data: { prefix:'donations/' }
 
 .progress_container
   .total_progress_label
-    ="Pledged Progress: $#{number_with_delimiter(@total_progress.round)} / $#{number_with_delimiter(@semester.goal)}"
+    Pledged Progress:
+    = number_to_currency @semester.total_progress, precision: 0
+    \/
+    = number_to_currency @semester.goal, precision: 0
   .progress_bar
-    .total_progress_bar{style: "width: #{@total_percent}%;"}
+    .total_progress_bar{style: "width: #{@semester.total_percent}%;"}
       &nbsp;
+
   .paid_progress_label
-    ="Paid Progress: $#{number_with_delimiter(@paid_progress.round)} / $#{number_with_delimiter(@total_progress.round)}"
+    Paid Progress:
+    = number_to_currency @semester.paid_progress, precision: 0
+    \/
+    = number_to_currency @semester.total_progress, precision: 0
   .progress_bar
-    .paid_progress_bar{style: "width: #{@paid_percent}%;"}
+    .paid_progress_bar{style: "width: #{@semester.paid_percent}%;"}
       &nbsp;
 
 .flexcontainer
-  -[[user_is_dd? ? "Unpaid" : "Pledged" , @unpaid_progress, @unpaid_pledgers],
-    ["Paid", @paid_progress, @paid_pledgers]].each do |section|
-    %section.home.flex1
-      %h4="#{section[0]}: $#{section[1].round}"
-      %ul.donations_list
-        -section[2].each do |d|
-          %li.donation_li.flexcontainer
-            .donation_pledger.flex3=link_to(d[:pledger].name,d[:pledger])
-            .donation_amount.flex1="$%.2f" %d[:amount]
-      -if section[0] == "Unpaid" and user_is_dd?
-        %p.actions
-          -if @forgiven_donations_total != 0
-            %p.instructions.centered="$%.2f worth of pledges forgiven" %@forgiven_donations_total 
-          -if @unpaid_progress != 0
-            = button_to "Forgive Unpaid Pledges", { action: "forgive", semester: @semester}, :method => "post", :data => { confirm: "Are you sure you want to forgive all unpaid pledges from #{@semester.name}? This action cannot be undone." }
+  %section.home.flex1
+    %h4
+      = succeed ':' do
+        = user_is_dd? ? 'Unpaid' : 'Pledged'
+      = number_to_currency @semester.unpaid_progress, precision: 0
+    %ul.donations_list
+      - @semester.unpaid_pledgers.each do |pledger, total|
+        %li.donation_li.flexcontainer
+          .donation_pledger.flex3= link_to pledger.name, pledger
+          .donation_amount.flex1= number_to_currency total
+    - if user_is_dd?
+      %p.actions
+        - if @semester.forgiven_donations_total > 0
+          %p.instructions.centered
+            = number_to_currency @semester.forgiven_donations_total
+            worth of pledges forgiven
+        - if @semester.unpaid_progress > 0
+          = button_to 'Forgive Unpaid Pledges',
+                      donations_forgive_path(semester: @semester),
+                      method: :post,
+                      data: { confirm: t('.confirm_forgive',
+                                         semester: @semester.name) }
+
+  %section.home.flex1
+    %h4
+      Paid:
+      = number_to_currency @semester.paid_progress, precision: 0
+    %ul.donations_list
+      - @semester.paid_pledgers.each do |pledger, total|
+        %li.donation_li.flexcontainer
+          .donation_pledger.flex3= link_to pledger.name, pledger
+          .donation_amount.flex1= number_to_currency total

@@ -6,15 +6,9 @@ class DonationsController < ApplicationController
   # GET /donations
   # GET /donations.json
   def index
-    @semester = Semester.where(month: params[:month], year: params[:year])[0]
-    @semester ||= Semester.current_semester
-
-    @semester.totals.each do |key, value|
-      self.instance_variable_set "@#{key}", value
-    end
-
-    forgiven_donations = @semester.slots.reduce([]) { |a, e| a + e.forgiven_donations }
-    @forgiven_donations_total = forgiven_donations.reduce(0) { |a, e| a + e.amount }
+    semester = Semester.find_by month: params[:month], year: params[:year]
+    semester ||= Semester.current_semester
+    @semester = semester.decorate
 
     respond_to do |format|
       format.html {
@@ -23,14 +17,14 @@ class DonationsController < ApplicationController
       format.json
       format.csv {
         authenticate_user!
-        headers['Content-Disposition'] = "attachment; filename=\"#{@semester.name}_Donations.csv\""
+        headers['Content-Disposition'] =
+          "attachment; filename=\"#{@semester.name}_Donations.csv\""
         headers['Content-Type'] ||= 'text/csv'
       }
     end
 
-    expires_in 2.minutes, :public => true
-    fresh_when last_modified: Donation.last.created_at, public: true
-
+    # expires_in 2.minutes, :public => true
+    # fresh_when last_modified: Donation.last.created_at, public: true
   end
 
   def underwriting
