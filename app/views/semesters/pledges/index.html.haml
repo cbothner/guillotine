@@ -1,0 +1,23 @@
+- title 'Pledge and Benefit Totals'
+
+%h1 Pledge and Benefit Totals
+%p.instructions
+  After fundraiser is over, we send University Development our list of pledgers,
+  including how much they promised to give and what the fair market value of
+  their premia requests is. The University then sends them a pledge form, as
+  well as periodic reminders, on our behalf.
+
+= button_to 'Download CSV', semester_pledges_path(@semester, format: :csv),
+            method: :get, class: 'action'
+
+%table
+  %tr
+    %th Pledger
+    %th Pledge Amount
+    %th Taxable Benefit
+
+  - @pledgers.each do |pledger|
+    %tr
+      %td= link_to pledger.name, pledger
+      %td= number_to_currency @donation_totals_by_pledger_id[pledger.id]
+      %td= number_to_currency @taxable_totals_by_pledger_id[pledger.id]

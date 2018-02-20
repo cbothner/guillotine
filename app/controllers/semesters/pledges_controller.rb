@@ -2,6 +2,8 @@ module Semesters
   class PledgesController < ApplicationController
     before_action :authenticate_user!
 
+    layout 'generate'
+
     def index
       set_semester
       set_donation_totals_by_pledger_id
