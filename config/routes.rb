@@ -4,7 +4,9 @@ Guillotine::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => "users/registrations" }
   resources :users, only: [:index,:destroy]
 
-  resources :semesters, only: [:index,:update,:create,:destroy]
+  resources :semesters, only: [:index,:update,:create,:destroy] do
+    resources :pledges, only: [:index], module: :semesters
+  end
 
   get 'gpo', to: "gpo#index"
   get "gpo/single/:id", to: 'gpo#single'
