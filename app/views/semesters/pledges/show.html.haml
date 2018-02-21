@@ -7,8 +7,9 @@
   their premia requests is. The University then sends them a pledge form, as
   well as periodic reminders, on our behalf.
 
-= button_to 'Download CSV', semester_pledges_path(@semester, format: :csv),
-            method: :get, class: 'action'
+= button_to semester_pledges_path(@semester, format: :csv),
+            method: :get, class: 'action' do
+  Download CSV
 
 %table
   %tr

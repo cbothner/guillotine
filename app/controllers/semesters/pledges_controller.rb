@@ -4,7 +4,7 @@ module Semesters
 
     layout 'generate'
 
-    def index
+    def show
       set_semester
       set_donation_totals_by_pledger_id
       set_last_donation_time_by_pledger_id

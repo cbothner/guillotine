@@ -5,7 +5,7 @@ Guillotine::Application.routes.draw do
   resources :users, only: [:index,:destroy]
 
   resources :semesters, only: [:index,:update,:create,:destroy] do
-    resources :pledges, only: [:index], module: :semesters
+    resource :pledges, only: %i[show update], module: :semesters
   end
 
   get 'gpo', to: "gpo#index"
