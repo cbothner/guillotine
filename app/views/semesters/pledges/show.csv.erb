@@ -1,0 +1,38 @@
+<% headers = [
+  'Last Pledge Date',
+  'Name',
+  'Address',
+  'Email Address',
+  'Phone Number',
+  'Total Amount',
+  'Designation Amount',
+  'Benefit Amount',
+  'Designation Number',
+  'Designation Name',
+  'Prepared By',
+  'Preparer Phone Number'
+] -%>
+<%= raw CSV.generate_line headers -%>
+<% @pledgers.each do |pledger| %>
+<%
+total_amount = @donation_totals_by_pledger_id[pledger.id]
+benefit_amount = @taxable_totals_by_pledger_id[pledger.id].to_d
+designation_amount = total_amount - benefit_amount
+
+-%>
+<%= raw CSV.generate_line([
+  @last_donation_time_by_pledger_id[pledger.id],
+  pledger.name,
+  pledger.address_string,
+  pledger.email,
+  pledger.perm_phone,
+  total_amount,
+  designation_amount,
+  benefit_amount,
+  '361991',
+  'WCBN-FM',
+  Setting.dd_name,
+  Setting.dd_phone
+])
+-%>
+<% end %>

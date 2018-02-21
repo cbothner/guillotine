@@ -30,7 +30,9 @@
     %section.home.flex1
       %h2 Documents
       %ul
-        %li= link_to "Thank You Notes and Pledge Forms", :controller => "pledge_forms"
+        %li
+          = link_to semester_pledges_path(Semester.current_semester) do
+            Pledge and Benefit Totals
         %li= link_to "All Unsent GPOs", :controller => "gpo"
   -else
     %section.flex1

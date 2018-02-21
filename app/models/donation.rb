@@ -7,6 +7,12 @@ class Donation < ActiveRecord::Base
   validates :amount, numericality: { greater_than: 0 }
   validates :payment_method, inclusion: { in: %w[Cash Check Online] }
 
+  scope :pledge_form_unsent, -> { where pledge_form_sent: false }
+
+  scope :in_cash, -> { where payment_method: 'Cash' }
+  scope :by_check, -> { where payment_method: 'Check' }
+  scope :online, -> { where payment_method: 'Online' }
+
   scope :unpaid, -> { where payment_received: false }
   scope :paid, -> { where payment_received: true }
 

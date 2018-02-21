@@ -1,0 +1,38 @@
+- title 'Pledge and Benefit Totals'
+
+%h1 Pledge and Benefit Totals
+
+%p.instructions
+  After fundraiser is over, we send University Development our list of pledgers,
+  including how much they promised to give and what the fair market value of
+  their premia requests is. The University then sends them a pledge form, as
+  well as periodic reminders, on our behalf.
+
+- if @pledgers.any?
+  = button_to semester_pledges_path(@semester, format: :csv),
+              method: :get, class: 'action' do
+    Download CSV
+
+  %p.instructions
+    Once we have sent OUD our list, we need to mark those donations as having had
+    a pledge form sent, and those rewards as having been taxed. You can do that
+    all in one go here.
+
+  = button_to semester_pledges_path(@semester), method: :put, class: 'action',
+    data: { confirm: 'Are you sure? This cannot be undone.' } do
+    Process Donations and Rewards
+
+  %table
+    %tr{ style: 'text-align: left' }
+      %th Pledger
+      %th Pledge Amount
+      %th Taxable Benefit
+
+    - @pledgers.each do |pledger|
+      %tr
+        %td= link_to pledger.name, pledger
+        %td= number_to_currency @donation_totals_by_pledger_id[pledger.id]
+        %td= number_to_currency @taxable_totals_by_pledger_id[pledger.id]
+
+- else
+  There are no donations that need to be sent to the OUD at this time.
