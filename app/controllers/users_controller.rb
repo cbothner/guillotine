@@ -9,6 +9,19 @@ class UsersController < ApplicationController
     @dd_phone = Setting.find_by_key('dd_phone')
   end
 
+  def new
+    @user = User.new
+  end
+
+  def create
+    @user = User.new(params[:user])
+    if @user.save
+      redirect_to new_user_path, notice: 'User created successfully'
+    else
+      render :new
+    end
+  end
+
   def destroy
     @user = User.find(params[:id])
     @user.destroy

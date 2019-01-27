@@ -11,6 +11,7 @@
   %p.inputP=best_in_place @dd_phone, :value, :type=>'tel'
 
   %br
+  = link_to "New User", new_user_path
   %h2 Users
   -@users.each do |user|
     .flexcontainer
@@ -23,3 +24,5 @@
 
 -else
   %h2 Only DD can see this page.
+
+- content_for(:back) { root_path }

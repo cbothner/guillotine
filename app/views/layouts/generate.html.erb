@@ -2,7 +2,11 @@
   &nbsp;
 </section>
 <section class="home grid_8">
-  <%= link_to "&larr;Back".html_safe, :back %>
+  <% if content_for? :back %>
+    <%= link_to "&larr;Back".html_safe, content_for(:back) %>
+  <% else %>
+    <%= link_to "&larr;Back".html_safe, :back %>
+  <% end %>
   <%= yield %>
 </section>
 
