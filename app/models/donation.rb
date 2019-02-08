@@ -6,6 +6,7 @@ class Donation < ActiveRecord::Base
   validates :amount, :payment_method, presence: true
   validates :amount, numericality: { greater_than: 0 }
   validates :payment_method, inclusion: { in: %w[Cash Check Online] }
+  validates :slot, presence: true
 
   scope :pledge_form_unsent, -> { where pledge_form_sent: false }
 
