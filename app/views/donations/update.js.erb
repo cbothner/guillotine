@@ -1,5 +1,5 @@
 <% if @donation.errors.any? %>
-  alert("<%= escape_javascript(error_messages_for(@donation)) %>");
+  alert("<%= raw escape_javascript @donation.errors.full_messages.to_sentence %>");
 <% else %>
   <% if @donation.payment_method == "Credit Card" and @donation.gpo_processed == false %>
     <%= render partial: 'print_credit_card_form', locals: {donation_id: @donation.id} %>

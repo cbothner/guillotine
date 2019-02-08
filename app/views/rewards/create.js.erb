@@ -1,5 +1,5 @@
 <% if @reward.errors.any? %>
-  alert("<%= escape_javascript(error_messages_for(@reward)) %>");
+  alert("<%= raw escape_javascript @reward.errors.full_messages.to_sentence %>");
 <% else %>
   $("aside.pledgerRewards.grid_3").replaceWith('<%= j render_cell :reward_list, :show, pledger: @reward.pledger %>');
   window.editedtext = false
