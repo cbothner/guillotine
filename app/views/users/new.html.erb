@@ -1,0 +1,6 @@
+<% content_for(:back) { users_path } %>
+
+<div class="new-user-page">
+  <h1>New User</h1>
+  <%= render 'form', user: @user %>
+</div>

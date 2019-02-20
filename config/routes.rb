@@ -1,8 +1,8 @@
 Guillotine::Application.routes.draw do
   resources :comments
 
-  devise_for :users, :controllers => { :registrations => "users/registrations" }
-  resources :users, only: [:index,:destroy]
+  devise_for :users
+  resources :users, only: [:index, :new, :create, :destroy]
 
   resources :semesters, only: [:index,:update,:create,:destroy] do
     resource :pledges, only: %i[show update], module: :semesters

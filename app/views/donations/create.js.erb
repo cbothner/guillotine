@@ -1,5 +1,5 @@
 <% if @donation.errors.any? %>
-  alert("<%= escape_javascript(error_messages_for(@donation)) %>");
+  alert("<%= raw escape_javascript @donation.errors.full_messages.to_sentence %>");
 <% else %>
   $("aside.pledgerDonations.grid_3").replaceWith('<%= j render_cell :donation_list, :show, pledger: @pledger %>');
   window.editedtext = false;
